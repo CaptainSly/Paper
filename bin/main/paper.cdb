@@ -1,52 +1,56 @@
 {
 	"sheets": [
 		{
+			"name": "npc_data",
+			"columns": [],
+			"lines": [],
+			"separators": [],
+			"props": {}
+		},
+		{
 			"name": "item_data",
 			"columns": [
 				{
 					"typeStr": "0",
-					"name": "id",
-					"display": null
+					"name": "itemId"
 				},
 				{
 					"typeStr": "1",
-					"name": "name",
-					"display": null
+					"name": "itemName"
 				},
 				{
 					"typeStr": "1",
-					"name": "desc",
-					"display": null
+					"name": "itemDescription"
 				},
 				{
 					"typeStr": "3",
-					"name": "cost"
+					"name": "itemCost"
 				}
 			],
 			"lines": [
 				{
-					"id": "oreIron",
-					"name": "Iron Ore",
-					"desc": "Ore containing iron, needs to be smelted into ingots before it can be used.",
-					"cost": 25
+					"itemId": "oreIron",
+					"itemName": "Iron Ore",
+					"itemDescription": "Ore containing iron, needs to be smelted into ingots before it can be used.",
+					"itemCost": 25
 				},
 				{
-					"id": "oreCopper",
-					"name": "Copper Ore",
-					"desc": "Ore containing copper, needs to be smelted into ingots before it can be used.",
-					"cost": 25
+					"itemId": "oreCopper",
+					"itemName": "Copper Ore",
+					"itemDescription": "Ore containing copper, needs to be smelted into ingots before it can be used.",
+					"itemCost": 25
 				},
 				{
-					"id": "ingotIron",
-					"name": "Iron Ingot",
-					"desc": "An ingot made of solid iron.",
-					"cost": 50
+					"itemId": "ingotIron",
+					"itemName": "Iron Ingot",
+					"itemDescription": "An ingot made of solid iron.",
+					"itemCost": 50
 				},
 				{
-					"id": "ingotCopper",
-					"name": "Copper Ingot",
-					"desc": "An ingot made of solid copper.",
-					"cost": 50
+					"itemId": "ingotCopper",
+					"itemName": "Copper Ingot",
+					"itemDescription": "An ingot made of solid copper.",
+					"itemCost": 50
 				}
 			],
 			"separators": [],
@@ -126,6 +130,18 @@
 					"locationDescription": "A bussling city, many types of ammenties and attractions exist here",
 					"locationNeighbors": [],
 					"locationActions": []
+				},
+				{
+					"locationId": "routeGlave",
+					"locationName": "The Albeian Glave",
+					"locationDescription": "The Albeian Glave opens up into a thick forest, wear a magical fog hangs thick in the sky at all times. Not much light seems to penetrate through the mist leaving it almost pitch black. A clearing around the forest makes for a good camp site",
+					"locationNeighbors": [
+						{
+							"location": "routeTimsoth",
+							"direction": 1
+						}
+					],
+					"locationActions": []
 				}
 			],
 			"separators": [],
@@ -165,6 +181,46 @@
 					"display": null
 				}
 			]
+		},
+		{
+			"name": "action_data",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "actionId"
+				},
+				{
+					"typeStr": "1",
+					"name": "actionName",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "actionDescription",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "actionScript",
+					"display": null
+				}
+			],
+			"lines": [
+				{
+					"actionId": "actionMine",
+					"actionName": "Mine",
+					"actionDescription": "A mine is located here. A great place to gather resources and gems",
+					"actionScript": "actionMineScript"
+				},
+				{
+					"actionId": "actionShop",
+					"actionName": "Shop",
+					"actionDescription": "A Shop is located here. You can buy and sell loot",
+					"actionScript": "actionShopScript"
+				}
+			],
+			"separators": [],
+			"props": {}
 		}
 	],
 	"customTypes": [],

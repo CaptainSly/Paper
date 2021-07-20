@@ -10,6 +10,8 @@ import java.util.Map.Entry;
 
 import com.google.gson.stream.JsonReader;
 
+import captainsly.paper.actions.MineAction;
+import captainsly.paper.actions.ShopAction;
 import captainsly.paper.location.Location;
 import captainsly.paper.location.Location.Direction;
 
@@ -62,16 +64,16 @@ public class Registry {
 										while (jsonReader.hasNext()) {
 											name = jsonReader.nextName();
 											switch (name) { // Switch on the item's properties, add them to the array
-												case "id":
+												case "itemId":
 													itemIds[0] = jsonReader.nextString();
 													break;
-												case "name":
+												case "itemName":
 													itemIds[1] = jsonReader.nextString();
 													break;
-												case "desc":
+												case "itemDescription":
 													itemIds[2] = jsonReader.nextString();
 													break;
-												case "cost":
+												case "itemCost":
 													itemCost = jsonReader.nextInt();
 													break;
 											}
@@ -89,6 +91,7 @@ public class Registry {
 										System.out.println("Working on Location Data");
 										Location genLocal = null;
 										String[] localIds = new String[3];
+										String action = "";
 										HashMap<String, Direction> locationNeighbors = new HashMap<String, Direction>();
 
 										// Just like the items, a fake location is made as well as a String array to
@@ -136,7 +139,20 @@ public class Registry {
 													jsonReader.endArray();
 													break;
 												case "locationActions":
-													jsonReader.skipValue();
+													jsonReader.beginArray();
+													while (jsonReader.hasNext()) {
+														jsonReader.beginObject();
+														while (jsonReader.hasNext()) {
+															// Right now actions aren't really created expertly, there
+															// might be another system, like the neighbor map that adds
+															// a bunch of actions to a location, but for now there is
+															// only two actions anyway.
+															name = jsonReader.nextName();
+															action = jsonReader.nextString();
+														}
+														jsonReader.endObject();
+													}
+													jsonReader.endArray();
 													break;
 
 											}
@@ -149,6 +165,13 @@ public class Registry {
 										genLocal = new Location(localIds[0], localIds[1], localIds[2]);
 										locationRegistry.put(genLocal.getLocationId(), genLocal);
 										locationNeighborMap.put(genLocal.getLocationId(), locationNeighbors);
+
+										// Add the actions to the location
+										if (action.contentEquals("actionMine"))
+											locationRegistry.get(genLocal.getLocationId()).addAction(new MineAction());
+										else if (action.contentEquals("actionShop"))
+											locationRegistry.get(genLocal.getLocationId()).addAction(new ShopAction());
+
 										System.out.println("Added Location: "
 												+ locationRegistry.get(genLocal.getLocationId()).getLocationName());
 
@@ -156,6 +179,8 @@ public class Registry {
 												+ locationNeighborMap.get(genLocal.getLocationId()).size());
 
 									} else {
+										// As the CastleDB grows, more data will be added either here or above depending
+										// on how the data needs to be loaded in
 										jsonReader.skipValue();
 									}
 								}
