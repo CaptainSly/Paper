@@ -1,0 +1,172 @@
+{
+	"sheets": [
+		{
+			"name": "item_data",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "id",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "name",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "desc",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "cost"
+				}
+			],
+			"lines": [
+				{
+					"id": "oreIron",
+					"name": "Iron Ore",
+					"desc": "Ore containing iron, needs to be smelted into ingots before it can be used.",
+					"cost": 25
+				},
+				{
+					"id": "oreCopper",
+					"name": "Copper Ore",
+					"desc": "Ore containing copper, needs to be smelted into ingots before it can be used.",
+					"cost": 25
+				},
+				{
+					"id": "ingotIron",
+					"name": "Iron Ingot",
+					"desc": "An ingot made of solid iron.",
+					"cost": 50
+				},
+				{
+					"id": "ingotCopper",
+					"name": "Copper Ingot",
+					"desc": "An ingot made of solid copper.",
+					"cost": 50
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "location_data",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "locationId"
+				},
+				{
+					"typeStr": "1",
+					"name": "locationName"
+				},
+				{
+					"typeStr": "1",
+					"name": "locationDescription"
+				},
+				{
+					"typeStr": "8",
+					"name": "locationNeighbors"
+				},
+				{
+					"typeStr": "8",
+					"name": "locationActions"
+				}
+			],
+			"lines": [
+				{
+					"locationName": "Calinfor",
+					"locationId": "townCalinfor",
+					"locationDescription": "The humble town of Calinfor, provides residents with a shop and way for miners coming from Presca to make a living.",
+					"locationNeighbors": [
+						{
+							"location": "routeTimsoth",
+							"direction": 3
+						},
+						{
+							"location": "cityAlgoria",
+							"direction": 1
+						}
+					],
+					"locationActions": [
+						{
+							"actionId": "actionShop"
+						}
+					]
+				},
+				{
+					"locationName": "Presca",
+					"locationId": "hamletPresca",
+					"locationDescription": "A mining hamlet. There's not much in Presca other than the iron mine, but you can sell what you mine in Calinfor",
+					"locationNeighbors": [
+						{
+							"location": "routeTimsoth",
+							"direction": 2
+						}
+					],
+					"locationActions": [
+						{
+							"actionId": "actionMine"
+						}
+					]
+				},
+				{
+					"locationName": "Timsoth",
+					"locationId": "routeTimsoth",
+					"locationDescription": "A flower grove, dedicated to a farmer named Timsoth who once helped recultivate the land. Now it's more so a route to go to and from Calinfor and Presca",
+					"locationNeighbors": [],
+					"locationActions": []
+				},
+				{
+					"locationName": "Algoria",
+					"locationId": "cityAlgoria",
+					"locationDescription": "A bussling city, many types of ammenties and attractions exist here",
+					"locationNeighbors": [],
+					"locationActions": []
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "location_data@locationNeighbors",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "6:location_data",
+					"name": "location",
+					"display": null
+				},
+				{
+					"typeStr": "5:NORTH,SOUTH,EAST,WEST",
+					"name": "direction",
+					"display": null
+				}
+			]
+		},
+		{
+			"name": "location_data@locationActions",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "1",
+					"name": "actionId",
+					"display": null
+				}
+			]
+		}
+	],
+	"customTypes": [],
+	"compress": false
+}

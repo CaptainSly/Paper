@@ -1,0 +1,22 @@
+
+plugins {
+  id 'application'
+  id 'org.openjfx.javafxplugin' version '0.0.9'
+}
+
+repositories {
+	maven { url 'https://jitpack.io' }
+    mavenCentral()
+}
+
+
+javafx {
+    version = "15.0.1"
+    modules = [ 'javafx.controls' ]
+}
+
+dependencies {
+	implementation "de.jensd:fontawesomefx-commons:9.1.2"
+	implementation 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
+	implementation "com.google.code.gson:gson:2.8.7"
+}
