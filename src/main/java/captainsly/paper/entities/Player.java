@@ -3,10 +3,6 @@ package captainsly.paper.entities;
 import captainsly.paper.mechanics.Equipment;
 
 public class Player extends Actor {
-
-	public enum EquipmentSlots {
-		HEAD, NECK, CHEST, ARMS, LEGS, HAND_L, HAND_R; 
-	}
 	
 	private Equipment[] equipmentSlots;
 	

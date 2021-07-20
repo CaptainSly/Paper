@@ -1,11 +1,11 @@
 package captainsly.paper.mechanics;
 
-public class Equipment extends Item {
+public class Equipment {
 
 	public int equipAtk, equipDef, equipSpd;
-	
-	public Equipment(String itemId, String itemName) {
-		super(itemId, itemName, "");
+
+	public enum EquipmentType {
+		WEAPON, SHIELD, ARMOR, NECKLACE, RING
 	}
 
 }

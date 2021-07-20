@@ -53,7 +53,6 @@ public class PlayerStatNode extends Region {
 		Label playerDef = new Label("DEF: " + player.getActorStat(Stat.DEF));
 		Label playerSpd = new Label("SPD: " + player.getActorStat(Stat.SPD));
 		Label playerWis = new Label("WIS: " + player.getActorStat(Stat.WIS));
-		
 
 		playerXp.setTooltip(new Tooltip("To next level: " + player.toNextLevel()));
 
@@ -84,7 +83,8 @@ public class PlayerStatNode extends Region {
 							this.setTooltip(null);
 						} else {
 							this.setText(item.getItem().getItemName() + "  |  " + item.getItemCount());
-							this.setTooltip(new Tooltip(item.getItem().getItemDesc()));
+							this.setTooltip(new Tooltip("Item Type: " + item.getItem().getItemType().name() + "\n\n"
+									+ item.getItem().getItemDesc() + "\n\nYou currently have: " + item.getItemCount()));
 						}
 
 					}
@@ -97,6 +97,7 @@ public class PlayerStatNode extends Region {
 
 	private void setupEquipment() {
 		// TODO: Setup Equipment
+		
 	}
 
 	public ListView<ItemSlot> getPlayerInventoryList() {

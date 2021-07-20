@@ -25,6 +25,11 @@
 				{
 					"typeStr": "3",
 					"name": "itemCost"
+				},
+				{
+					"typeStr": "5:CONSUMABLE,BATTLE,KEY,COMMON",
+					"name": "itemType",
+					"display": null
 				}
 			],
 			"lines": [
@@ -32,25 +37,29 @@
 					"itemId": "oreIron",
 					"itemName": "Iron Ore",
 					"itemDescription": "Ore containing iron, needs to be smelted into ingots before it can be used.",
-					"itemCost": 25
+					"itemCost": 25,
+					"itemType": 3
 				},
 				{
 					"itemId": "oreCopper",
 					"itemName": "Copper Ore",
 					"itemDescription": "Ore containing copper, needs to be smelted into ingots before it can be used.",
-					"itemCost": 25
+					"itemCost": 25,
+					"itemType": 3
 				},
 				{
 					"itemId": "ingotIron",
 					"itemName": "Iron Ingot",
 					"itemDescription": "An ingot made of solid iron.",
-					"itemCost": 50
+					"itemCost": 50,
+					"itemType": 3
 				},
 				{
 					"itemId": "ingotCopper",
 					"itemName": "Copper Ingot",
 					"itemDescription": "An ingot made of solid copper.",
-					"itemCost": 50
+					"itemCost": 50,
+					"itemType": 3
 				}
 			],
 			"separators": [],
@@ -221,6 +230,112 @@
 			],
 			"separators": [],
 			"props": {}
+		},
+		{
+			"name": "equipment_data",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "equipmentId"
+				},
+				{
+					"typeStr": "1",
+					"name": "equipmentName"
+				},
+				{
+					"typeStr": "1",
+					"name": "equipmentDescription"
+				},
+				{
+					"typeStr": "5:WEAPON,SHIELD,ARMOR,NECKLACE,RING",
+					"name": "equipmentType",
+					"display": null
+				},
+				{
+					"typeStr": "8",
+					"name": "equipmentStats",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "equipmentItemId",
+					"display": null
+				}
+			],
+			"lines": [
+				{
+					"equipmentId": "",
+					"equipmentName": "",
+					"equipmentDescription": "",
+					"equipmentType": 0,
+					"equipmentStats": [],
+					"equipmentItemId": ""
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "equipment_data@equipmentStats",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": []
+		},
+		{
+			"name": "crafting_data",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "craftingId",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "craftingName",
+					"display": null
+				},
+				{
+					"typeStr": "8",
+					"name": "craftingRecipe",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "craftingResultId"
+				}
+			],
+			"lines": [
+				{
+					"craftingId": "craftIronIngot",
+					"craftingName": "Iron Ingot",
+					"craftingRecipe": [
+						{
+							"itemId": "oreIron"
+						}
+					],
+					"craftingResultId": "ingotIron"
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "crafting_data@craftingRecipe",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "1",
+					"name": "itemId",
+					"display": null
+				}
+			]
 		}
 	],
 	"customTypes": [],

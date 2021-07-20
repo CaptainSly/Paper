@@ -14,6 +14,7 @@ import captainsly.paper.actions.MineAction;
 import captainsly.paper.actions.ShopAction;
 import captainsly.paper.location.Location;
 import captainsly.paper.location.Location.Direction;
+import captainsly.paper.mechanics.Item.ItemType;
 
 public class Registry {
 
@@ -58,6 +59,7 @@ public class Registry {
 										System.out.println("Working on Item Data");
 										String[] itemIds = new String[3];
 										int itemCost = 0;
+										int itemType = 0;
 
 										// Begin Working inside the Item Object
 										jsonReader.beginObject();
@@ -76,12 +78,15 @@ public class Registry {
 												case "itemCost":
 													itemCost = jsonReader.nextInt();
 													break;
+												case "itemType":
+													itemType = jsonReader.nextInt();
+													break;
 											}
 										}
 										jsonReader.endObject();
 
 										// Create a fake genItem and toss it in the list, keeping a copy always
-										Item genItem = new Item(itemIds[0], itemIds[1], itemIds[2]);
+										Item genItem = new Item(itemIds[0], itemIds[1], itemIds[2], ItemType.values()[itemType]);
 										genItem.setItemCost(itemCost);
 										itemRegistry.put(itemIds[0], genItem);
 										System.out.println("Item Registry Currently has: " + itemRegistry.size());
