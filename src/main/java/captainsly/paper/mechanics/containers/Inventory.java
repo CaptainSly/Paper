@@ -1,5 +1,6 @@
-package captainsly.paper.mechanics;
+package captainsly.paper.mechanics.containers;
 
+import captainsly.paper.mechanics.items.Item;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -31,8 +32,11 @@ public class Inventory {
 
 	public boolean slotContainsItem(Item item) {
 		for (ItemSlot slot : slots)
-			if (slot.getItem().getItemId().equals(item.getItemId()))
-				return true;
+			if (slot.getItem() != null) {
+				if (slot.getItem().getItemId().equals(item.getItemId()))
+					return true;
+			} else
+				return false;
 
 		return false;
 	}

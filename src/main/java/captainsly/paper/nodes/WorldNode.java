@@ -1,9 +1,9 @@
 package captainsly.paper.nodes;
 
-import captainsly.paper.actions.Action;
 import captainsly.paper.entities.Player;
 import captainsly.paper.location.Location;
 import captainsly.paper.location.Location.Direction;
+import captainsly.paper.location.LocationAction;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
@@ -24,7 +24,7 @@ public class WorldNode extends Region {
 	private GridPane worldMovementPane;
 	private Button worldMovementButtonUp, worldMovementButtonDown, worldMovementButtonLeft, worldMovementButtonRight;
 	private TextArea worldOutputArea;
-	private ListView<Action> actionListView;
+	private ListView<LocationAction> actionListView;
 
 	private Location worldCurrentLocation;
 
@@ -73,23 +73,23 @@ public class WorldNode extends Region {
 	}
 
 	private void setupActionPane() {
-		actionListView = new ListView<Action>();
-		actionListView.setCellFactory(new Callback<ListView<Action>, ListCell<Action>>() {
+		actionListView = new ListView<LocationAction>();
+		actionListView.setCellFactory(new Callback<ListView<LocationAction>, ListCell<LocationAction>>() {
 
 			@Override
-			public ListCell<Action> call(ListView<Action> param) {
-				ListCell<Action> cell = new ListCell<Action>() {
+			public ListCell<LocationAction> call(ListView<LocationAction> param) {
+				ListCell<LocationAction> cell = new ListCell<LocationAction>() {
 					@Override
-					protected void updateItem(Action item, boolean empty) {
+					protected void updateItem(LocationAction item, boolean empty) {
 						super.updateItem(item, empty);
 
 						if (empty) {
 							this.setText("");
 							this.setTooltip(null);
 						} else {
-							this.setText(item.getActionName());
-							this.setTooltip(new Tooltip(item.getActionDesc()));
-							this.setOnMouseClicked(e -> item.onAction(worldNode));
+							this.setText(item.getLocationActionName());
+							this.setTooltip(new Tooltip(item.getLocationActionDescription()));
+							this.setOnMouseClicked(e -> item.getAction().onAction(worldNode));
 						}
 					}
 				};
@@ -175,6 +175,8 @@ public class WorldNode extends Region {
 		Button saveBtn = new Button("SAVE");
 		Button loadBtn = new Button("LOAD");
 		Button optionsBtn = new Button("OPTIONS");
+		
+		// Setup Button Stuff
 
 		journalPane.add(journalBtn, 0, 0);
 		journalPane.add(questBtn, 1, 0);
@@ -194,11 +196,11 @@ public class WorldNode extends Region {
 				+ "\n\n");
 		write(getLocationNeighborText(worldCurrentLocation));
 
-		if (worldCurrentLocation.getActions().size() > 0) {
-			actionListView.setItems(FXCollections.observableArrayList(worldCurrentLocation.getActions()));
+		if (worldCurrentLocation.getLocationActions().size() > 0) {
+			actionListView.setItems(FXCollections.observableArrayList(worldCurrentLocation.getLocationActions()));
 			write("");
-			for (Action action : worldCurrentLocation.getActions())
-				write("There is a " + action.getActionName());
+			for (LocationAction action : worldCurrentLocation.getLocationActions())
+				write("There is a " + action.getLocationActionName());
 		}
 
 		write("\n");
@@ -212,6 +214,10 @@ public class WorldNode extends Region {
 		this.worldCurrentLocation = location;
 		checkLocationPositions(location);
 		resetOutput();
+	}
+	
+	public PlayerStatNode getPlayerStatNode() {
+		return playerStatNode;
 	}
 
 	public Location getCurrentLocation() {

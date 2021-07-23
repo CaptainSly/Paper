@@ -1,6 +1,6 @@
 package captainsly.paper.entities;
 
-import captainsly.paper.mechanics.Inventory;
+import captainsly.paper.mechanics.containers.Inventory;
 
 public abstract class Actor {
 
@@ -20,7 +20,7 @@ public abstract class Actor {
 	}
 
 	public void setActorStat(Stat stat, int statIncrease) {
-		actorStats[stat.ordinal()] = statIncrease;
+		actorStats[stat.ordinal()] += statIncrease;
 	}
 
 	public String getActorId() {

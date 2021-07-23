@@ -1,11 +1,24 @@
 package captainsly.paper.nodes;
 
+import java.util.Optional;
+
 import captainsly.paper.entities.Player;
 import captainsly.paper.entities.Stat;
-import captainsly.paper.mechanics.ItemSlot;
+import captainsly.paper.mechanics.containers.ItemSlot;
+import captainsly.paper.mechanics.items.Item;
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -81,10 +94,85 @@ public class PlayerStatNode extends Region {
 						if (empty || item.isEmpty()) {
 							this.setText("");
 							this.setTooltip(null);
+							this.setContextMenu(null);
 						} else {
 							this.setText(item.getItem().getItemName() + "  |  " + item.getItemCount());
 							this.setTooltip(new Tooltip("Item Type: " + item.getItem().getItemType().name() + "\n\n"
 									+ item.getItem().getItemDesc() + "\n\nYou currently have: " + item.getItemCount()));
+
+							ContextMenu slotContextMenu = new ContextMenu();
+							Item slotItem = item.getItem();
+
+							MenuItem slotMenuUse = new MenuItem("Use " + slotItem.getItemName());
+							MenuItem slotMenuInfo = new MenuItem("Inspect " + slotItem.getItemName());
+							MenuItem slotMenuToss = new MenuItem("Toss " + slotItem.getItemName());
+
+							slotMenuUse.setOnAction(e -> {
+								slotItem.onUse();
+								item.remove(1);
+								characterInventoryList.refresh();
+							});
+
+							slotMenuInfo.setOnAction(e -> {
+								// TODO: Implement item inspection
+							});
+
+							slotMenuToss.setOnAction(e -> {
+								Dialog<Integer> slotTossDialog = new Dialog<Integer>();
+								slotTossDialog.setTitle("Toss how much " + slotItem.getItemName());
+								slotTossDialog
+										.setHeaderText("How many " + slotItem.getItemName() + " do you want to toss");
+								slotTossDialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+								
+								Node okayButton = slotTossDialog.getDialogPane().lookupButton(ButtonType.OK);
+								okayButton.setDisable(true);
+								
+								TextField contextText = new TextField();
+								contextText.setPromptText("Item Amount");
+								contextText.textProperty().addListener(new ChangeListener<String>() {
+
+									@Override
+									public void changed(ObservableValue<? extends String> observable, String oldValue,
+											String newValue) {
+										
+										okayButton.setDisable(newValue.trim().isEmpty());
+										if (!newValue.matches("\\d*")) {
+											contextText.setText(newValue.replaceAll("[^\\d]", ""));
+										}
+										
+										
+									}
+								});
+								
+								GridPane slotGrid = new GridPane();
+								slotGrid.setHgap(10);
+								slotGrid.setVgap(10);
+								slotGrid.setPadding(new Insets(20, 150, 10, 10));
+								
+								slotGrid.add(new Label("Please input how many to toss"), 0,	0);
+								slotGrid.add(contextText, 1, 0);
+								
+								slotTossDialog.getDialogPane().setContent(slotGrid);
+								Platform.runLater(() -> contextText.requestFocus());
+								
+								slotTossDialog.setResultConverter(dialogButton -> {
+									if (dialogButton == ButtonType.OK)
+										return Integer.parseInt(contextText.getText());
+									
+									return null;
+								});	
+								
+								Optional<Integer> result = slotTossDialog.showAndWait();
+								
+								result.ifPresent(throwAmount -> {
+									System.out.println("Throwing away " + throwAmount + " " + slotItem.getItemName());
+									item.remove(throwAmount);
+								});
+							});
+
+							slotContextMenu.getItems().addAll(slotMenuUse, slotMenuInfo, slotMenuToss);
+							this.setContextMenu(slotContextMenu);
+							characterInventoryList.refresh();
 						}
 
 					}
@@ -93,11 +181,12 @@ public class PlayerStatNode extends Region {
 				return cell;
 			}
 		});
+
 	}
 
 	private void setupEquipment() {
 		// TODO: Setup Equipment
-		
+
 	}
 
 	public ListView<ItemSlot> getPlayerInventoryList() {

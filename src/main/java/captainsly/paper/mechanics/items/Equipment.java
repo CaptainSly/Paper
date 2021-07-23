@@ -1,4 +1,4 @@
-package captainsly.paper.mechanics;
+package captainsly.paper.mechanics.items;
 
 public class Equipment {
 

@@ -25,6 +25,8 @@ public class Paper extends Application {
 		paperRootPane.setCenter(worldNode);
 		
 		Scene scene = new Scene(paperRootPane);
+		scene.getStylesheets().add("style_dark.css");
+		
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("Reignleif - TextBased Adventure");
 		primaryStage.show();

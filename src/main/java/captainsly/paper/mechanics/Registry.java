@@ -10,11 +10,12 @@ import java.util.Map.Entry;
 
 import com.google.gson.stream.JsonReader;
 
-import captainsly.paper.actions.MineAction;
-import captainsly.paper.actions.ShopAction;
 import captainsly.paper.location.Location;
 import captainsly.paper.location.Location.Direction;
-import captainsly.paper.mechanics.Item.ItemType;
+import captainsly.paper.location.MineLocationAction;
+import captainsly.paper.location.ShopLocationAction;
+import captainsly.paper.mechanics.items.Item;
+import captainsly.paper.mechanics.items.Item.ItemType;
 
 public class Registry {
 
@@ -42,21 +43,20 @@ public class Registry {
 						jsonReader.beginObject();
 						while (jsonReader.hasNext()) {
 							name = jsonReader.nextName();
-							System.out.println("Token is: " + name);
 							if (name.contentEquals("name")) { // Token was name, based on the sheets name we determine
 																// the data inside
 								data = jsonReader.nextString(); // item_data, location_data etc.
-								System.out.println("Working with " + data);
 							} else if (name.contentEquals("lines")) { // The actual data for the sheet lies inside
 																		// lines, so we can ignore everything else
-								System.out.println("Inside the lines section");
 								jsonReader.beginArray();
 
 								while (jsonReader.hasNext()) {
+
 									if (data.contentEquals("item_data")) { // All the item data lies in here so if the
-																			// data flag was set to this, start prepring
+																			// data flag was set to this, start
+																			// preparing
 																			// for item creation
-										System.out.println("Working on Item Data");
+
 										String[] itemIds = new String[3];
 										int itemCost = 0;
 										int itemType = 0;
@@ -86,14 +86,13 @@ public class Registry {
 										jsonReader.endObject();
 
 										// Create a fake genItem and toss it in the list, keeping a copy always
-										Item genItem = new Item(itemIds[0], itemIds[1], itemIds[2], ItemType.values()[itemType]);
+										Item genItem = new Item(itemIds[0], itemIds[1], itemIds[2],
+												ItemType.values()[itemType]);
 										genItem.setItemCost(itemCost);
 										itemRegistry.put(itemIds[0], genItem);
-										System.out.println("Item Registry Currently has: " + itemRegistry.size());
 
 									} else if (data.contentEquals("location_data")) { // All the location data is inside
 																						// here
-										System.out.println("Working on Location Data");
 										Location genLocal = null;
 										String[] localIds = new String[3];
 										String action = "";
@@ -118,7 +117,7 @@ public class Registry {
 													localIds[2] = jsonReader.nextString();
 													break;
 												case "locationNeighbors":
-													// Location Neighbors is an array holding two
+													// Location Neighbors is HashMap holding two
 													// objects, location and direction. Location
 													// is the id of it's neighboring location,
 													// and direction is the ordinal of the enum
@@ -173,15 +172,9 @@ public class Registry {
 
 										// Add the actions to the location
 										if (action.contentEquals("actionMine"))
-											locationRegistry.get(genLocal.getLocationId()).addAction(new MineAction());
+											locationRegistry.get(genLocal.getLocationId()).addLocationAction(new MineLocationAction(genLocal));
 										else if (action.contentEquals("actionShop"))
-											locationRegistry.get(genLocal.getLocationId()).addAction(new ShopAction());
-
-										System.out.println("Added Location: "
-												+ locationRegistry.get(genLocal.getLocationId()).getLocationName());
-
-										System.out.println("Added Neighbor Locations: "
-												+ locationNeighborMap.get(genLocal.getLocationId()).size());
+											locationRegistry.get(genLocal.getLocationId()).addLocationAction(new ShopLocationAction(genLocal));
 
 									} else {
 										// As the CastleDB grows, more data will be added either here or above depending
@@ -234,17 +227,17 @@ public class Registry {
 	}
 
 	private static void addLocationNeigbors() {
-		System.out.println("Adding Neighbors");
 		// We iterate through the locationRegistry adding all the neighbors of each
 		// location, some locations won't have a neighbor (since adding a location as a
 		// neighbor links back to the parent location), so we must check to see if the
 		// HashMap's size is not equal to zero before we begin
+
 		Iterator<Location> locationIterator = locationRegistry.values().iterator();
+		// Get an iterator from the location registry and make sure the extracted
+		// location is not null
 		while (locationIterator.hasNext()) {
 			Location location = locationIterator.next();
 			if (location != null) {
-				System.out.println("Working on location: " + location.getLocationId());
-
 				// Check the size of the location's neighborMap
 				HashMap<String, Direction> neighborMap = locationNeighborMap.get(location.getLocationId());
 				if (neighborMap.size() != 0) {
@@ -258,8 +251,6 @@ public class Registry {
 						if (neighborEntry != null) {
 
 							// Add the neighbors to the current Location
-							System.out.println("Adding Location: " + neighborEntry.getKey() + " to the "
-									+ neighborEntry.getValue().name());
 							location.addNeighbor(locationRegistry.get(neighborEntry.getKey()),
 									neighborEntry.getValue());
 						}

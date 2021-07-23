@@ -1,4 +1,6 @@
-package captainsly.paper.mechanics;
+package captainsly.paper.mechanics.containers;
+
+import captainsly.paper.mechanics.items.Item;
 
 public class ItemSlot {
 
@@ -20,20 +22,23 @@ public class ItemSlot {
 
 	public void add(Item item, int amount) {
 		this.item = item;
-		this.itemCount = amount;
-		this.empty = false;
+		add(amount);
 	}
 
 	public void add(int amount) {
 		this.itemCount += amount;
-
+		if (empty) empty = false;
+	}
+	
+	public void remove(int amount) {
+		this.itemCount -= amount;
 		if (itemCount <= 0) {
 			itemCount = 0;
 			empty = true;
+			item = null;
 		}
-
 	}
-
+	
 	public Item getItem() {
 		return item;
 	}

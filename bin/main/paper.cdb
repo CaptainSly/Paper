@@ -27,9 +27,8 @@
 					"name": "itemCost"
 				},
 				{
-					"typeStr": "5:CONSUMABLE,BATTLE,KEY,COMMON",
-					"name": "itemType",
-					"display": null
+					"typeStr": "5:CONSUMABLE,ACCESSORY,KEY,COMMON,WEAPON,ARMOR",
+					"name": "itemType"
 				}
 			],
 			"lines": [
@@ -130,7 +129,24 @@
 					"locationName": "Timsoth",
 					"locationId": "routeTimsoth",
 					"locationDescription": "A flower grove, dedicated to a farmer named Timsoth who once helped recultivate the land. Now it's more so a route to go to and from Calinfor and Presca",
-					"locationNeighbors": [],
+					"locationNeighbors": [
+						{
+							"location": "routeGlave",
+							"direction": 0
+						}
+					],
+					"locationActions": []
+				},
+				{
+					"locationId": "routeGlave",
+					"locationName": "The Albeian Glave",
+					"locationDescription": "The Albeian Glave opens up into a thick forest, wear a magical fog hangs thick in the sky at all times. Not much light seems to penetrate through the mist leaving it almost pitch black. A clearing around the forest makes for a good camp site",
+					"locationNeighbors": [
+						{
+							"location": "forestGoregia",
+							"direction": 0
+						}
+					],
 					"locationActions": []
 				},
 				{
@@ -141,15 +157,10 @@
 					"locationActions": []
 				},
 				{
-					"locationId": "routeGlave",
-					"locationName": "The Albeian Glave",
-					"locationDescription": "The Albeian Glave opens up into a thick forest, wear a magical fog hangs thick in the sky at all times. Not much light seems to penetrate through the mist leaving it almost pitch black. A clearing around the forest makes for a good camp site",
-					"locationNeighbors": [
-						{
-							"location": "routeTimsoth",
-							"direction": 1
-						}
-					],
+					"locationId": "forestGoregia",
+					"locationName": "The Gorgeia Forest",
+					"locationDescription": "The Gorgeia Forest, a dark forest with a magical fog hanging in the air. It almost feels evil in a way.",
+					"locationNeighbors": [],
 					"locationActions": []
 				}
 			],
@@ -192,7 +203,7 @@
 			]
 		},
 		{
-			"name": "action_data",
+			"name": "location_action_data",
 			"columns": [
 				{
 					"typeStr": "0",
@@ -207,25 +218,23 @@
 					"typeStr": "1",
 					"name": "actionDescription",
 					"display": null
-				},
-				{
-					"typeStr": "1",
-					"name": "actionScript",
-					"display": null
 				}
 			],
 			"lines": [
 				{
 					"actionId": "actionMine",
 					"actionName": "Mine",
-					"actionDescription": "A mine is located here. A great place to gather resources and gems",
-					"actionScript": "actionMineScript"
+					"actionDescription": "A mine is located here. A great place to gather resources and gems"
 				},
 				{
 					"actionId": "actionShop",
 					"actionName": "Shop",
-					"actionDescription": "A Shop is located here. You can buy and sell loot",
-					"actionScript": "actionShopScript"
+					"actionDescription": "A Shop is located here. You can buy and sell loot"
+				},
+				{
+					"actionId": "actionSmith",
+					"actionName": "Smith",
+					"actionDescription": "A Smith is located here. You can smelt your ores here."
 				}
 			],
 			"separators": [],
@@ -258,20 +267,10 @@
 				},
 				{
 					"typeStr": "1",
-					"name": "equipmentItemId",
-					"display": null
+					"name": "equipmentItemId"
 				}
 			],
-			"lines": [
-				{
-					"equipmentId": "",
-					"equipmentName": "",
-					"equipmentDescription": "",
-					"equipmentType": 0,
-					"equipmentStats": [],
-					"equipmentItemId": ""
-				}
-			],
+			"lines": [],
 			"separators": [],
 			"props": {}
 		},

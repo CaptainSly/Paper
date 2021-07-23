@@ -1,10 +1,12 @@
 package captainsly.paper.nodes;
 
 import captainsly.paper.entities.Actor;
-import captainsly.paper.mechanics.Inventory;
-import captainsly.paper.mechanics.ItemSlot;
+import captainsly.paper.mechanics.containers.Inventory;
+import captainsly.paper.mechanics.containers.ItemSlot;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -85,6 +87,15 @@ public class MerchantDialog extends Alert {
 						}
 					}
 				};
+
+				cell.itemProperty().addListener(new ChangeListener<ItemSlot>() {
+
+					@Override
+					public void changed(ObservableValue<? extends ItemSlot> observable, ItemSlot oldValue,
+							ItemSlot newValue) {
+					}
+
+				});
 
 				return cell;
 			}

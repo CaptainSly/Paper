@@ -1,9 +1,9 @@
-package captainsly.paper.mechanics;
+package captainsly.paper.mechanics.items;
 
 public class Item {
 
 	public enum ItemType {
-		CONSUMABLE, BATTLE, KEY, COMMON
+		CONSUMABLE, ACCESSORY, KEY, COMMON, WEAPON, ARMOR
 	}
 
 	private String itemId, itemName, itemDesc;
@@ -15,6 +15,10 @@ public class Item {
 		this.itemName = itemName;
 		this.itemDesc = itemDesc;
 		this.itemType = itemType;
+	}
+
+	public void onUse() {
+		System.out.println("I am " + itemId);
 	}
 
 	public String getItemDesc() {

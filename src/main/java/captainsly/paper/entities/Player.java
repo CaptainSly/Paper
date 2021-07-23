@@ -1,6 +1,6 @@
 package captainsly.paper.entities;
 
-import captainsly.paper.mechanics.Equipment;
+import captainsly.paper.mechanics.items.Equipment;
 
 public class Player extends Actor {
 	
