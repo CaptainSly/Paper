@@ -1,4 +1,4 @@
-package captainsly.paper.nodes;
+package captainsly.paper.nodes.playerui;
 
 import java.util.Optional;
 
@@ -6,6 +6,9 @@ import captainsly.paper.entities.Player;
 import captainsly.paper.entities.Stat;
 import captainsly.paper.mechanics.containers.ItemSlot;
 import captainsly.paper.mechanics.items.Item;
+import captainsly.paper.mechanics.items.Equipment.EquipmentType;
+import captainsly.paper.nodes.EquipmentButton;
+import captainsly.paper.nodes.WorldNode;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -31,10 +34,12 @@ public class PlayerStatNode extends Region {
 	private GridPane characterStatGrid, characterEquipmentGrid;
 	private ListView<ItemSlot> characterInventoryList;
 
+	private WorldNode worldNode;
 	private Player player;
 
-	public PlayerStatNode(Player player) {
-		this.player = player;
+	public PlayerStatNode(WorldNode worldNode) {
+		this.worldNode = worldNode;
+		this.player = worldNode.getPlayer();
 		characterPane = new BorderPane();
 		characterStatGrid = new GridPane();
 		characterEquipmentGrid = new GridPane();
@@ -57,7 +62,7 @@ public class PlayerStatNode extends Region {
 	}
 
 	private void setupStats() {
-		Label playerName = new Label("NAME: " + player.getActorName());
+		Label playerName = new Label("-=- " + player.getActorName() + "'s Stats -=-");
 		Label playerLevel = new Label("LEVEL: " + player.getActorStat(Stat.LEVEL));
 		Label playerHp = new Label("HP: " + player.getActorStat(Stat.MAX_HP) + " / " + player.getActorStat(Stat.HP));
 		Label playerMp = new Label("MP: " + player.getActorStat(Stat.MAX_MP) + " / " + player.getActorStat(Stat.MP));
@@ -70,16 +75,20 @@ public class PlayerStatNode extends Region {
 		playerXp.setTooltip(new Tooltip("To next level: " + player.toNextLevel()));
 
 		// Setup tooltips
-		characterStatGrid.add(playerName, 0, 0);
-		characterStatGrid.add(playerLevel, 1, 0);
-		characterStatGrid.add(playerXp, 2, 0);
+		characterStatGrid.setHgap(5);
+		characterStatGrid.setVgap(5);
+		characterStatGrid.setPadding(new Insets(5, 5, 5, 5));
 
-		characterStatGrid.add(playerHp, 0, 1);
-		characterStatGrid.add(playerMp, 1, 1);
-		characterStatGrid.add(playerAtk, 0, 2);
-		characterStatGrid.add(playerDef, 1, 2);
-		characterStatGrid.add(playerSpd, 0, 3);
-		characterStatGrid.add(playerWis, 1, 3);
+		characterStatGrid.add(playerName, 0, 0);
+		characterStatGrid.add(playerLevel, 0, 1);
+		characterStatGrid.add(playerXp, 1, 1);
+
+		characterStatGrid.add(playerHp, 0, 2);
+		characterStatGrid.add(playerMp, 1, 2);
+		characterStatGrid.add(playerAtk, 0, 3);
+		characterStatGrid.add(playerDef, 1, 3);
+		characterStatGrid.add(playerSpd, 0, 4);
+		characterStatGrid.add(playerWis, 1, 4);
 	}
 
 	private void setupInventory() {
@@ -122,11 +131,12 @@ public class PlayerStatNode extends Region {
 								slotTossDialog.setTitle("Toss how much " + slotItem.getItemName());
 								slotTossDialog
 										.setHeaderText("How many " + slotItem.getItemName() + " do you want to toss");
-								slotTossDialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
-								
+								slotTossDialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK,
+										ButtonType.CANCEL);
+
 								Node okayButton = slotTossDialog.getDialogPane().lookupButton(ButtonType.OK);
 								okayButton.setDisable(true);
-								
+
 								TextField contextText = new TextField();
 								contextText.setPromptText("Item Amount");
 								contextText.textProperty().addListener(new ChangeListener<String>() {
@@ -134,36 +144,35 @@ public class PlayerStatNode extends Region {
 									@Override
 									public void changed(ObservableValue<? extends String> observable, String oldValue,
 											String newValue) {
-										
+
 										okayButton.setDisable(newValue.trim().isEmpty());
 										if (!newValue.matches("\\d*")) {
 											contextText.setText(newValue.replaceAll("[^\\d]", ""));
 										}
-										
-										
+
 									}
 								});
-								
+
 								GridPane slotGrid = new GridPane();
 								slotGrid.setHgap(10);
 								slotGrid.setVgap(10);
 								slotGrid.setPadding(new Insets(20, 150, 10, 10));
-								
-								slotGrid.add(new Label("Please input how many to toss"), 0,	0);
+
+								slotGrid.add(new Label("Please input how many to toss"), 0, 0);
 								slotGrid.add(contextText, 1, 0);
-								
+
 								slotTossDialog.getDialogPane().setContent(slotGrid);
 								Platform.runLater(() -> contextText.requestFocus());
-								
+
 								slotTossDialog.setResultConverter(dialogButton -> {
 									if (dialogButton == ButtonType.OK)
 										return Integer.parseInt(contextText.getText());
-									
+
 									return null;
-								});	
-								
+								});
+
 								Optional<Integer> result = slotTossDialog.showAndWait();
-								
+
 								result.ifPresent(throwAmount -> {
 									System.out.println("Throwing away " + throwAmount + " " + slotItem.getItemName());
 									item.remove(throwAmount);
@@ -186,7 +195,31 @@ public class PlayerStatNode extends Region {
 
 	private void setupEquipment() {
 		// TODO: Setup Equipment
+		EquipmentButton headEquipBtn = new EquipmentButton(worldNode, EquipmentType.HEAD);
+		EquipmentButton neckEquipBtn = new EquipmentButton(worldNode, EquipmentType.NECK);
+		EquipmentButton chestEquipBtn = new EquipmentButton(worldNode, EquipmentType.CHEST);
+		EquipmentButton handLEquipBtn = new EquipmentButton(worldNode, EquipmentType.HANDS);
+		EquipmentButton handREquipBtn = new EquipmentButton(worldNode, EquipmentType.HANDS);
+		EquipmentButton legsEquipBtn = new EquipmentButton(worldNode, EquipmentType.LEGS);
+		
+		EquipmentButton weaponEquipBtn = new EquipmentButton(worldNode, EquipmentType.WEAPON);
+		EquipmentButton sheildEquipBtn = new EquipmentButton(worldNode, EquipmentType.SHEILD);
+		
+		characterEquipmentGrid.setHgap(5);
+		characterEquipmentGrid.setVgap(5);
+		characterEquipmentGrid.setPadding(new Insets(5, 5, 5, 5));
 
+		characterEquipmentGrid.add(headEquipBtn, 1, 0);
+		characterEquipmentGrid.add(neckEquipBtn, 2, 0);
+		
+		characterEquipmentGrid.add(handLEquipBtn, 0, 1);
+		characterEquipmentGrid.add(chestEquipBtn, 1, 1);
+		characterEquipmentGrid.add(handREquipBtn, 2, 1);
+		
+		characterEquipmentGrid.add(legsEquipBtn, 1, 2);
+		
+		characterEquipmentGrid.add(weaponEquipBtn, 0, 3);
+		characterEquipmentGrid.add(sheildEquipBtn, 1, 3);
 	}
 
 	public ListView<ItemSlot> getPlayerInventoryList() {

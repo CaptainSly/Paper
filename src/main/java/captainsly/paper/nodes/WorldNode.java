@@ -4,9 +4,12 @@ import captainsly.paper.entities.Player;
 import captainsly.paper.location.Location;
 import captainsly.paper.location.Location.Direction;
 import captainsly.paper.location.LocationAction;
+import captainsly.paper.nodes.playerui.PlayerJournal;
+import captainsly.paper.nodes.playerui.PlayerStatNode;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -19,27 +22,28 @@ import javafx.util.Callback;
 
 public class WorldNode extends Region {
 
-	private BorderPane worldLocationPane;
-	private BorderPane worldRootPane, worldActionsPane, worldCharacterPane, worldControlPane;
+	private BorderPane worldRootPane, worldLocationPane, worldInteractionPane, worldCharacterPane, worldControlPane;
 	private GridPane worldMovementPane;
 	private Button worldMovementButtonUp, worldMovementButtonDown, worldMovementButtonLeft, worldMovementButtonRight;
 	private TextArea worldOutputArea;
-	private ListView<LocationAction> actionListView;
+	private ListView<LocationAction> locationActionListView;
 
 	private Location worldCurrentLocation;
 
 	private WorldNode worldNode;
 	private PlayerStatNode playerStatNode;
+	private PlayerJournal playerJournal;
 	private Player player;
 
 	public WorldNode(Player player, Location worldCurrentLocation) {
 		this.player = player;
 
 		worldNode = this;
-		playerStatNode = new PlayerStatNode(player);
+		playerStatNode = new PlayerStatNode(this);
+		playerJournal = new PlayerJournal(this);
 
 		worldRootPane = new BorderPane();
-		worldActionsPane = new BorderPane();
+		worldInteractionPane = new BorderPane();
 		worldLocationPane = new BorderPane();
 		worldCharacterPane = new BorderPane();
 		worldControlPane = new BorderPane();
@@ -58,13 +62,18 @@ public class WorldNode extends Region {
 		setupActionPane();
 		setLocation(worldCurrentLocation);
 
+		worldCharacterPane.setPadding(new Insets(5, 5, 5, 5));
+		worldInteractionPane.setPadding(new Insets(5, 5, 5, 5));
+		
 		worldLocationPane.setCenter(worldOutputArea);
 		worldCharacterPane.setCenter(playerStatNode);
 
 		worldControlPane.setLeft(worldMovementPane);
 		worldControlPane.setRight(setupPlayerJournalPane());
 
-		worldRootPane.setRight(worldActionsPane);
+		worldRootPane.setPadding(new Insets(10, 10, 10, 10));
+		
+		worldRootPane.setRight(worldInteractionPane);
 		worldRootPane.setCenter(worldLocationPane);
 		worldRootPane.setLeft(worldCharacterPane);
 		worldRootPane.setBottom(worldControlPane);
@@ -73,8 +82,8 @@ public class WorldNode extends Region {
 	}
 
 	private void setupActionPane() {
-		actionListView = new ListView<LocationAction>();
-		actionListView.setCellFactory(new Callback<ListView<LocationAction>, ListCell<LocationAction>>() {
+		locationActionListView = new ListView<LocationAction>();
+		locationActionListView.setCellFactory(new Callback<ListView<LocationAction>, ListCell<LocationAction>>() {
 
 			@Override
 			public ListCell<LocationAction> call(ListView<LocationAction> param) {
@@ -97,7 +106,7 @@ public class WorldNode extends Region {
 			}
 		});
 
-		worldActionsPane.setCenter(actionListView);
+		worldInteractionPane.setCenter(locationActionListView);
 	}
 
 	private void setupMovementPane() {
@@ -121,6 +130,10 @@ public class WorldNode extends Region {
 			setLocation(worldCurrentLocation.getNeighbor(Direction.WEST));
 		});
 
+		worldMovementPane.setHgap(5);
+		worldMovementPane.setVgap(5);
+		worldMovementPane.setPadding(new Insets(10, 10, 10, 10));
+		
 		worldMovementPane.add(worldMovementButtonUp, 1, 0);
 		worldMovementPane.add(worldMovementButtonLeft, 0, 1);
 		worldMovementPane.add(worldMovementButtonRight, 2, 1);
@@ -169,35 +182,38 @@ public class WorldNode extends Region {
 		journalPane.setVgap(10);
 
 		Button journalBtn = new Button("JOURNAL");
-		Button questBtn = new Button("QUESTS");
-		Button mapBtn = new Button("MAP");
-
 		Button saveBtn = new Button("SAVE");
 		Button loadBtn = new Button("LOAD");
 		Button optionsBtn = new Button("OPTIONS");
-		
+
 		// Setup Button Stuff
-
+		journalBtn.setOnAction(e -> {
+			playerJournal.show();
+		});
+		
+		journalPane.setHgap(5);
+		journalPane.setVgap(5);
+		journalPane.setPadding(new Insets(5, 5, 5, 5));
+		
 		journalPane.add(journalBtn, 0, 0);
-		journalPane.add(questBtn, 1, 0);
-		journalPane.add(mapBtn, 2, 0);
-		journalPane.add(saveBtn, 0, 1);
-		journalPane.add(loadBtn, 1, 1);
-		journalPane.add(optionsBtn, 2, 1);
+		journalPane.add(saveBtn, 1, 0);
+		journalPane.add(loadBtn, 2, 0);
+		journalPane.add(optionsBtn, 3, 0);
 
+		
 		return journalPane;
 	}
 
 	public void resetOutput() {
 		playerStatNode.getPlayerInventoryList().refresh();
-		actionListView.getItems().clear();
+		locationActionListView.getItems().clear();
 		worldOutputArea.clear();
-		write("-=-" + worldCurrentLocation.getLocationName() + "-=-\n" + worldCurrentLocation.getLocationDesc()
+		write("-=- " + worldCurrentLocation.getLocationName() + " -=-\n" + worldCurrentLocation.getLocationDesc()
 				+ "\n\n");
 		write(getLocationNeighborText(worldCurrentLocation));
 
 		if (worldCurrentLocation.getLocationActions().size() > 0) {
-			actionListView.setItems(FXCollections.observableArrayList(worldCurrentLocation.getLocationActions()));
+			locationActionListView.setItems(FXCollections.observableArrayList(worldCurrentLocation.getLocationActions()));
 			write("");
 			for (LocationAction action : worldCurrentLocation.getLocationActions())
 				write("There is a " + action.getLocationActionName());
@@ -209,13 +225,17 @@ public class WorldNode extends Region {
 	public void write(String text) {
 		worldOutputArea.appendText(text + "\n");
 	}
+	
+	public void clear() {
+		worldOutputArea.clear();
+	}
 
 	public void setLocation(Location location) {
 		this.worldCurrentLocation = location;
 		checkLocationPositions(location);
 		resetOutput();
 	}
-	
+
 	public PlayerStatNode getPlayerStatNode() {
 		return playerStatNode;
 	}

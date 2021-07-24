@@ -165,7 +165,6 @@ public class MerchantDialog extends Alert {
 		merchantControls.add(merchantLabel, 0, 0);
 		merchantControls.add(merchantInventoryList, 0, 1);
 		merchantControls.add(transferToPlayer, 0, 2);
-
 	}
 
 }

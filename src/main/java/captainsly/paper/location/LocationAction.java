@@ -1,6 +1,6 @@
 package captainsly.paper.location;
 
-import captainsly.paper.actions.Action;
+import captainsly.paper.location.actions.Action;
 
 public abstract class LocationAction {
 	private String locationActionName, locationActionDescription;

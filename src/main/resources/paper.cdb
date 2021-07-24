@@ -27,7 +27,7 @@
 					"name": "itemCost"
 				},
 				{
-					"typeStr": "5:CONSUMABLE,ACCESSORY,KEY,COMMON,WEAPON,ARMOR",
+					"typeStr": "5:CONSUMABLE,ACCESSORY,KEY,COMMON,EQUIPMENT",
 					"name": "itemType"
 				}
 			],

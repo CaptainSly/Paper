@@ -21,6 +21,4 @@ dependencies {
 	
 	implementation "com.google.code.gson:gson:2.8.7"
 	implementation "org.luaj:luaj-jse:3.0.1"
-	
-	implementation "com.github.Valkryst:VTerminal:2021.03.04"
 }

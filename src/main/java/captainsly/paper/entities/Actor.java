@@ -20,7 +20,7 @@ public abstract class Actor {
 	}
 
 	public void setActorStat(Stat stat, int statIncrease) {
-		actorStats[stat.ordinal()] += statIncrease;
+		actorStats[stat.ordinal()] = statIncrease;
 	}
 
 	public String getActorId() {

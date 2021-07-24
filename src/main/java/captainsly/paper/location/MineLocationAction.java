@@ -1,6 +1,6 @@
 package captainsly.paper.location;
 
-import captainsly.paper.actions.Action;
+import captainsly.paper.location.actions.Action;
 import captainsly.paper.mechanics.Registry;
 import captainsly.paper.mechanics.items.Item;
 import captainsly.paper.nodes.WorldNode;

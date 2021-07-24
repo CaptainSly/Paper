@@ -1,4 +1,4 @@
-package captainsly.paper.actions;
+package captainsly.paper.location.actions;
 
 import captainsly.paper.nodes.WorldNode;
 
