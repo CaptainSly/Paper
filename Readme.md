@@ -20,7 +20,12 @@ Changelog
 
 - Version 0.0.2
 
-	Added the basics for buying and selling items
-	Added a Timer for actions
-	Fixed Stats Pane not showing stat updates
-	Working on a whole plethora of new things
+	* Added the basics for buying and selling items
+	* Added a Timer for actions
+	* Fixed Stats Pane not showing stat updates
+	* Working on a whole plethora of new things
+
+	
+ScreenShots
+===========
+![TestImage](test.png)
