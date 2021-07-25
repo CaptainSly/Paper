@@ -135,6 +135,9 @@
 						},
 						{
 							"itemId": "oreCopper"
+						},
+						{
+							"itemId": "oreTin"
 						}
 					]
 				},
@@ -374,13 +377,23 @@
 					"typeStr": "8",
 					"name": "equipmentStats",
 					"display": null
-				},
-				{
-					"typeStr": "1",
-					"name": "equipmentItemId"
 				}
 			],
-			"lines": [],
+			"lines": [
+				{
+					"equipmentId": "weaponDagger",
+					"equipmentName": "Dagger",
+					"equipmentDescription": "It's a small pointed dagger",
+					"equipmentType": 0,
+					"equipmentStats": [
+						{
+							"atk": 2,
+							"def": 0,
+							"spd": 3
+						}
+					]
+				}
+			],
 			"separators": [],
 			"props": {}
 		},
@@ -391,7 +404,20 @@
 			},
 			"separators": [],
 			"lines": [],
-			"columns": []
+			"columns": [
+				{
+					"typeStr": "3",
+					"name": "atk"
+				},
+				{
+					"typeStr": "3",
+					"name": "def"
+				},
+				{
+					"typeStr": "3",
+					"name": "spd"
+				}
+			]
 		},
 		{
 			"name": "crafting_data",

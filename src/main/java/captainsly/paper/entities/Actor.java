@@ -44,7 +44,7 @@ public abstract class Actor {
 	public void modifySkill(Skill skill, int statIncrease) {
 		actorSkills[skill.ordinal()] += statIncrease;
 	}
-	
+
 	public void modifyActorGold(int gold) {
 		actorGold += gold;
 	}
@@ -60,15 +60,15 @@ public abstract class Actor {
 	public Inventory getActorInventory() {
 		return actorInventory;
 	}
-	
+
 	public CharacterRace getActorRace() {
 		return actorRace;
 	}
-	
+
 	public CharacterClass getActorCharacterClass() {
 		return actorClass;
 	}
-	
+
 	public Faction getActorFaction() {
 		return actorFaction;
 	}
@@ -86,7 +86,7 @@ public abstract class Actor {
 	}
 
 	public int toNextLevel() {
-		return ((getActorStat(Stat.LEVEL) + (getActorStat(Stat.LEVEL) + 1)) * 30) - getActorStat(Stat.XP);
+		return (getActorStat(Stat.LEVEL) + getActorStat(Stat.LEVEL) + 1) * 30;
 	}
 
 	public int[] getActorSkills() {

@@ -20,6 +20,10 @@ public class MineAction extends Action {
 
 	private List<Item> oreTypes;
 	private Lootlist lootList;
+	
+	private final String[] mineSayings = new String[] {
+			"Pick...", "Thwack...", "Boink..."
+	};
 
 	public MineAction() {
 		super("actionMine", "Mine");
@@ -32,11 +36,12 @@ public class MineAction extends Action {
 	}
 
 	@Override
-	public void onAction(WorldRegion worldNode) {
+	public void onAction(WorldRegion worldRegion) {
 		inAction = true;
-		worldNode.refresh();
-		worldNode.getMovementRegion().disableMovement();
-		worldNode.resetOutput();
+		worldRegion.refresh();
+		
+		worldRegion.getMovementRegion().disableMovement();
+		worldRegion.resetOutput();
 
 		Timer oreTimer = new Timer();
 		TimerTask oreMineTask = new TimerTask() {
@@ -45,33 +50,33 @@ public class MineAction extends Action {
 
 				Platform.runLater(() -> {
 
-					worldNode.write("Pick...");
+					worldRegion.write(mineSayings[worldRegion.getRNJesus().nextInt(mineSayings.length)]);
 					if (actionCounter <= 1) {
 						oreTimer.cancel();
 
-						int index = worldNode.getRNJesus().nextInt(2);
-						int amount = worldNode.getRNJesus()
-								.nextInt(2 * worldNode.getPlayer().getActorStat(Stat.LEVEL) + 3);
+						int index = worldRegion.getRNJesus().nextInt(2);
+						int amount = worldRegion.getRNJesus()
+								.nextInt(2 * worldRegion.getPlayer().getActorStat(Stat.LEVEL) + 3);
 
 						if (amount == 0)
 							amount++;
 
-						worldNode.getPlayer().getActorInventory().add(oreTypes.get(index), amount);
-						worldNode.write("\nGot " + amount + " " + oreTypes.get(index).getItemName());
+						worldRegion.getPlayer().getActorInventory().add(oreTypes.get(index), amount);
+						worldRegion.write("\nGot " + amount + " " + oreTypes.get(index).getItemName());
 
 						RollHistory roll = new DiceRoller().transform(new DefaultDiceParser().parse("1d6*" + amount));
-						worldNode.getPlayer().modifyXp(roll.getTotalRoll());
+						worldRegion.getPlayer().modifyXp(roll.getTotalRoll());
 
-						worldNode.refresh();
+						worldRegion.refresh();
 						actionCounter = 4;
 						inAction = false;
 
-						worldNode.getMovementRegion().checkLocationPositions(worldNode.getCurrentLocation());
+						worldRegion.getMovementRegion().checkLocationPositions(worldRegion.getCurrentLocation());
 						return;
 					}
 
 					actionCounter--;
-					worldNode.refresh();
+					worldRegion.refresh();
 				});
 			}
 

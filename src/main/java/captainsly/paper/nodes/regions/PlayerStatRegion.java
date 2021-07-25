@@ -20,7 +20,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
@@ -97,7 +96,7 @@ public class PlayerStatRegion extends Region {
 		playerWisValue.set(Utils.writeStatString(Stat.WIS, player.getActorStat(Stat.WIS)));
 		playerGoldValue.set("GP: " + player.getActorGold());
 
-		playerXpTooltip = new Tooltip("To next level: " + player.toNextLevel());
+		playerXpTooltip = new Tooltip("Amount need for next level: " + player.toNextLevel());
 
 		playerLevel.textProperty().bind(playerLevelValue);
 		playerHp.textProperty().bind(playerHpValue);

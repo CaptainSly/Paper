@@ -32,7 +32,7 @@ public class MerchantDialog extends Alert {
 		this.player = player;
 		this.merchant = merchant;
 		this.getButtonTypes().clear();
-		
+
 		ButtonType leaveButton = new ButtonType("Leave");
 		this.getButtonTypes().add(leaveButton);
 
@@ -70,6 +70,7 @@ public class MerchantDialog extends Alert {
 						if (empty || item.isEmpty()) {
 							this.setText("");
 							this.setTooltip(null);
+							this.setOnMouseClicked(null);
 						} else {
 							this.setText(item.getItem().getItemName() + " | " + item.getItemCount());
 							this.setTooltip(new Tooltip(item.getItem().getItemDesc()));
@@ -98,8 +99,8 @@ public class MerchantDialog extends Alert {
 											if (merchant.getActorGold() >= cost) {
 												merchant.modifyActorGold(-cost);
 												player.modifyActorGold(cost);
-												player.getActorInventory().remove(item.getItem(), soldAmount);
-												merchant.getActorInventory().add(item.getItem(), soldAmount);
+												merchantInventory.add(item.getItem(), soldAmount);
+												item.remove(soldAmount);
 												refresh();
 											}
 										}
@@ -118,8 +119,8 @@ public class MerchantDialog extends Alert {
 										if (merchant.getActorGold() >= cost) {
 											merchant.modifyActorGold(-cost);
 											player.modifyActorGold(cost);
-											player.getActorInventory().remove(item.getItem(), 1);
-											merchant.getActorInventory().add(item.getItem());
+											merchantInventory.add(item.getItem());
+											item.remove(1);
 											refresh();
 										}
 									}
@@ -145,6 +146,7 @@ public class MerchantDialog extends Alert {
 						if (empty || item.isEmpty()) {
 							this.setText("");
 							this.setTooltip(null);
+							this.setOnMouseClicked(null);
 						} else {
 							this.setText(item.getItem().getItemName() + " | " + item.getItemCount());
 							this.setTooltip(new Tooltip(item.getItem().getItemDesc()));
@@ -173,8 +175,8 @@ public class MerchantDialog extends Alert {
 											if (player.getActorGold() >= cost) {
 												merchant.modifyActorGold(cost);
 												player.modifyActorGold(-cost);
-												merchant.getActorInventory().remove(item.getItem(), boughtAmount);
-												player.getActorInventory().add(item.getItem(), boughtAmount);
+												playerInventory.add(item.getItem(), boughtAmount);
+												item.remove(boughtAmount);
 												refresh();
 											}
 										}
@@ -184,7 +186,8 @@ public class MerchantDialog extends Alert {
 									// Throw up another dialog making sure it's okay
 									Alert confirmationAlert = new Alert(AlertType.CONFIRMATION);
 									confirmationAlert.setTitle("Are you sure?");
-									confirmationAlert.setContentText("You're about to buy " + item.getItem().getItemName());
+									confirmationAlert
+											.setContentText("You're about to buy " + item.getItem().getItemName());
 
 									Optional<ButtonType> confirmationResult = confirmationAlert.showAndWait();
 									if (confirmationResult.get() == ButtonType.OK) {
@@ -193,8 +196,8 @@ public class MerchantDialog extends Alert {
 										if (player.getActorGold() >= cost) {
 											merchant.modifyActorGold(cost);
 											player.modifyActorGold(-cost);
-											merchant.getActorInventory().remove(item.getItem(), 1);
-											player.getActorInventory().add(item.getItem());
+											playerInventory.add(item.getItem());
+											item.remove(1);
 											refresh();
 										}
 									}
@@ -219,6 +222,7 @@ public class MerchantDialog extends Alert {
 	private void refresh() {
 		playerInventoryList.refresh();
 		merchantInventoryList.refresh();
+
 		playerLabel.setText(player.getActorName() + " GP: " + player.getActorGold());
 		merchantLabel.setText(merchant.getActorName() + " GP: " + merchant.getActorGold());
 

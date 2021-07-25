@@ -8,15 +8,15 @@ import javafx.scene.control.TabPane;
 public class PlayerJournalAlert extends Alert {
 
 	private TabPane journalTabPane;
-	private WorldRegion worldNode;
+	private WorldRegion worldRegion;
 	
 	//TODO: Implement The Player Journal
 
-	public PlayerJournalAlert(WorldRegion worldNode) {
+	public PlayerJournalAlert(WorldRegion worldRegion) {
 		super(AlertType.INFORMATION);
-		this.worldNode = worldNode;
+		this.worldRegion = worldRegion;
 		this.setGraphic(null);
-		this.setTitle(worldNode.getPlayer().getActorName() + "'s Journal");
+		this.setTitle(worldRegion.getPlayer().getActorName() + "'s Journal");
 		this.setHeaderText(null);
 		setupJournal();
 

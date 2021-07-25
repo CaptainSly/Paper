@@ -60,6 +60,7 @@ public class WorldRegion extends Region {
 		worldControlPane.setRight(setupPlayerJournalPane());
 
 		worldRootPane.setPadding(new Insets(10, 10, 10, 10));
+		player.modifyActorGold(20000);
 
 		worldRootPane.setRight(locationInteractionRegion);
 		worldRootPane.setCenter(worldLocationPane);
