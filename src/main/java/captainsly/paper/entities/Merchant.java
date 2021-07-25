@@ -4,6 +4,7 @@ public class Merchant extends Actor {
 
 	public Merchant(String actorId, String actorName) {
 		super(actorId, actorName);		
+		modifyActorGold(5000);
 	}
 
 }

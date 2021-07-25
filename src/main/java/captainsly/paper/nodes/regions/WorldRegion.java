@@ -1,11 +1,12 @@
-package captainsly.paper.nodes;
+package captainsly.paper.nodes.regions;
+
+import java.util.Random;
 
 import captainsly.paper.entities.Player;
 import captainsly.paper.location.Location;
 import captainsly.paper.location.Location.Direction;
-import captainsly.paper.location.LocationAction;
-import captainsly.paper.nodes.playerui.PlayerJournal;
-import captainsly.paper.nodes.playerui.PlayerStatNode;
+import captainsly.paper.location.actions.LocationAction;
+import captainsly.paper.nodes.dialogs.PlayerJournalAlert;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.collections.FXCollections;
@@ -20,7 +21,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
-public class WorldNode extends Region {
+public class WorldRegion extends Region {
 
 	private BorderPane worldRootPane, worldLocationPane, worldInteractionPane, worldCharacterPane, worldControlPane;
 	private GridPane worldMovementPane;
@@ -30,17 +31,19 @@ public class WorldNode extends Region {
 
 	private Location worldCurrentLocation;
 
-	private WorldNode worldNode;
-	private PlayerStatNode playerStatNode;
-	private PlayerJournal playerJournal;
+	private WorldRegion worldNode;
+	private PlayerStatRegion playerStatNode;
+	private PlayerJournalAlert playerJournal;
 	private Player player;
+	private Random rnJesus;
 
-	public WorldNode(Player player, Location worldCurrentLocation) {
+	public WorldRegion(Player player, Location worldCurrentLocation) {
 		this.player = player;
 
 		worldNode = this;
-		playerStatNode = new PlayerStatNode(this);
-		playerJournal = new PlayerJournal(this);
+		rnJesus = new Random();
+		playerStatNode = new PlayerStatRegion(this);
+		playerJournal = new PlayerJournalAlert(this);
 
 		worldRootPane = new BorderPane();
 		worldInteractionPane = new BorderPane();
@@ -64,7 +67,7 @@ public class WorldNode extends Region {
 
 		worldCharacterPane.setPadding(new Insets(5, 5, 5, 5));
 		worldInteractionPane.setPadding(new Insets(5, 5, 5, 5));
-		
+
 		worldLocationPane.setCenter(worldOutputArea);
 		worldCharacterPane.setCenter(playerStatNode);
 
@@ -72,7 +75,7 @@ public class WorldNode extends Region {
 		worldControlPane.setRight(setupPlayerJournalPane());
 
 		worldRootPane.setPadding(new Insets(10, 10, 10, 10));
-		
+
 		worldRootPane.setRight(worldInteractionPane);
 		worldRootPane.setCenter(worldLocationPane);
 		worldRootPane.setLeft(worldCharacterPane);
@@ -96,9 +99,16 @@ public class WorldNode extends Region {
 							this.setText("");
 							this.setTooltip(null);
 						} else {
-							this.setText(item.getLocationActionName());
+							String locationTimer = "";
+							if (item.locationTimer != 0) {
+								locationTimer = "" + item.locationTimer;
+							}
+							this.setText(item.getLocationActionName() + "  |  " + item.getLocationActionStatus() + "  " + locationTimer);
 							this.setTooltip(new Tooltip(item.getLocationActionDescription()));
-							this.setOnMouseClicked(e -> item.getAction().onAction(worldNode));
+							this.setOnMouseClicked(e -> {
+								if (!item.isInAction())
+									item.getAction().onAction(worldNode);
+							});
 						}
 					}
 				};
@@ -133,7 +143,7 @@ public class WorldNode extends Region {
 		worldMovementPane.setHgap(5);
 		worldMovementPane.setVgap(5);
 		worldMovementPane.setPadding(new Insets(10, 10, 10, 10));
-		
+
 		worldMovementPane.add(worldMovementButtonUp, 1, 0);
 		worldMovementPane.add(worldMovementButtonLeft, 0, 1);
 		worldMovementPane.add(worldMovementButtonRight, 2, 1);
@@ -190,22 +200,21 @@ public class WorldNode extends Region {
 		journalBtn.setOnAction(e -> {
 			playerJournal.show();
 		});
-		
+
 		journalPane.setHgap(5);
 		journalPane.setVgap(5);
 		journalPane.setPadding(new Insets(5, 5, 5, 5));
-		
+
 		journalPane.add(journalBtn, 0, 0);
 		journalPane.add(saveBtn, 1, 0);
 		journalPane.add(loadBtn, 2, 0);
 		journalPane.add(optionsBtn, 3, 0);
 
-		
 		return journalPane;
 	}
 
 	public void resetOutput() {
-		playerStatNode.getPlayerInventoryList().refresh();
+		playerStatNode.getCharacterInventoryList().refresh();
 		locationActionListView.getItems().clear();
 		worldOutputArea.clear();
 		write("-=- " + worldCurrentLocation.getLocationName() + " -=-\n" + worldCurrentLocation.getLocationDesc()
@@ -213,7 +222,8 @@ public class WorldNode extends Region {
 		write(getLocationNeighborText(worldCurrentLocation));
 
 		if (worldCurrentLocation.getLocationActions().size() > 0) {
-			locationActionListView.setItems(FXCollections.observableArrayList(worldCurrentLocation.getLocationActions()));
+			locationActionListView
+					.setItems(FXCollections.observableArrayList(worldCurrentLocation.getLocationActions()));
 			write("");
 			for (LocationAction action : worldCurrentLocation.getLocationActions())
 				write("There is a " + action.getLocationActionName());
@@ -225,23 +235,33 @@ public class WorldNode extends Region {
 	public void write(String text) {
 		worldOutputArea.appendText(text + "\n");
 	}
-	
+
 	public void clear() {
 		worldOutputArea.clear();
+	}
+
+	public void refresh() {
+		getPlayerStatNode().getCharacterInventoryList().refresh();
+		locationActionListView.refresh();
 	}
 
 	public void setLocation(Location location) {
 		this.worldCurrentLocation = location;
 		checkLocationPositions(location);
+		refresh();
 		resetOutput();
 	}
 
-	public PlayerStatNode getPlayerStatNode() {
+	public PlayerStatRegion getPlayerStatNode() {
 		return playerStatNode;
 	}
 
 	public Location getCurrentLocation() {
 		return worldCurrentLocation;
+	}
+
+	public Random getRNJesus() {
+		return rnJesus;
 	}
 
 	public Player getPlayer() {

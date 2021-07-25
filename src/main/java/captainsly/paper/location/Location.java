@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import captainsly.paper.entities.Npc;
+import captainsly.paper.location.actions.LocationAction;
 
 public class Location {
 

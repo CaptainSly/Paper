@@ -12,8 +12,8 @@ import com.google.gson.stream.JsonReader;
 
 import captainsly.paper.location.Location;
 import captainsly.paper.location.Location.Direction;
-import captainsly.paper.location.MineLocationAction;
-import captainsly.paper.location.ShopLocationAction;
+import captainsly.paper.location.actions.MineLocationAction;
+import captainsly.paper.location.actions.ShopLocationAction;
 import captainsly.paper.mechanics.items.Item;
 import captainsly.paper.mechanics.items.Item.ItemType;
 

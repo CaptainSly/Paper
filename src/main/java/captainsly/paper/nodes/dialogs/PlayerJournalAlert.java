@@ -1,27 +1,30 @@
-package captainsly.paper.nodes.playerui;
+package captainsly.paper.nodes.dialogs;
 
-import captainsly.paper.nodes.WorldNode;
+import captainsly.paper.nodes.regions.WorldRegion;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TabPane;
 
-public class PlayerJournal extends Alert {
+public class PlayerJournalAlert extends Alert {
 
 	private TabPane journalTabPane;
-	private WorldNode worldNode;
+	private WorldRegion worldNode;
 	
 	//TODO: Implement The Player Journal
 
-	public PlayerJournal(WorldNode worldNode) {
+	public PlayerJournalAlert(WorldRegion worldNode) {
 		super(AlertType.INFORMATION);
 		this.worldNode = worldNode;
 		this.setGraphic(null);
 		this.setTitle(worldNode.getPlayer().getActorName() + "'s Journal");
+		this.setHeaderText(null);
 		setupJournal();
 
 		this.getDialogPane().setContent(journalTabPane);
 	}
 	
 	private void setupJournal() {
+		getButtonTypes().set(0, ButtonType.CLOSE);
 	}
 
 }

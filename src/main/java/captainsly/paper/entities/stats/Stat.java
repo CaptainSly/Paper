@@ -1,4 +1,4 @@
-package captainsly.paper.entities;
+package captainsly.paper.entities.stats;
 
 public enum Stat {
     

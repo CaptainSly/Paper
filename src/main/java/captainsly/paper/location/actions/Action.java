@@ -1,6 +1,6 @@
 package captainsly.paper.location.actions;
 
-import captainsly.paper.nodes.WorldNode;
+import captainsly.paper.nodes.regions.WorldRegion;
 
 public abstract class Action {
 
@@ -11,7 +11,7 @@ public abstract class Action {
 		this.actionName = actionName;
 	}
 
-	public abstract void onAction(WorldNode worldNode);
+	public abstract void onAction(WorldRegion worldNode);
 
 	public String getActionName() {
 		return actionName;

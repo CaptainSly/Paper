@@ -3,6 +3,7 @@ package captainsly.paper.nodes;
 import captainsly.paper.entities.Player;
 import captainsly.paper.mechanics.items.Equipment;
 import captainsly.paper.mechanics.items.Equipment.EquipmentType;
+import captainsly.paper.nodes.regions.WorldRegion;
 import captainsly.paper.utils.Utils;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -18,11 +19,11 @@ public class EquipmentButton extends Button {
 
 	private Equipment currentEquipment;
 	private EquipmentType equipmentType;
-	private WorldNode worldNode;
+	private WorldRegion worldNode;
 	private Player player;
 	public static final DataFormat equipmentFormat = new DataFormat("equipment");
 
-	public EquipmentButton(WorldNode worldNode, EquipmentType equipmentType) {
+	public EquipmentButton(WorldRegion worldNode, EquipmentType equipmentType) {
 		super(equipmentType.name().substring(0, 1));
 		this.worldNode = worldNode;
 		this.player = worldNode.getPlayer();
@@ -74,6 +75,7 @@ public class EquipmentButton extends Button {
 					success = true;
 				}
 
+				worldNode.getPlayerStatNode().getCharacterInventoryList().refresh();
 				event.setDropCompleted(success);
 				event.consume();
 			}
@@ -88,7 +90,6 @@ public class EquipmentButton extends Button {
 
 	public void setEquipment(Equipment equipment) {
 		this.currentEquipment = equipment;
-		// TODO: Change player stats on equip
 		player.setEquipmentInSlot(equipmentType, equipment);
 
 	}
@@ -101,7 +102,7 @@ public class EquipmentButton extends Button {
 		return equipmentType;
 	}
 
-	public WorldNode getWorldNode() {
+	public WorldRegion getWorldNode() {
 		return worldNode;
 	}
 

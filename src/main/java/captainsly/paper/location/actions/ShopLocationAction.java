@@ -1,9 +1,9 @@
-package captainsly.paper.location;
+package captainsly.paper.location.actions;
 
 import captainsly.paper.entities.Merchant;
-import captainsly.paper.location.actions.Action;
-import captainsly.paper.nodes.MerchantDialog;
-import captainsly.paper.nodes.WorldNode;
+import captainsly.paper.location.Location;
+import captainsly.paper.nodes.dialogs.MerchantDialog;
+import captainsly.paper.nodes.regions.WorldRegion;
 
 public class ShopLocationAction extends LocationAction {
 
@@ -15,10 +15,10 @@ public class ShopLocationAction extends LocationAction {
 		Action shopAction = new Action("shopAction") {	
 
 			@Override
-			public void onAction(WorldNode worldNode) {
+			public void onAction(WorldRegion worldNode) {
 				MerchantDialog dialog = new MerchantDialog(worldNode.getPlayer(), merchant, parentLocation.getLocationName());
 				dialog.showAndWait();
-				worldNode.getPlayerStatNode().getPlayerInventoryList().refresh();
+				worldNode.refresh();
 			}
 		};
 		

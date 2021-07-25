@@ -1,6 +1,6 @@
 package captainsly.paper.mechanics.items;
 
-public enum EquipmentStats {
+public enum EquipmentStat {
 
 	ATK, DEF, SPD
 	
