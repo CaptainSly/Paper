@@ -20,14 +20,16 @@ Changelog
 =========
 
 
-- Version 0.0.2
+
+Version 0.0.2
 
 	* Added the basics for buying and selling items
 	* Added a Timer for actions
 	* Fixed Stats Pane not showing stat updates
 	* Working on a whole plethora of new things
 	
-- Version 0.0.3
+
+Version 0.0.3
 	
 	* Working on NPCs
 	* Refactored most of the WorldRegion into it's own sub regions
