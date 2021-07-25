@@ -86,7 +86,7 @@ public abstract class Actor {
 	}
 
 	public int toNextLevel() {
-		return (getActorStat(Stat.LEVEL) + (getActorStat(Stat.LEVEL) + 1)) * 30;
+		return ((getActorStat(Stat.LEVEL) + (getActorStat(Stat.LEVEL) + 1)) * 30) - getActorStat(Stat.XP);
 	}
 
 	public int[] getActorSkills() {

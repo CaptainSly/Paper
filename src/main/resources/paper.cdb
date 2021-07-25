@@ -2,8 +2,29 @@
 	"sheets": [
 		{
 			"name": "npc_data",
-			"columns": [],
-			"lines": [],
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "npcId",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "npcName",
+					"display": null
+				},
+				{
+					"typeStr": "5:SHOP_KEEP,SMITHY,GUARD,NPC",
+					"name": "npcOccupation"
+				}
+			],
+			"lines": [
+				{
+					"npcId": "npcCalinforBob",
+					"npcName": "Bob",
+					"npcOccupation": 3
+				}
+			],
 			"separators": [],
 			"props": {}
 		},
@@ -47,6 +68,13 @@
 					"itemType": 3
 				},
 				{
+					"itemId": "oreTin",
+					"itemName": "Tin Ore",
+					"itemDescription": "Ore containing tin, needs to be smelted into ingots before it can be used.",
+					"itemCost": 25,
+					"itemType": 3
+				},
+				{
 					"itemId": "ingotIron",
 					"itemName": "Iron Ingot",
 					"itemDescription": "An ingot made of solid iron.",
@@ -59,6 +87,73 @@
 					"itemDescription": "An ingot made of solid copper.",
 					"itemCost": 50,
 					"itemType": 3
+				},
+				{
+					"itemId": "ingotTin",
+					"itemName": "Tin Ingot",
+					"itemDescription": "An ingot made of solid tin.",
+					"itemCost": 50,
+					"itemType": 3
+				},
+				{
+					"itemId": "foodApple",
+					"itemName": "Apple",
+					"itemDescription": "A delicious red apple",
+					"itemCost": 10,
+					"itemType": 0
+				},
+				{
+					"itemId": "foodBread",
+					"itemName": "Bread",
+					"itemDescription": "A freshly baked loaf of bread",
+					"itemCost": 15,
+					"itemType": 0
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "lootlist_data",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "lootlistId"
+				},
+				{
+					"typeStr": "8",
+					"name": "itemIds",
+					"display": null
+				}
+			],
+			"lines": [
+				{
+					"lootlistId": "mineList",
+					"itemIds": [
+						{
+							"itemId": "oreIron"
+						},
+						{
+							"itemId": "oreCopper"
+						}
+					]
+				},
+				{
+					"lootlistId": "merchantListTim",
+					"itemIds": [
+						{
+							"itemId": "ingotCopper"
+						},
+						{
+							"itemId": "ingotIron"
+						},
+						{
+							"itemId": "foodApple"
+						},
+						{
+							"itemId": "foodBread"
+						}
+					]
 				}
 			],
 			"separators": [],
@@ -86,6 +181,11 @@
 				{
 					"typeStr": "8",
 					"name": "locationActions"
+				},
+				{
+					"typeStr": "8",
+					"name": "locationNpcs",
+					"display": null
 				}
 			],
 			"lines": [
@@ -107,6 +207,11 @@
 						{
 							"actionId": "actionShop"
 						}
+					],
+					"locationNpcs": [
+						{
+							"npcId": "npcCalinforBob"
+						}
 					]
 				},
 				{
@@ -123,7 +228,8 @@
 						{
 							"actionId": "actionMine"
 						}
-					]
+					],
+					"locationNpcs": []
 				},
 				{
 					"locationName": "Timsoth",
@@ -135,7 +241,8 @@
 							"direction": 0
 						}
 					],
-					"locationActions": []
+					"locationActions": [],
+					"locationNpcs": []
 				},
 				{
 					"locationId": "routeGlave",
@@ -147,21 +254,24 @@
 							"direction": 0
 						}
 					],
-					"locationActions": []
+					"locationActions": [],
+					"locationNpcs": []
 				},
 				{
 					"locationName": "Algoria",
 					"locationId": "cityAlgoria",
 					"locationDescription": "A bussling city, many types of ammenties and attractions exist here",
 					"locationNeighbors": [],
-					"locationActions": []
+					"locationActions": [],
+					"locationNpcs": []
 				},
 				{
 					"locationId": "forestGoregia",
 					"locationName": "The Gorgeia Forest",
 					"locationDescription": "The Gorgeia Forest, a dark forest with a magical fog hanging in the air. It almost feels evil in a way.",
 					"locationNeighbors": [],
-					"locationActions": []
+					"locationActions": [],
+					"locationNpcs": []
 				}
 			],
 			"separators": [],
@@ -333,6 +443,34 @@
 					"typeStr": "1",
 					"name": "itemId",
 					"display": null
+				}
+			]
+		},
+		{
+			"name": "lootlist_data@itemIds",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "1",
+					"name": "itemId"
+				}
+			]
+		},
+		{
+			"name": "location_data@locationNpcs",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "1",
+					"name": "npcId"
 				}
 			]
 		}

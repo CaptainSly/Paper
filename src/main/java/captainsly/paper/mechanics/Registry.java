@@ -4,23 +4,29 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
 
 import com.google.gson.stream.JsonReader;
 
-import captainsly.paper.location.Location;
-import captainsly.paper.location.Location.Direction;
-import captainsly.paper.location.actions.MineLocationAction;
-import captainsly.paper.location.actions.ShopLocationAction;
+import captainsly.paper.entities.Npc;
+import captainsly.paper.entities.Npc.Occupation;
 import captainsly.paper.mechanics.items.Item;
 import captainsly.paper.mechanics.items.Item.ItemType;
+import captainsly.paper.mechanics.locations.Location;
+import captainsly.paper.mechanics.locations.Location.Direction;
+import captainsly.paper.mechanics.locations.actions.MineAction;
+import captainsly.paper.mechanics.locations.actions.ShopAction;
 
 public class Registry {
 
 	public static final HashMap<String, Item> itemRegistry = new HashMap<String, Item>();
 	public static final HashMap<String, Location> locationRegistry = new HashMap<String, Location>();
+	public static final HashMap<String, Lootlist> lootListRegistry = new HashMap<String, Lootlist>();
+	public static final HashMap<String, Npc> npcRegistry = new HashMap<String, Npc>();
 
 	private static HashMap<String, HashMap<String, Direction>> locationNeighborMap = new HashMap<String, HashMap<String, Direction>>();
 
@@ -51,11 +57,36 @@ public class Registry {
 								jsonReader.beginArray();
 
 								while (jsonReader.hasNext()) {
+									if (data.contentEquals("npc_data")) {
+										Npc npc = null;
+										String npcName = "";
+										String npcId = "";
+										Occupation npcOccupation = Occupation.GUARD;
 
-									if (data.contentEquals("item_data")) { // All the item data lies in here so if the
-																			// data flag was set to this, start
-																			// preparing
-																			// for item creation
+										jsonReader.beginObject();
+										while (jsonReader.hasNext()) {
+											name = jsonReader.nextName();
+											switch (name) {
+												case "npcId":
+													npcId = jsonReader.nextString();
+													break;
+												case "npcName":
+													npcName = jsonReader.nextString();
+													break;
+												case "npcOccupation":
+													npcOccupation = Occupation.values()[jsonReader.nextInt()];
+													break;
+											}
+										}
+
+										npc = new Npc(npcId, npcName, npcOccupation);
+										jsonReader.endObject();
+										npcRegistry.put(npcId, npc);
+									} else if (data.contentEquals("item_data")) { // All the item data lies in here so
+																					// if the
+																					// data flag was set to this, start
+																					// preparing
+																					// for item creation
 
 										String[] itemIds = new String[3];
 										int itemCost = 0;
@@ -91,11 +122,39 @@ public class Registry {
 										genItem.setItemCost(itemCost);
 										itemRegistry.put(itemIds[0], genItem);
 
+									} else if (data.contentEquals("lootlist_data")) {
+										// TODO: Figure out if it's better to store the item or only it's id
+										Lootlist lootlist = null;
+
+										jsonReader.beginObject();
+										while (jsonReader.hasNext()) {
+											name = jsonReader.nextName();
+											switch (name) {
+												case "lootlistId":
+													lootlist = new Lootlist(jsonReader.nextString());
+													break;
+												case "itemIds":
+													jsonReader.beginArray();
+													while (jsonReader.hasNext()) {
+														jsonReader.beginObject();
+														if (jsonReader.nextName().contentEquals("itemId"))
+															lootlist.add(jsonReader.nextString());
+
+														jsonReader.endObject();
+													}
+													jsonReader.endArray();
+													break;
+											}
+										}
+										jsonReader.endObject();
+										lootListRegistry.put(lootlist.getLootListId(), lootlist);
+
 									} else if (data.contentEquals("location_data")) { // All the location data is inside
 																						// here
 										Location genLocal = null;
 										String[] localIds = new String[3];
 										String action = "";
+										List<String> npcIds = new ArrayList<String>();
 										HashMap<String, Direction> locationNeighbors = new HashMap<String, Direction>();
 
 										// Just like the items, a fake location is made as well as a String array to
@@ -158,6 +217,18 @@ public class Registry {
 													}
 													jsonReader.endArray();
 													break;
+												case "locationNpcs":
+													jsonReader.beginArray();
+													while (jsonReader.hasNext()) {
+														jsonReader.beginObject();
+														while (jsonReader.hasNext()) {
+															if (jsonReader.nextName().contentEquals("npcId")) {
+																npcIds.add(jsonReader.nextString());
+															}
+														}
+														jsonReader.endObject();
+													}
+													jsonReader.endArray();
 
 											}
 
@@ -167,14 +238,19 @@ public class Registry {
 										// We finally create the fake location and add it to the list along with adding
 										// the created neighbors to the locationNeighborMap
 										genLocal = new Location(localIds[0], localIds[1], localIds[2]);
+										for (String id : npcIds)
+											genLocal.addNpc(npcRegistry.get(id));
+										
 										locationRegistry.put(genLocal.getLocationId(), genLocal);
 										locationNeighborMap.put(genLocal.getLocationId(), locationNeighbors);
 
 										// Add the actions to the location
 										if (action.contentEquals("actionMine"))
-											locationRegistry.get(genLocal.getLocationId()).addLocationAction(new MineLocationAction(genLocal));
+											locationRegistry.get(genLocal.getLocationId())
+													.addLocationAction(new MineAction());
 										else if (action.contentEquals("actionShop"))
-											locationRegistry.get(genLocal.getLocationId()).addLocationAction(new ShopLocationAction(genLocal));
+											locationRegistry.get(genLocal.getLocationId())
+													.addLocationAction(new ShopAction());
 
 									} else {
 										// As the CastleDB grows, more data will be added either here or above depending

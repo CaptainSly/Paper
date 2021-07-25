@@ -5,11 +5,13 @@ import captainsly.paper.mechanics.items.Equipment;
 import captainsly.paper.mechanics.items.Equipment.EquipmentType;
 import captainsly.paper.mechanics.items.EquipmentStat;
 import captainsly.paper.nodes.regions.PlayerStatRegion;
+import captainsly.paper.nodes.regions.WorldRegion;
 import captainsly.paper.utils.Utils;
 
 public class Player extends Actor {
 
 	private PlayerStatRegion playerStats;
+	private WorldRegion worldRegion;
 	private Equipment[] equipmentSlots;
 
 	public Player() {
@@ -36,6 +38,7 @@ public class Player extends Actor {
 	public void modifyXp(int xpValue) {
 		modifyActorStat(Stat.XP, xpValue);
 		playerStats.getPlayerXpValue().setValue(Utils.writeStatString(Stat.XP, getActorStat(Stat.XP)));
+		worldRegion.write("You were awarded with " + xpValue + " experience!\n");
 		if (getActorStat(Stat.XP) == toNextLevel()) {
 			onLevelUp();
 		}
@@ -58,17 +61,30 @@ public class Player extends Actor {
 	public void setPlayerStatRegion(PlayerStatRegion playerStats) {
 		this.playerStats = playerStats;
 	}
+	
+	public void setWorldRegion(WorldRegion worldRegion) {
+		this.worldRegion = worldRegion;
+	}
 
 	@Override
 	public void modifyActorGold(int goldValue) {
 		super.modifyActorGold(goldValue);
 		playerStats.getPlayerGoldValue().set("GP: " + getActorGold());
 	}
+	
+	@Override
+	public void modifyActorStat(Stat stat, int statIncrease) {
+		super.modifyActorStat(stat, statIncrease);
+		playerStats.getPropertyByStat(stat).set(Utils.writeStatString(stat, getActorStat(stat)));
+		if (stat.equals(Stat.XP))
+			playerStats.getPlayerXpTooltip().setText("To next Level: " + toNextLevel());
+	}
 
 	private void onLevelUp() {
 		modifyActorStat(Stat.LEVEL, 1);
 		playerStats.getPlayerLevelValue().set(Utils.writeStatString(Stat.LEVEL, getActorStat(Stat.LEVEL)));
 		playerStats.getPlayerXpTooltip().setText("To next level: " + toNextLevel());
+		worldRegion.write("LEVEL UP!");
 		// TODO: Show Up Level up Dialog
 
 	}

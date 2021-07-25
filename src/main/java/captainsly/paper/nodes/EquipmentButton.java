@@ -72,10 +72,12 @@ public class EquipmentButton extends Button {
 				if (db.hasContent(equipmentFormat)) {
 					Equipment equipment = (Equipment) db.getContent(equipmentFormat);
 					thiss.setEquipment(equipment);
+					worldNode.getPlayer().setEquipmentInSlot(thiss.equipmentType, equipment);
 					success = true;
+
+					worldNode.getPlayerStatNode().getCharacterInventoryList().refresh();
 				}
 
-				worldNode.getPlayerStatNode().getCharacterInventoryList().refresh();
 				event.setDropCompleted(success);
 				event.consume();
 			}

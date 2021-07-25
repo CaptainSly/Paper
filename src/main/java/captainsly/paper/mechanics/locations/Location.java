@@ -1,17 +1,17 @@
-package captainsly.paper.location;
+package captainsly.paper.mechanics.locations;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import captainsly.paper.entities.Npc;
-import captainsly.paper.location.actions.LocationAction;
+import captainsly.paper.mechanics.locations.actions.Action;
 
 public class Location {
 
 	private String locationId, locationName, locationDesc;
 	private Location[] neighborLocations;
 
-	private List<LocationAction> actionList;
+	private List<Action> actionList;
 	private List<Npc> npcList;
 
 	public enum Direction {
@@ -38,11 +38,11 @@ public class Location {
 		this.locationDesc = locationDesc;
 		this.locationName = locationName;
 		neighborLocations = new Location[4];
-		actionList = new ArrayList<LocationAction>();
+		actionList = new ArrayList<Action>();
 		npcList = new ArrayList<Npc>();
 	}
 
-	public void addLocationAction(LocationAction action) {
+	public void addLocationAction(Action action) {
 		actionList.add(action);
 	}
 
@@ -50,8 +50,8 @@ public class Location {
 		npcList.add(npc);
 	}
 
-	public void addLocationAction(LocationAction... actions) {
-		for (LocationAction action : actions)
+	public void addLocationAction(Action... actions) {
+		for (Action action : actions)
 			actionList.add(action);
 	}
 
@@ -76,8 +76,12 @@ public class Location {
 		return neighborLocations[dir.ordinal()] != null;
 	}
 
-	public List<LocationAction> getLocationActions() {
+	public List<Action> getActions() {
 		return actionList;
+	}
+	
+	public List<Npc> getNpcs() {
+		return npcList;
 	}
 
 	public Location[] getNeighbors() {

@@ -20,6 +20,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
 
@@ -41,7 +42,7 @@ public class PlayerStatRegion extends Region {
 		this.worldNode = worldNode;
 		this.player = worldNode.getPlayer();
 		player.setPlayerStatRegion(this);
-		
+
 		characterPane = new BorderPane();
 		characterStatGrid = new GridPane();
 		characterEquipmentGrid = new GridPane();
@@ -116,7 +117,7 @@ public class PlayerStatRegion extends Region {
 		characterStatGrid.setPadding(new Insets(5, 5, 5, 5));
 
 		characterStatGrid.add(playerName, 0, 0);
-		
+
 		characterStatGrid.add(playerLevel, 0, 1);
 		characterStatGrid.add(playerGold, 1, 1);
 		characterStatGrid.add(playerXp, 2, 1);
@@ -255,9 +256,37 @@ public class PlayerStatRegion extends Region {
 	public SimpleStringProperty getPlayerWisValue() {
 		return playerWisValue;
 	}
-	
+
 	public SimpleStringProperty getPlayerGoldValue() {
 		return playerGoldValue;
+	}
+
+	public SimpleStringProperty getPropertyByStat(Stat stat) {
+		switch (stat) {
+			case ATK:
+				return playerAtkValue;
+			case DEF:
+				return playerDefValue;
+			case HP:
+				return playerHpValue;
+			case LEVEL:
+				return playerLevelValue;
+			case MAX_HP:
+				return playerHpValue;
+			case MAX_MP:
+				return playerMpValue;
+			case MP:
+				return playerMpValue;
+			case SPD:
+				return playerSpdValue;
+			case WIS:
+				return playerWisValue;
+			case XP:
+				return playerXpValue;
+			default:
+				return null;
+
+		}
 	}
 
 	public Tooltip getPlayerXpTooltip() {

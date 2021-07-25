@@ -40,7 +40,7 @@ public class Item {
 	public ItemType getItemType() {
 		return itemType;
 	}
-	
+
 	public String getItemId() {
 		return itemId;
 	}
