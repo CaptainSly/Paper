@@ -1,9 +1,9 @@
 package captainsly.paper.entities;
 
 import captainsly.paper.entities.stats.Stat;
-import captainsly.paper.mechanics.items.Equipment;
-import captainsly.paper.mechanics.items.Equipment.EquipmentType;
-import captainsly.paper.mechanics.items.EquipmentStat;
+import captainsly.paper.mechanics.items.equipment.Equipment;
+import captainsly.paper.mechanics.items.equipment.EquipmentStat;
+import captainsly.paper.mechanics.items.equipment.Equipment.EquipmentType;
 import captainsly.paper.nodes.regions.PlayerStatRegion;
 import captainsly.paper.nodes.regions.WorldRegion;
 import captainsly.paper.utils.Utils;

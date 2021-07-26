@@ -1,8 +1,8 @@
 package captainsly.paper.nodes;
 
 import captainsly.paper.entities.Player;
-import captainsly.paper.mechanics.items.Equipment;
-import captainsly.paper.mechanics.items.Equipment.EquipmentType;
+import captainsly.paper.mechanics.items.equipment.Equipment;
+import captainsly.paper.mechanics.items.equipment.Equipment.EquipmentType;
 import captainsly.paper.nodes.regions.WorldRegion;
 import captainsly.paper.utils.Utils;
 import javafx.event.EventHandler;

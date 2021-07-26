@@ -29,6 +29,7 @@ public class Paper extends Application {
 		scene.getStylesheets().add("style_dark.css");
 		
 		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
 		primaryStage.setTitle("Reignleif - TextBased Adventure |v" + Utils.VERSION + "|");
 		primaryStage.show();
 	}

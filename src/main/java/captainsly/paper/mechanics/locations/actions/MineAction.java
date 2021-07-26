@@ -20,10 +20,8 @@ public class MineAction extends Action {
 
 	private List<Item> oreTypes;
 	private Lootlist lootList;
-	
-	private final String[] mineSayings = new String[] {
-			"Pick...", "Thwack...", "Boink..."
-	};
+
+	private final String[] mineSayings = new String[] { "Pick...", "Thwack...", "Boink...", "Strike..." };
 
 	public MineAction() {
 		super("actionMine", "Mine");
@@ -39,7 +37,7 @@ public class MineAction extends Action {
 	public void onAction(WorldRegion worldRegion) {
 		inAction = true;
 		worldRegion.refresh();
-		
+
 		worldRegion.getMovementRegion().disableMovement();
 		worldRegion.resetOutput();
 
@@ -54,9 +52,11 @@ public class MineAction extends Action {
 					if (actionCounter <= 1) {
 						oreTimer.cancel();
 
-						int index = worldRegion.getRNJesus().nextInt(2);
+						RollHistory roll = new DiceRoller()
+								.transform(new DefaultDiceParser().parse("1d" + mineSayings.length));
+						int index = roll.getTotalRoll() - 1;
 						int amount = worldRegion.getRNJesus()
-								.nextInt(2 * worldRegion.getPlayer().getActorStat(Stat.LEVEL) + 3);
+								.nextInt(2 * worldRegion.getPlayer().getActorStat(Stat.LEVEL) + 3) + 1;
 
 						if (amount == 0)
 							amount++;
@@ -64,7 +64,7 @@ public class MineAction extends Action {
 						worldRegion.getPlayer().getActorInventory().add(oreTypes.get(index), amount);
 						worldRegion.write("\nGot " + amount + " " + oreTypes.get(index).getItemName());
 
-						RollHistory roll = new DiceRoller().transform(new DefaultDiceParser().parse("1d6*" + amount));
+						roll = new DiceRoller().transform(new DefaultDiceParser().parse("1d6*" + amount));
 						worldRegion.getPlayer().modifyXp(roll.getTotalRoll());
 
 						worldRegion.refresh();

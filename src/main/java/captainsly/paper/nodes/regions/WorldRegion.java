@@ -16,11 +16,10 @@ import javafx.scene.layout.Region;
 
 public class WorldRegion extends Region {
 
-	private BorderPane worldRootPane, worldControlPane, worldLocationPane;
+	private BorderPane worldRootPane, worldLocationPane;
+	private GridPane worldJournalGrid;
 	private TextArea worldOutputArea;
 	private Location worldCurrentLocation;
-
-	private WorldRegion worldRegion;
 	private MovementRegion movementRegion;
 	private PlayerStatRegion playerStatRegion;
 	private LocationInteractionRegion locationInteractionRegion;
@@ -32,8 +31,6 @@ public class WorldRegion extends Region {
 	public WorldRegion(Player player, Location worldCurrentLocation) {
 		this.player = player;
 
-		worldRegion = this;
-
 		player.setWorldRegion(this);
 
 		rnJesus = new Random();
@@ -43,7 +40,7 @@ public class WorldRegion extends Region {
 		playerJournal = new PlayerJournalAlert(this);
 
 		worldRootPane = new BorderPane();
-		worldControlPane = new BorderPane();
+		worldJournalGrid = new GridPane();
 		worldLocationPane = new BorderPane();
 
 		worldOutputArea = new TextArea();
@@ -53,11 +50,15 @@ public class WorldRegion extends Region {
 
 		setLocation(worldCurrentLocation);
 
-		worldLocationPane.setCenter(worldOutputArea);
-		worldLocationPane.setLeft(movementRegion);
-		worldLocationPane.setRight(worldControlPane);
+		setupPlayerJournalPane();
+		GridPane locationControlGrid = new GridPane();
+		locationControlGrid.setVgap(10);
 
-		worldControlPane.setRight(setupPlayerJournalPane());
+		locationControlGrid.add(movementRegion, 0, 0);
+		locationControlGrid.add(worldJournalGrid, 0, 1);
+
+		worldLocationPane.setCenter(worldOutputArea);
+		worldLocationPane.setLeft(locationControlGrid);
 
 		worldRootPane.setPadding(new Insets(10, 10, 10, 10));
 		player.modifyActorGold(20000);
@@ -83,11 +84,9 @@ public class WorldRegion extends Region {
 		return text;
 	}
 
-	private GridPane setupPlayerJournalPane() {
-		GridPane journalPane = new GridPane();
-
-		journalPane.setHgap(10);
-		journalPane.setVgap(10);
+	private void setupPlayerJournalPane() {
+		worldJournalGrid.setHgap(10);
+		worldJournalGrid.setVgap(10);
 
 		Button journalBtn = new Button("JOURNAL");
 		Button saveBtn = new Button("SAVE");
@@ -95,20 +94,16 @@ public class WorldRegion extends Region {
 		Button optionsBtn = new Button("OPTIONS");
 
 		// Setup Button Stuff
-		journalBtn.setOnAction(e -> {
-			playerJournal.show();
-		});
+		journalBtn.setOnAction(e -> playerJournal.show());
 
-		journalPane.setHgap(5);
-		journalPane.setVgap(5);
-		journalPane.setPadding(new Insets(5, 5, 5, 5));
+		worldJournalGrid.setHgap(5);
+		worldJournalGrid.setVgap(5);
+		worldJournalGrid.setPadding(new Insets(5, 5, 5, 5));
 
-		journalPane.add(journalBtn, 0, 0);
-		journalPane.add(saveBtn, 0, 1);
-		journalPane.add(loadBtn, 0, 2);
-		journalPane.add(optionsBtn, 0, 3);
-
-		return journalPane;
+		worldJournalGrid.add(journalBtn, 0, 0);
+		worldJournalGrid.add(saveBtn, 0, 1);
+		worldJournalGrid.add(loadBtn, 0, 2);
+		worldJournalGrid.add(optionsBtn, 0, 3);
 	}
 
 	public void resetOutput() {

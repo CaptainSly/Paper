@@ -1,4 +1,7 @@
-package captainsly.paper.mechanics.items;
+package captainsly.paper.mechanics.items.equipment;
+
+import captainsly.paper.mechanics.items.Item;
+import captainsly.paper.mechanics.items.Rarity;
 
 public class Equipment extends Item {
 

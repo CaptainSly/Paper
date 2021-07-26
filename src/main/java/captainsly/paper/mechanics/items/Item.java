@@ -3,7 +3,7 @@ package captainsly.paper.mechanics.items;
 public class Item {
 
 	public enum ItemType {
-		CONSUMABLE, ACCESSORY, KEY, COMMON, EQUIPMENT
+		CONSUMABLE, ACCESSORY, KEY, COMMON, EQUIPMENT, GEM
 	}
 
 	private String itemId, itemName, itemDesc;
