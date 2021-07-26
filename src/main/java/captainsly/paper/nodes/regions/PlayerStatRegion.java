@@ -6,11 +6,13 @@ import captainsly.paper.entities.Player;
 import captainsly.paper.entities.stats.Stat;
 import captainsly.paper.mechanics.containers.ItemSlot;
 import captainsly.paper.mechanics.items.Item;
+import captainsly.paper.mechanics.items.Item.ItemType;
 import captainsly.paper.mechanics.items.equipment.Equipment.EquipmentType;
 import captainsly.paper.nodes.EquipmentButton;
 import captainsly.paper.nodes.dialogs.NumberDialog;
 import captainsly.paper.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -18,6 +20,11 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tooltip;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
@@ -29,22 +36,29 @@ public class PlayerStatRegion extends Region {
 	private GridPane characterStatGrid, characterEquipmentGrid;
 	private ListView<ItemSlot> characterInventoryList;
 
-	private WorldRegion worldNode;
+	private WorldRegion worldRegion;
 	private Player player;
+
+	private EquipmentButton[] equipmentSlots;
 
 	private SimpleStringProperty playerLevelValue, playerXpValue, playerHpValue, playerMpValue, playerAtkValue,
 			playerDefValue, playerSpdValue, playerWisValue, playerGoldValue;
 
 	private Tooltip playerXpTooltip;
 
-	public PlayerStatRegion(WorldRegion worldNode) {
-		this.worldNode = worldNode;
-		this.player = worldNode.getPlayer();
+	public PlayerStatRegion(WorldRegion worldRegion) {
+		this.worldRegion = worldRegion;
+		this.player = worldRegion.getPlayer();
 		player.setPlayerStatRegion(this);
 
 		characterPane = new BorderPane();
 		characterStatGrid = new GridPane();
 		characterEquipmentGrid = new GridPane();
+
+		equipmentSlots = new EquipmentButton[EquipmentType.values().length];
+		for (int i = 0; i < EquipmentType.values().length; i++) {
+			equipmentSlots[i] = new EquipmentButton(worldRegion, EquipmentType.values()[i]);
+		}
 
 		characterInventoryList = new ListView<ItemSlot>();
 		characterInventoryList.setItems(player.getActorInventory().getItemSlots());
@@ -185,6 +199,41 @@ public class PlayerStatRegion extends Region {
 					}
 				};
 
+				cell.setOnDragDetected(new EventHandler<MouseEvent>() {
+
+					@Override
+					public void handle(MouseEvent event) {
+						Dragboard db = cell.startDragAndDrop(TransferMode.MOVE);
+						ClipboardContent content = new ClipboardContent();
+
+						if (!cell.isEmpty()) {
+							if (!cell.getItem().isEmpty()) {
+								if (cell.getItem().getItem().getItemType() == ItemType.EQUIPMENT) {
+									// Since the drag operation was detected on the inventory, we must grab the
+									// entire Equipment item
+									content.putString(cell.getItem().getItem().getItemId());
+									db.setContent(content);
+									event.consume();
+								}
+							}
+						}
+					}
+
+				});
+
+				cell.setOnDragDone(new EventHandler<DragEvent>() {
+
+					@Override
+					public void handle(DragEvent event) {
+						if (event.getTransferMode() == TransferMode.MOVE) {
+							cell.getItem().remove(1);
+							characterInventoryList.refresh();
+						}
+
+						event.consume();
+					}
+				});
+
 				return cell;
 			}
 		});
@@ -193,35 +242,26 @@ public class PlayerStatRegion extends Region {
 
 	private void setupEquipment() {
 		// TODO: Setup Equipment
-		EquipmentButton headEquipBtn = new EquipmentButton(worldNode, EquipmentType.HEAD);
-		EquipmentButton neckEquipBtn = new EquipmentButton(worldNode, EquipmentType.NECK);
-		EquipmentButton chestEquipBtn = new EquipmentButton(worldNode, EquipmentType.CHEST);
-		EquipmentButton handLEquipBtn = new EquipmentButton(worldNode, EquipmentType.HANDS);
-		EquipmentButton handREquipBtn = new EquipmentButton(worldNode, EquipmentType.HANDS);
-		EquipmentButton legsEquipBtn = new EquipmentButton(worldNode, EquipmentType.LEGS);
-
-		EquipmentButton weaponEquipBtn = new EquipmentButton(worldNode, EquipmentType.WEAPON);
-		EquipmentButton sheildEquipBtn = new EquipmentButton(worldNode, EquipmentType.SHEILD);
 
 		characterEquipmentGrid.setHgap(5);
 		characterEquipmentGrid.setVgap(5);
 		characterEquipmentGrid.setPadding(new Insets(5, 5, 5, 5));
 
-		characterEquipmentGrid.add(headEquipBtn, 1, 0);
-		characterEquipmentGrid.add(neckEquipBtn, 2, 0);
+		characterEquipmentGrid.add(equipmentSlots[EquipmentType.HEAD.ordinal()], 1, 0);
+		characterEquipmentGrid.add(equipmentSlots[EquipmentType.NECK.ordinal()], 2, 0);
 
-		characterEquipmentGrid.add(handLEquipBtn, 0, 1);
-		characterEquipmentGrid.add(chestEquipBtn, 1, 1);
-		characterEquipmentGrid.add(handREquipBtn, 2, 1);
+		characterEquipmentGrid.add(equipmentSlots[EquipmentType.HANDS.ordinal()], 0, 1);
+		characterEquipmentGrid.add(equipmentSlots[EquipmentType.CHEST.ordinal()], 1, 1);
 
-		characterEquipmentGrid.add(legsEquipBtn, 1, 2);
+		characterEquipmentGrid.add(equipmentSlots[EquipmentType.LEGS.ordinal()], 1, 2);
+		characterEquipmentGrid.add(equipmentSlots[EquipmentType.FEET.ordinal()], 2, 2);
 
-		characterEquipmentGrid.add(weaponEquipBtn, 0, 3);
-		characterEquipmentGrid.add(sheildEquipBtn, 1, 3);
+		characterEquipmentGrid.add(equipmentSlots[EquipmentType.WEAPON.ordinal()], 0, 3);
+		characterEquipmentGrid.add(equipmentSlots[EquipmentType.SHEILD.ordinal()], 1, 3);
 	}
 
 	public WorldRegion getWorldNode() {
-		return worldNode;
+		return worldRegion;
 	}
 
 	public SimpleStringProperty getPlayerLevelValue() {

@@ -16,6 +16,9 @@ import captainsly.paper.entities.Npc;
 import captainsly.paper.entities.Npc.Occupation;
 import captainsly.paper.mechanics.items.Item;
 import captainsly.paper.mechanics.items.Item.ItemType;
+import captainsly.paper.mechanics.items.equipment.Equipment;
+import captainsly.paper.mechanics.items.equipment.Equipment.EquipmentType;
+import captainsly.paper.mechanics.items.equipment.EquipmentStat;
 import captainsly.paper.mechanics.locations.Location;
 import captainsly.paper.mechanics.locations.Location.Direction;
 import captainsly.paper.mechanics.locations.actions.MineAction;
@@ -24,6 +27,7 @@ import captainsly.paper.mechanics.locations.actions.ShopAction;
 public class Registry {
 
 	public static final HashMap<String, Item> itemRegistry = new HashMap<String, Item>();
+	public static final HashMap<String, Equipment> equipmentRegistry = new HashMap<String, Equipment>();
 	public static final HashMap<String, Location> locationRegistry = new HashMap<String, Location>();
 	public static final HashMap<String, Lootlist> lootListRegistry = new HashMap<String, Lootlist>();
 	public static final HashMap<String, Npc> npcRegistry = new HashMap<String, Npc>();
@@ -240,7 +244,7 @@ public class Registry {
 										genLocal = new Location(localIds[0], localIds[1], localIds[2]);
 										for (String id : npcIds)
 											genLocal.addNpc(npcRegistry.get(id));
-										
+
 										locationRegistry.put(genLocal.getLocationId(), genLocal);
 										locationNeighborMap.put(genLocal.getLocationId(), locationNeighbors);
 
@@ -252,6 +256,58 @@ public class Registry {
 											locationRegistry.get(genLocal.getLocationId())
 													.addLocationAction(new ShopAction());
 
+									} else if (data.contentEquals("equipment_data")) {
+										Equipment equipment = null;
+										String[] equipmentData = new String[3];
+										int[] equipmentStat = new int[3];
+										EquipmentType equipmentType = null;
+
+										jsonReader.beginObject();
+										while (jsonReader.hasNext()) {
+											name = jsonReader.nextName();
+											switch (name) {
+												case "equipmentId":
+													equipmentData[0] = jsonReader.nextString();
+													break;
+												case "equipmentName":
+													equipmentData[1] = jsonReader.nextString();
+													break;
+												case "equipmentDescription":
+													equipmentData[2] = jsonReader.nextString();
+													break;
+												case "equipmentType":
+													equipmentType = EquipmentType.values()[jsonReader.nextInt()];
+													System.out.println(equipmentType.name());
+													break;
+												case "equipmentStats":
+													jsonReader.beginArray();
+													jsonReader.beginObject();
+													while (jsonReader.hasNext()) {
+														name = jsonReader.nextName();
+														switch (name) {
+															case "atk":
+																equipmentStat[0] = jsonReader.nextInt();
+																break;
+															case "def":
+																equipmentStat[1] = jsonReader.nextInt();
+																break;
+															case "spd":
+																equipmentStat[2] = jsonReader.nextInt();
+																break;
+														}
+													}
+													jsonReader.endObject();
+													jsonReader.endArray();
+													break;
+											}
+										}
+										equipment = new Equipment(equipmentData[0], equipmentData[1], equipmentData[2],
+												equipmentType);
+										equipment.setStat(EquipmentStat.ATK, equipmentStat[0]);
+										equipment.setStat(EquipmentStat.DEF, equipmentStat[1]);
+										equipment.setStat(EquipmentStat.SPD, equipmentStat[2]);
+										equipmentRegistry.put(equipmentData[0], equipment);
+										jsonReader.endObject();
 									} else {
 										// As the CastleDB grows, more data will be added either here or above depending
 										// on how the data needs to be loaded in

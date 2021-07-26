@@ -41,7 +41,13 @@ Version 0.0.3
 * Implementing The Journal Alert
 * Added Generic ItemTransfer Alert/Dialog
 * Lots and Lots of Prototyping
+* Equipment can be equipped to the player by dragging the item from the list to the correct equipment slot, and they provide a stat boost.
 	
+
+BUGS
+====
+
+* If you equip equipment or toss an item while in the middle of an action, there is a chance that an item will be thrown into the first empty slot and create double ItemSlots
 
 TODO List
 =========

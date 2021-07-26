@@ -53,7 +53,7 @@ public class MineAction extends Action {
 						oreTimer.cancel();
 
 						RollHistory roll = new DiceRoller()
-								.transform(new DefaultDiceParser().parse("1d" + mineSayings.length));
+								.transform(new DefaultDiceParser().parse("1d" + oreTypes.size()));
 						int index = roll.getTotalRoll() - 1;
 						int amount = worldRegion.getRNJesus()
 								.nextInt(2 * worldRegion.getPlayer().getActorStat(Stat.LEVEL) + 3) + 1;

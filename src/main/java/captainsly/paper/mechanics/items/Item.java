@@ -49,4 +49,10 @@ public class Item {
 		return itemName;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		Item item = (Item) obj;
+		return this.getItemId().contentEquals(item.getItemId());
+	}
+
 }

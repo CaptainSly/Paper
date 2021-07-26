@@ -3,6 +3,7 @@ package captainsly.paper.nodes.regions;
 import java.util.Random;
 
 import captainsly.paper.entities.Player;
+import captainsly.paper.mechanics.Registry;
 import captainsly.paper.mechanics.locations.Location;
 import captainsly.paper.mechanics.locations.Location.Direction;
 import captainsly.paper.mechanics.locations.actions.Action;
@@ -61,7 +62,11 @@ public class WorldRegion extends Region {
 		worldLocationPane.setLeft(locationControlGrid);
 
 		worldRootPane.setPadding(new Insets(10, 10, 10, 10));
+		
+		//TODO: Remove testing stuff
 		player.modifyActorGold(20000);
+		player.getActorInventory().add(Registry.equipmentRegistry.get("weaponDagger"));
+		player.getActorInventory().add(Registry.equipmentRegistry.get("armorChestPlateTest"));
 
 		worldRootPane.setRight(locationInteractionRegion);
 		worldRootPane.setCenter(worldLocationPane);

@@ -16,6 +16,8 @@ public class Equipment extends Item {
 
 	public Equipment(String itemId, String itemName, String itemDesc, EquipmentType equipmentType) {
 		super(itemId, itemName, itemDesc, ItemType.EQUIPMENT);
+		this.equipmentType = equipmentType;
+		
 		equipmentStats = new int[EquipmentStat.values().length];
 		equipmentRarity = Rarity.COMMON;
 	}

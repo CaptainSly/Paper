@@ -33,7 +33,7 @@ public class Inventory {
 	public boolean slotContainsItem(Item item) {
 		for (ItemSlot slot : slots)
 			if (slot.getItem() != null) {
-				if (slot.getItem().getItemId().equals(item.getItemId()))
+				if (slot.getItem().getItemId().contentEquals(item.getItemId()))
 					return true;
 			} else
 				return false;
@@ -43,7 +43,7 @@ public class Inventory {
 
 	public ItemSlot getSlotFromItem(Item item) {
 		for (ItemSlot slot : slots)
-			if (slot.getItem().getItemId().equals(item.getItemId()))
+			if (slot.getItem().getItemId().contentEquals(item.getItemId()))
 				return slot;
 
 		return null;
@@ -52,7 +52,7 @@ public class Inventory {
 	public ItemSlot getFreeItemSlot() {
 		if (slots.size() <= 0) {
 			slots.add(new ItemSlot());
-			return slots.get(0);
+			return getFreeItemSlot();
 		}
 
 		for (ItemSlot slot : slots) {

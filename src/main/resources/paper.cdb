@@ -369,9 +369,8 @@
 					"name": "equipmentDescription"
 				},
 				{
-					"typeStr": "5:WEAPON,SHIELD,ARMOR,NECKLACE,RING",
-					"name": "equipmentType",
-					"display": null
+					"typeStr": "5:HEAD,NECK,CHEST,HANDS,WEAPON,SHEILD,LEGS,FEET",
+					"name": "equipmentType"
 				},
 				{
 					"typeStr": "8",
@@ -384,12 +383,25 @@
 					"equipmentId": "weaponDagger",
 					"equipmentName": "Dagger",
 					"equipmentDescription": "It's a small pointed dagger",
-					"equipmentType": 0,
+					"equipmentType": 4,
 					"equipmentStats": [
 						{
 							"atk": 2,
 							"def": 0,
 							"spd": 3
+						}
+					]
+				},
+				{
+					"equipmentId": "armorChestPlateTest",
+					"equipmentName": "LEET SHINY CHEST PLATE LOLOLOLOL",
+					"equipmentDescription": "It's a fucking test item bruh",
+					"equipmentType": 2,
+					"equipmentStats": [
+						{
+							"atk": 0,
+							"def": 5,
+							"spd": 2
 						}
 					]
 				}

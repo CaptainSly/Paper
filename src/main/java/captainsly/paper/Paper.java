@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 public class Paper extends Application {
 
 	private BorderPane paperRootPane;
-	private WorldRegion worldNode;
+	private WorldRegion worldRegion;
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
@@ -21,9 +21,9 @@ public class Paper extends Application {
 		
 		Player player = new Player();
 
-		worldNode = new WorldRegion(player, Registry.locationRegistry.get("townCalinfor"));
+		worldRegion = new WorldRegion(player, Registry.locationRegistry.get("townCalinfor"));
 
-		paperRootPane.setCenter(worldNode);
+		paperRootPane.setCenter(worldRegion);
 		
 		Scene scene = new Scene(paperRootPane);
 		scene.getStylesheets().add("style_dark.css");
