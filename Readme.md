@@ -42,33 +42,36 @@ Version 0.0.3
 * Added Generic ItemTransfer Alert/Dialog
 * Lots and Lots of Prototyping
 * Equipment can be equipped to the player by dragging the item from the list to the correct equipment slot, and they provide a stat boost.
+* Working on implementing a level up, takes in account leveling up repeatedly from a lot of exp gain
 	
 
 BUGS
 ====
 
-* If you equip equipment or toss an item while in the middle of an action, there is a chance that an item will be thrown into the first empty slot and create double ItemSlots
+BUG - Inv01
+* If you equip equipment or toss an item while in the middle of an action, there is a chance that an item will be thrown into the first empty slot and create double ItemSlots. (Possibliy reorder the list when an Item is taken out so that all empty slots are moved to the bottom, should prevent a double ItemSlot issue?)
 
 TODO List
 =========
 
-* Implement The Journal Alert Class -- IN PROGRESS
-* Implement The Player Creation Dialog
-* Implement The Character Class, Character Race and the Faction classes 
-* Implement The Map Class inside 
-* Implement Dragging and Dropping of Equipment from the inventory to the equipment slots
-* Implement Lua Scripting and create a basic Lua Library for the project.
-* Implement Magic System
-* Implement Stamina Requirement to move from location to location, a player has to rest before being able to move to different locations, (less spammy)
-* Work on implementing the rest of the data inside the cdb file
-* Work on Player Level Up Method, currently just raises level and does nothing with stats
-* Implement Battle Action and a battle state machine
-* Implement Quests, Crafting, Smithing.
-* Implement a tool requirement to Resource Gathering Actions
-* Finish Implementing Item/Equipment Rarity
-* Implement Saving and Loading
-* Implement Options panel 
-* Implement Inspection Panel
+* [] Some type of list sorting for the Inventories. They can be sorted any way as long as empty ItemSlots are placed at the bottom (Should fix bug Inv01)
+* [] Implement The Journal Alert Class -- IN PROGRESS
+* [] Implement The Player Creation Dialog
+* [] Implement The Character Class, Character Race and the Faction classes 
+* [] Implement The Map Class inside 
+* [x] Implement Dragging and Dropping of Equipment from the inventory to the equipment slots
+* [] Implement Lua Scripting and create a basic Lua Library for the project.
+* [] Implement Magic System
+* [] Implement Stamina Requirement to move from location to location, a player has to rest before being able to move to different locations, (less spammy)
+* [] Work on implementing the rest of the data inside the cdb file
+* [] Work on Player Level Up Method, currently just raises level and does nothing with stats -- IN PROGRESS
+* [] Implement Battle Action and a battle state machine
+* [] Implement Quests, Crafting, Smithing.
+* [] Implement a tool requirement to Resource Gathering Actions
+* [] Finish Implementing Item/Equipment Rarity
+* [] Implement Saving and Loading
+* [] Implement Options panel 
+* [] Implement Inspection Panel
 	
 Things to potentially work on
 =============================

@@ -64,8 +64,7 @@ public class MineAction extends Action {
 						worldRegion.getPlayer().getActorInventory().add(oreTypes.get(index), amount);
 						worldRegion.write("\nGot " + amount + " " + oreTypes.get(index).getItemName());
 
-						roll = new DiceRoller().transform(new DefaultDiceParser().parse("1d6*" + amount));
-						worldRegion.getPlayer().modifyXp(roll.getTotalRoll());
+						worldRegion.getPlayer().modifyXp(amount * 50);
 
 						worldRegion.refresh();
 						actionCounter = 4;

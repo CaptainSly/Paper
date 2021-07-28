@@ -53,6 +53,8 @@ public class EquipmentButton extends Button {
 				if (db.hasString()) {
 					Equipment equipment = Registry.equipmentRegistry.get(db.getString());
 					if (equipment.getEquipmentType() == equipmentType) {
+						//TODO: Check the equipment type, and create the corresponding type
+						
 						setEquipment(equipment);
 						success = true;
 					}

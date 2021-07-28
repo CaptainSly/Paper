@@ -127,7 +127,6 @@ public class Registry {
 										itemRegistry.put(itemIds[0], genItem);
 
 									} else if (data.contentEquals("lootlist_data")) {
-										// TODO: Figure out if it's better to store the item or only it's id
 										Lootlist lootlist = null;
 
 										jsonReader.beginObject();
@@ -277,7 +276,6 @@ public class Registry {
 													break;
 												case "equipmentType":
 													equipmentType = EquipmentType.values()[jsonReader.nextInt()];
-													System.out.println(equipmentType.name());
 													break;
 												case "equipmentStats":
 													jsonReader.beginArray();

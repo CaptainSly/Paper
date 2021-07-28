@@ -2,8 +2,9 @@ package captainsly.paper.entities;
 
 import captainsly.paper.entities.stats.Stat;
 import captainsly.paper.mechanics.items.equipment.Equipment;
-import captainsly.paper.mechanics.items.equipment.EquipmentStat;
 import captainsly.paper.mechanics.items.equipment.Equipment.EquipmentType;
+import captainsly.paper.mechanics.items.equipment.EquipmentStat;
+import captainsly.paper.nodes.dialogs.LevelUpDialog;
 import captainsly.paper.nodes.regions.PlayerStatRegion;
 import captainsly.paper.nodes.regions.WorldRegion;
 import captainsly.paper.utils.Utils;
@@ -36,10 +37,12 @@ public class Player extends Actor {
 	}
 
 	public void modifyXp(int xpValue) {
-		modifyActorStat(Stat.XP, xpValue);
+		super.modifyActorStat(Stat.XP, xpValue);
 		playerStats.getPlayerXpValue().setValue(Utils.writeStatString(Stat.XP, getActorStat(Stat.XP)));
+		playerStats.getPlayerXpTooltip()
+				.setText("Amount needed for next level: " + (toNextLevel() - getActorStat(Stat.XP)));
 		worldRegion.write("You were awarded with " + xpValue + " experience!\n");
-		if (getActorStat(Stat.XP) == toNextLevel()) {
+		if (getActorStat(Stat.XP) >= toNextLevel()) {
 			onLevelUp();
 		}
 	}
@@ -61,7 +64,7 @@ public class Player extends Actor {
 	public void setPlayerStatRegion(PlayerStatRegion playerStats) {
 		this.playerStats = playerStats;
 	}
-	
+
 	public void setWorldRegion(WorldRegion worldRegion) {
 		this.worldRegion = worldRegion;
 	}
@@ -71,13 +74,11 @@ public class Player extends Actor {
 		super.modifyActorGold(goldValue);
 		playerStats.getPlayerGoldValue().set("GP: " + getActorGold());
 	}
-	
+
 	@Override
 	public void modifyActorStat(Stat stat, int statIncrease) {
 		super.modifyActorStat(stat, statIncrease);
 		playerStats.getPropertyByStat(stat).set(Utils.writeStatString(stat, getActorStat(stat)));
-		if (stat.equals(Stat.XP))
-			playerStats.getPlayerXpTooltip().setText("Amount needed for next level: " + toNextLevel());
 	}
 
 	private void onLevelUp() {
@@ -86,7 +87,11 @@ public class Player extends Actor {
 		playerStats.getPlayerXpTooltip().setText("Amount needed for next level: " + toNextLevel());
 		worldRegion.write("LEVEL UP!");
 		// TODO: Show Up Level up Dialog
+		LevelUpDialog levelup = new LevelUpDialog(this);
+		levelup.showAndWait();
 
+		if (getActorStat(Stat.XP) >= toNextLevel())
+			onLevelUp();
 	}
 
 }
