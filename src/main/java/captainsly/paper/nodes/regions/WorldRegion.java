@@ -7,6 +7,7 @@ import captainsly.paper.mechanics.Registry;
 import captainsly.paper.mechanics.locations.Location;
 import captainsly.paper.mechanics.locations.Location.Direction;
 import captainsly.paper.mechanics.locations.actions.Action;
+import captainsly.paper.nodes.controls.MovementNode;
 import captainsly.paper.nodes.dialogs.PlayerJournalAlert;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -21,7 +22,7 @@ public class WorldRegion extends Region {
 	private GridPane worldJournalGrid;
 	private TextArea worldOutputArea;
 	private Location worldCurrentLocation;
-	private MovementRegion movementRegion;
+	private MovementNode movementRegion;
 	private PlayerStatRegion playerStatRegion;
 	private LocationInteractionRegion locationInteractionRegion;
 
@@ -36,7 +37,7 @@ public class WorldRegion extends Region {
 
 		rnJesus = new Random();
 		playerStatRegion = new PlayerStatRegion(this);
-		movementRegion = new MovementRegion(this);
+		movementRegion = new MovementNode(this);
 		locationInteractionRegion = new LocationInteractionRegion(this);
 		playerJournal = new PlayerJournalAlert(this);
 
@@ -155,7 +156,7 @@ public class WorldRegion extends Region {
 		return playerStatRegion;
 	}
 
-	public MovementRegion getMovementRegion() {
+	public MovementNode getMovementRegion() {
 		return movementRegion;
 	}
 

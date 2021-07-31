@@ -1,7 +1,8 @@
-package captainsly.paper.nodes.regions;
+package captainsly.paper.nodes.controls;
 
 import captainsly.paper.mechanics.locations.Location;
 import captainsly.paper.mechanics.locations.Location.Direction;
+import captainsly.paper.nodes.regions.WorldRegion;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.Insets;
@@ -10,7 +11,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 
-public class MovementRegion extends Region {
+public class MovementNode extends Region {
 
 	private GridPane movementGrid;
 
@@ -18,7 +19,7 @@ public class MovementRegion extends Region {
 
 	private WorldRegion worldRegion;
 
-	public MovementRegion(WorldRegion worldRegion) {
+	public MovementNode(WorldRegion worldRegion) {
 		this.worldRegion = worldRegion;
 		movementGrid = new GridPane();
 

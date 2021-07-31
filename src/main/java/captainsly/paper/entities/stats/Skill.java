@@ -2,6 +2,6 @@ package captainsly.paper.entities.stats;
 
 public enum Skill {
 
-	MINING, SMITHING, WOODCUTTING, FISHING, COOKING
+	ATTACK, STRENGTH, DEFENCE, MAGIC, MINING, SMITHING, FISHING, COOKING, CONSTRUCTION, 
 	
 }

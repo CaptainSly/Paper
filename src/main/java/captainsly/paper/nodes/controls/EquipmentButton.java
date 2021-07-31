@@ -1,4 +1,4 @@
-package captainsly.paper.nodes;
+package captainsly.paper.nodes.controls;
 
 import captainsly.paper.entities.Player;
 import captainsly.paper.mechanics.Registry;

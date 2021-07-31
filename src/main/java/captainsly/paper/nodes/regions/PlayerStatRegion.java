@@ -8,7 +8,7 @@ import captainsly.paper.mechanics.containers.ItemSlot;
 import captainsly.paper.mechanics.items.Item;
 import captainsly.paper.mechanics.items.Item.ItemType;
 import captainsly.paper.mechanics.items.equipment.Equipment.EquipmentType;
-import captainsly.paper.nodes.EquipmentButton;
+import captainsly.paper.nodes.controls.EquipmentButton;
 import captainsly.paper.nodes.dialogs.NumberDialog;
 import captainsly.paper.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
@@ -61,6 +61,7 @@ public class PlayerStatRegion extends Region {
 		}
 
 		characterInventoryList = new ListView<ItemSlot>();
+
 		characterInventoryList.setItems(player.getActorInventory().getItemSlots());
 
 		characterStatGrid.setHgap(10);
@@ -186,9 +187,13 @@ public class PlayerStatRegion extends Region {
 								Optional<Integer> result = slotTossDialog.showAndWait();
 
 								result.ifPresent(throwAmount -> {
+									if (throwAmount > item.getItemCount())
+										throwAmount = item.getItemCount();
+
 									System.out.println("Throwing away " + throwAmount + " " + slotItem.getItemName());
 									item.remove(throwAmount);
 								});
+
 							});
 
 							slotContextMenu.getItems().addAll(slotMenuUse, slotMenuInfo, slotMenuToss);
@@ -209,8 +214,9 @@ public class PlayerStatRegion extends Region {
 						if (!cell.isEmpty()) {
 							if (!cell.getItem().isEmpty()) {
 								if (cell.getItem().getItem().getItemType() == ItemType.EQUIPMENT) {
-									// Since the drag operation was detected on the inventory, we must grab the
-									// entire Equipment item
+									// Since the drag operation was detected on the inventory, we grab the itemId
+									// from the item, since all equipment is stored with their ItemIds in the
+									// Registry hashmap
 									content.putString(cell.getItem().getItem().getItemId());
 									db.setContent(content);
 									event.consume();
@@ -241,8 +247,6 @@ public class PlayerStatRegion extends Region {
 	}
 
 	private void setupEquipment() {
-		// TODO: Setup Equipment
-
 		characterEquipmentGrid.setHgap(5);
 		characterEquipmentGrid.setVgap(5);
 		characterEquipmentGrid.setPadding(new Insets(5, 5, 5, 5));

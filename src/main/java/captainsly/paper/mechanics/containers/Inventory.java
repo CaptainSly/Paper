@@ -1,5 +1,7 @@
 package captainsly.paper.mechanics.containers;
 
+import java.util.Collections;
+
 import captainsly.paper.mechanics.items.Item;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -17,20 +19,21 @@ public class Inventory {
 	}
 
 	public void add(Item item, int amount) {
-		if (!slotContainsItem(item))
+		if (!inventoryContainsItem(item))
 			getFreeItemSlot().add(item, amount);
 		else
 			getSlotFromItem(item).add(amount);
 	}
 
 	public void remove(Item item, int amount) {
-		if (!slotContainsItem(item))
+		if (!inventoryContainsItem(item))
 			return;
 
-		getSlotFromItem(item).add(-amount);
+		getSlotFromItem(item).remove(amount);
 	}
 
-	public boolean slotContainsItem(Item item) {
+	public boolean inventoryContainsItem(Item item) {
+		Collections.sort(slots);
 		for (ItemSlot slot : slots)
 			if (slot.getItem() != null) {
 				if (slot.getItem().getItemId().contentEquals(item.getItemId()))
@@ -42,6 +45,7 @@ public class Inventory {
 	}
 
 	public ItemSlot getSlotFromItem(Item item) {
+		Collections.sort(slots);
 		for (ItemSlot slot : slots)
 			if (slot.getItem().getItemId().contentEquals(item.getItemId()))
 				return slot;
@@ -50,6 +54,7 @@ public class Inventory {
 	}
 
 	public ItemSlot getFreeItemSlot() {
+		Collections.sort(slots);
 		if (slots.size() <= 0) {
 			slots.add(new ItemSlot());
 			return getFreeItemSlot();

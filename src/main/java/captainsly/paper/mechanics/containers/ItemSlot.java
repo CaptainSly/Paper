@@ -2,7 +2,7 @@ package captainsly.paper.mechanics.containers;
 
 import captainsly.paper.mechanics.items.Item;
 
-public class ItemSlot {
+public class ItemSlot implements Comparable<ItemSlot> {
 
 	private Item item;
 	private int itemCount;
@@ -27,9 +27,10 @@ public class ItemSlot {
 
 	public void add(int amount) {
 		this.itemCount += amount;
-		if (empty) empty = false;
+		if (empty)
+			empty = false;
 	}
-	
+
 	public void remove(int amount) {
 		this.itemCount -= amount;
 		if (itemCount <= 0) {
@@ -38,7 +39,7 @@ public class ItemSlot {
 			item = null;
 		}
 	}
-	
+
 	public Item getItem() {
 		return item;
 	}
@@ -49,6 +50,11 @@ public class ItemSlot {
 
 	public boolean isEmpty() {
 		return empty;
+	}
+
+	@Override
+	public int compareTo(ItemSlot o) {
+		return Boolean.compare(isEmpty(), o.isEmpty());
 	}
 
 }
