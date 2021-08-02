@@ -78,7 +78,14 @@ public class Player extends Actor {
 	@Override
 	public void modifyActorStat(Stat stat, int statIncrease) {
 		super.modifyActorStat(stat, statIncrease);
-		playerStats.getPropertyByStat(stat).set(Utils.writeStatString(stat, getActorStat(stat)));
+		if (stat.equals(Stat.MAX_HP) || stat.equals(Stat.HP)) {
+			super.modifyActorStat(Stat.HP, statIncrease);
+			playerStats.getPropertyByStat(stat).set("HP: " + getActorStat(Stat.MAX_HP) + "/" + getActorStat(Stat.HP));
+		} else if (stat.equals(Stat.MAX_MP) || stat.equals(Stat.MP)) {
+			super.modifyActorStat(Stat.MP, statIncrease);
+			playerStats.getPropertyByStat(stat).set("MP: " + getActorStat(Stat.MAX_MP) + "/" + getActorStat(Stat.MP));
+		} else
+			playerStats.getPropertyByStat(stat).set(Utils.writeStatString(stat, getActorStat(stat)));
 	}
 
 	private void onLevelUp() {
@@ -86,9 +93,9 @@ public class Player extends Actor {
 		playerStats.getPlayerLevelValue().set(Utils.writeStatString(Stat.LEVEL, getActorStat(Stat.LEVEL)));
 		playerStats.getPlayerXpTooltip().setText("Amount needed for next level: " + toNextLevel());
 		worldRegion.write("LEVEL UP!");
-		// TODO: Show Up Level up Dialog
+
 		LevelUpDialog levelup = new LevelUpDialog(this);
-		levelup.showAndWait();
+		levelup.showDialog();
 
 		if (getActorStat(Stat.XP) >= toNextLevel())
 			onLevelUp();

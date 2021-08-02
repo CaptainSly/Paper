@@ -9,7 +9,6 @@ import com.bernardomg.tabletop.dice.history.RollHistory;
 import com.bernardomg.tabletop.dice.interpreter.DiceRoller;
 import com.bernardomg.tabletop.dice.parser.DefaultDiceParser;
 
-import captainsly.paper.entities.stats.Stat;
 import captainsly.paper.mechanics.Lootlist;
 import captainsly.paper.mechanics.Registry;
 import captainsly.paper.mechanics.items.Item;
@@ -21,7 +20,8 @@ public class MineAction extends Action {
 	private List<Item> oreTypes;
 	private Lootlist lootList;
 
-	private final String[] mineSayings = new String[] { "Pick...", "Thwack...", "Boink...", "Strike..." };
+	private final String[] mineSayings = new String[] { "Pick...", "Thwack...", "Boink...", "Strike...",
+			"WHOA YEAH!!!" };
 
 	public MineAction() {
 		super("actionMine", "Mine");
@@ -55,16 +55,14 @@ public class MineAction extends Action {
 						RollHistory roll = new DiceRoller()
 								.transform(new DefaultDiceParser().parse("1d" + oreTypes.size()));
 						int index = roll.getTotalRoll() - 1;
-						int amount = worldRegion.getRNJesus()
-								.nextInt(2 * worldRegion.getPlayer().getActorStat(Stat.LEVEL) + 3) + 1;
+						int amount = worldRegion.getRNJesus().nextInt(3);
 
-						if (amount == 0)
-							amount++;
+						amount = amount == 0 ? 1 : amount; // Don't want the amount to be 0 now do we?
 
 						worldRegion.getPlayer().getActorInventory().add(oreTypes.get(index), amount);
 						worldRegion.write("\nGot " + amount + " " + oreTypes.get(index).getItemName());
 
-						worldRegion.getPlayer().modifyXp(amount * 50);
+						worldRegion.getPlayer().modifyXp(amount * 5);
 
 						worldRegion.refresh();
 						actionCounter = 4;

@@ -11,7 +11,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 
-public class MovementNode extends Region {
+public class MovementControl extends Region {
 
 	private GridPane movementGrid;
 
@@ -19,7 +19,7 @@ public class MovementNode extends Region {
 
 	private WorldRegion worldRegion;
 
-	public MovementNode(WorldRegion worldRegion) {
+	public MovementControl(WorldRegion worldRegion) {
 		this.worldRegion = worldRegion;
 		movementGrid = new GridPane();
 

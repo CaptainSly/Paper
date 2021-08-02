@@ -41,7 +41,7 @@ public abstract class Actor {
 		actorSkills[skill.ordinal()] = statIncrease;
 	}
 
-	public void modifySkill(Skill skill, int statIncrease) {
+	public void modifyActorSkill(Skill skill, int statIncrease) {
 		actorSkills[skill.ordinal()] += statIncrease;
 	}
 

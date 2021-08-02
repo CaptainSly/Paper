@@ -42,8 +42,9 @@ Version 0.0.3
 * Added Generic ItemTransfer Alert/Dialog
 * Lots and Lots of Prototyping
 * Equipment can be equipped to the player by dragging the item from the list to the correct equipment slot, and they provide a stat boost.
-* Working on implementing a level up, takes in account leveling up repeatedly from a lot of exp gain
+* Implemented a level up screen, takes in account leveling up repeatedly from a lot of exp gain. Not balanced what so ever, may have bugs. Can allot skill points to skills
 * Fixed Bug Inv01, Implemented Sorting based on the ItemSlot empty value (Thank you Boolean.compare(x,y))
+* Constantly Refractoring random things and renaming files
 	
 
 BUGS
@@ -58,16 +59,18 @@ TODO List
 * [x] Some type of list sorting for the Inventories. They can be sorted any way as long as empty ItemSlots are placed at the bottom (Should fix bug Inv01)
 * [ ] Implement The Journal Alert Class -- IN PROGRESS
 * [ ] Implement The Player Creation Dialog
-* [ ] Implement The Character Class, Character Race and the Faction classes 
+* [ ] Implement The Character Class, Character Race and the Faction classes -- IN PROGRESS
 * [ ] Implement The Map Class inside 
 * [x] Implement Dragging and Dropping of Equipment from the inventory to the equipment slots
 * [ ] Implement Lua Scripting and create a basic Lua Library for the project.
 * [ ] Implement Magic System
 * [ ] Implement Stamina Requirement to move from location to location, a player has to rest before being able to move to different locations, (less spammy)
 * [ ] Work on implementing the rest of the data inside the cdb file
-* [ ] Work on Player Level Up Method, currently just raises level and does nothing with stats -- IN PROGRESS
+* [x] Work on Player Level Up Method -- COMPLETE (Not balanced what so ever can be cheated really easily, but the node should scale if I decide to add more skills)
+* [ ] Implement Balancing within the Skills, Stats, etc. -- IN PROGRESS ETERNAL
 * [ ] Implement Battle Action and a battle state machine
-* [ ] Implement Quests, Crafting, Smithing.
+* [ ] Implement Crafting -- IN PROGRESS
+* [ ] Implement Questing
 * [ ] Implement a tool requirement to Resource Gathering Actions
 * [ ] Finish Implementing Item/Equipment Rarity
 * [ ] Implement Saving and Loading
