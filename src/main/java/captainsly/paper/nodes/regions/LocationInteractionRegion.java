@@ -85,7 +85,7 @@ public class LocationInteractionRegion extends Region {
 						} else {
 							this.setText(item.getActorName());
 							this.setOnMouseClicked(e -> {
-								//TODO: Create a Dialogue(Talking) dialog lol
+								//TODO: Create a Dialogue(Talking) dialog 
 							});
 						}
 					}

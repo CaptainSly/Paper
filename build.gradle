@@ -6,6 +6,7 @@ plugins {
 
 repositories {
 	maven { url 'https://jitpack.io' }
+	jcenter();
     mavenCentral()
 }
 
@@ -19,6 +20,10 @@ dependencies {
 	implementation "de.jensd:fontawesomefx-commons:9.1.2"
 	implementation 'de.jensd:fontawesomefx-fontawesome:4.7.0-9.1.2'
 	implementation 'org.controlsfx:controlsfx:11.1.0'
+	
+	// Maybe switching to graphics????
+	// implementation "com.github.almasb:fxgl:11.17"
+	// Not a concrete thing, moreso just an idea currently
 	
 	implementation "com.bernardomg.tabletop:dice:2.1.2"
 

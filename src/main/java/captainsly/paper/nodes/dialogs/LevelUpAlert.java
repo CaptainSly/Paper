@@ -21,7 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Spinner;
 import javafx.scene.layout.GridPane;
 
-public class LevelUpDialog extends Alert {
+public class LevelUpAlert extends Alert {
 
 	private Player player;
 	private GridPane statGrid;
@@ -30,12 +30,11 @@ public class LevelUpDialog extends Alert {
 	// They have so many stat points that they can put into each skill. The amount
 	// of stat points is influenced by the Intelligence skill
 
-	// TODO: Figure out/Make the right control to raise or lower
 	private int skillPoints;
 	private Label[] skillLabels;
 	private List<Spinner<Integer>> skillSpinners;
 
-	public LevelUpDialog(Player player) {
+	public LevelUpAlert(Player player) {
 		super(AlertType.INFORMATION);
 		this.player = player;
 		this.setTitle("Congratulations " + player.getActorName() + ", you've leveled up to Level "
@@ -43,7 +42,9 @@ public class LevelUpDialog extends Alert {
 		this.setHeaderText("ASCENDED TO LEVEL " + player.getActorStat(Stat.LEVEL));
 		this.setGraphic(null);
 
-		// TODO: Change this
+		// TODO: Maybe see if it'd be better to have the skillpoints be tied to your
+		// level or a stat or something
+
 		skillPoints = 10;
 		statGrid = new GridPane();
 		statGrid.setHgap(10);
@@ -60,18 +61,15 @@ public class LevelUpDialog extends Alert {
 		this.getDialogPane().setContent(statGrid);
 
 	}
-	
+
 	public void showDialog() {
-		 this.showAndWait()
-	      .filter(response -> response == ButtonType.CLOSE)
-	      .ifPresent(response -> {
-	    	  for (int i = 0; i < Skill.values().length; i++) {
-	    		  Skill skill = Skill.values()[i];
-	    		  Spinner<Integer> spinner = skillSpinners.get(i);
-	    		  player.modifyActorSkill(skill, spinner.getValue());
-	    		  System.out.println(Utils.toNormalCase(skill.name()) + ": " + spinner.getValue());
-	    	  }
-	      });
+		this.showAndWait().filter(response -> response == ButtonType.CLOSE).ifPresent(response -> {
+			for (int i = 0; i < Skill.values().length; i++) {
+				Skill skill = Skill.values()[i];
+				Spinner<Integer> spinner = skillSpinners.get(i);
+				player.modifyActorSkill(skill, spinner.getValue());
+			}
+		});
 	}
 
 	private void setupStatGrid() {
@@ -152,6 +150,8 @@ public class LevelUpDialog extends Alert {
 	}
 
 	private int rollStat(Stat stat) {
+		// TODO: The stats are extremely unbalanced. You take a d3 and roll it. Then add
+		// the level.
 		RollHistory roll = new DiceRoller()
 				.transform(new DefaultDiceParser().parse("1d3+" + player.getActorStat(Stat.LEVEL)));
 		player.modifyActorStat(stat, roll.getTotalRoll());

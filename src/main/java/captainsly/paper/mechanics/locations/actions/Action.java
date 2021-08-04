@@ -13,7 +13,7 @@ public abstract class Action {
 		this.actionName = actionName;
 	}
 
-	public abstract void onAction(WorldRegion worldNode);
+	public abstract void onAction(WorldRegion worldRegion);
 
 	public String getActionName() {
 		return actionName;

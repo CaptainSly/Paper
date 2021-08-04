@@ -20,7 +20,7 @@
 			],
 			"lines": [
 				{
-					"npcId": "npcCalinforBob",
+					"npcId": "f",
 					"npcName": "Bob",
 					"npcOccupation": 3
 				}
@@ -195,15 +195,11 @@
 				{
 					"locationName": "Calinfor",
 					"locationId": "townCalinfor",
-					"locationDescription": "The humble town of Calinfor, provides residents with a shop and way for miners coming from Presca to make a living.",
+					"locationDescription": "A small hamlet that was established when General Raim retired from the military and bought the land, insisting the village would stay soverign in continental affairs. There are a few families that call Calinfor home and a market is also present. There is a fountain that was built to memoralize General Raim along with his grave being present right next to it. Some say tossing in a coin will bring good luck for the years to come.",
 					"locationNeighbors": [
 						{
 							"location": "routeTimsoth",
 							"direction": 3
-						},
-						{
-							"location": "cityAlgoria",
-							"direction": 1
 						}
 					],
 					"locationActions": [
@@ -235,13 +231,17 @@
 					"locationNpcs": []
 				},
 				{
-					"locationName": "Timsoth",
+					"locationName": "The Timsoth Passage",
 					"locationId": "routeTimsoth",
-					"locationDescription": "A flower grove, dedicated to a farmer named Timsoth who once helped recultivate the land. Now it's more so a route to go to and from Calinfor and Presca",
+					"locationDescription": "The Timsoth Passage once was an extremely lush flower field taken care of by one of General Raim's lieutenants, Alexander James Timsoth. The passage contains access to the mining town Presca and to Calinfor and Algoria as well. The north holds The Abeian Glave which leads into The Gorgeia Forest.",
 					"locationNeighbors": [
 						{
 							"location": "routeGlave",
 							"direction": 0
+						},
+						{
+							"location": "cityAlgoria",
+							"direction": 1
 						}
 					],
 					"locationActions": [],
@@ -394,7 +394,7 @@
 				},
 				{
 					"equipmentId": "armorChestPlateTest",
-					"equipmentName": "LEET SHINY CHEST PLATE LOLOLOLOL",
+					"equipmentName": "Chest Plate",
 					"equipmentDescription": "It's a fucking test item bruh",
 					"equipmentType": 2,
 					"equipmentStats": [
@@ -509,6 +509,97 @@
 				{
 					"typeStr": "1",
 					"name": "npcId"
+				}
+			]
+		},
+		{
+			"name": "faction_data",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "factionId"
+				},
+				{
+					"typeStr": "1",
+					"name": "factionName",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "factionDescription",
+					"display": null
+				},
+				{
+					"typeStr": "8",
+					"name": "factionAggroList",
+					"display": null
+				},
+				{
+					"typeStr": "8",
+					"name": "factionNeturalList",
+					"display": null
+				},
+				{
+					"typeStr": "8",
+					"name": "factionPositiveList",
+					"display": null
+				}
+			],
+			"lines": [
+				{
+					"factionId": "playerFaction",
+					"factionName": "Player Faction",
+					"factionDescription": "The Player Faction - ONLY THE PLAYER HAS THIS FACTION",
+					"factionAggroList": [],
+					"factionNeturalList": [],
+					"factionPositiveList": []
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "faction_data@factionAggroList",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "factionId",
+					"display": null
+				}
+			]
+		},
+		{
+			"name": "faction_data@factionNeturalList",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "factionId",
+					"display": null
+				}
+			]
+		},
+		{
+			"name": "faction_data@factionPositiveList",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "factionId",
+					"display": null
 				}
 			]
 		}

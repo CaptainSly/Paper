@@ -15,7 +15,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 
-public class MerchantDialog extends Alert {
+public class MerchantAlert extends Alert {
 
 	private Actor player, merchant;
 
@@ -25,7 +25,7 @@ public class MerchantDialog extends Alert {
 	private ListView<ItemSlot> playerInventoryList, merchantInventoryList;
 	private Label playerLabel, merchantLabel;
 
-	public MerchantDialog(Actor player, Actor merchant, String locationName) {
+	public MerchantAlert(Actor player, Actor merchant, String locationName) {
 		super(AlertType.CONFIRMATION);
 		this.setTitle(locationName + " Market");
 		this.setHeaderText("BUY/SELL");

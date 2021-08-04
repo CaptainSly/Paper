@@ -5,4 +5,7 @@ import javafx.scene.control.Dialog;
 
 public class PlayerCreationDialog extends Dialog<Player> {
 	
+	// Creates a Player
+	
+	
 }

@@ -14,7 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 
-public class ItemTransferDialog extends Alert {
+public class ItemTransferAlert extends Alert {
 
 	private BorderPane containerPane;
 	private GridPane containerGrid, playerGrid;
@@ -22,7 +22,7 @@ public class ItemTransferDialog extends Alert {
 	private Label playerLabel, containerLabel;
 	private Actor containerActor, playerActor;
 
-	public ItemTransferDialog(Actor containerActor, Actor playerActor) {
+	public ItemTransferAlert(Actor containerActor, Actor playerActor) {
 		super(AlertType.CONFIRMATION);
 		this.setTitle("Searching " + containerActor.getActorName());
 		this.setHeaderText("Transfer");

@@ -1,13 +1,15 @@
 A textbased game engine written in javafx for fun. Probably will never get finished.
 Not gonna lie, a lot of the code is hacks. It's completely unoptimized and I'm sure a better framework would be better than what I have going on here. JavaFX is not meant for games of any type it seems. 
-A lot of values had to be converted to and from ObservableValues and the way I do things, it clutters up and spaghettifies the code quite a bit. It also doesn't help that most of this code I wrote while I was stoned. Though, there are a few bangers in here that make it look like I know what I'm doing. This project is where all my ambitions go to die
+A lot of values had to be converted to and from ObservableValues and the way I do things, it clutters up and spaghettifies the code quite a bit. It also doesn't help that most of this code I wrote while I was stoned. Though, there are a few bangers in here that make it look like I know what I'm doing. This project is where all my ambitions go to die. 
 
 Using The Following Libraries
 =============================
 
-[JavaFX](https://openjfx.io/) - 15
+[JavaFX](https://openjfx.io/) - 15.0.1
 
 [FontAwesomeFX Commons](https://bitbucket.org/Jerady/fontawesomefx) 9.1.2 | FontAwesome 4.7.0-9.1.2
+
+[ControlsFX](https://github.com/controlsfx/controlsfx) 11.1.0
 
 [DiceNotation](https://github.com/Bernardo-MG/dice-notation-java) - 2.1.2
 
@@ -36,7 +38,7 @@ Version 0.0.3
 * Working on up towards Crafting
 * Scratchpadding Character Race, Classes, Factions
 * Implemented lootlists (Probably needs to be fixed will figure out later)
-* Working on more Actions (Currently working on smithing, battle action will probably be next once enemies get prototyped)
+* Working on more Actions (Smithing, Battle, Crafting) 
 * Fixed bug where buying items and selling them left ghost items in the list
 * Implementing The Journal Alert
 * Added Generic ItemTransfer Alert/Dialog
@@ -45,7 +47,9 @@ Version 0.0.3
 * Implemented a level up screen, takes in account leveling up repeatedly from a lot of exp gain. Not balanced what so ever, may have bugs. Can allot skill points to skills
 * Fixed Bug Inv01, Implemented Sorting based on the ItemSlot empty value (Thank you Boolean.compare(x,y))
 * Constantly Refractoring random things and renaming files
-	
+* Working on the Battle System. 
+* Refactored the Dialog classes that extend Alert to have Alert in their name instead of Dialog
+* Prototyping Enemies. 
 
 BUGS
 ====
@@ -56,19 +60,19 @@ BUG - Inv01 - FIXED
 TODO List
 =========
 
-* [x] Some type of list sorting for the Inventories. They can be sorted any way as long as empty ItemSlots are placed at the bottom (Should fix bug Inv01)
+* [x] Some type of list sorting for the Inventories. They can be sorted any way as long as empty ItemSlots are placed at the bottom (Should fix bug Inv01) -- COMPLETE (Thank god for Boolean.compare(x, y))
 * [ ] Implement The Journal Alert Class -- IN PROGRESS
 * [ ] Implement The Player Creation Dialog
 * [ ] Implement The Character Class, Character Race and the Faction classes -- IN PROGRESS
-* [ ] Implement The Map Class inside 
-* [x] Implement Dragging and Dropping of Equipment from the inventory to the equipment slots
+* [ ] Implement The Map Class
+* [x] Implement Dragging and Dropping of Equipment from the inventory to the equipment slots -- COMPLETE
 * [ ] Implement Lua Scripting and create a basic Lua Library for the project.
 * [ ] Implement Magic System
 * [ ] Implement Stamina Requirement to move from location to location, a player has to rest before being able to move to different locations, (less spammy)
-* [ ] Work on implementing the rest of the data inside the cdb file
+* [ ] Work on implementing the rest of the data inside the cdb file -- IN PROGRESS (See Things to Potentially work on)
 * [x] Work on Player Level Up Method -- COMPLETE (Not balanced what so ever can be cheated really easily, but the node should scale if I decide to add more skills)
 * [ ] Implement Balancing within the Skills, Stats, etc. -- IN PROGRESS ETERNAL
-* [ ] Implement Battle Action and a battle state machine
+* [ ] Implement Battle Action and a battle state machine -- IN PROGRESS
 * [ ] Implement Crafting -- IN PROGRESS
 * [ ] Implement Questing
 * [ ] Implement a tool requirement to Resource Gathering Actions
@@ -76,12 +80,17 @@ TODO List
 * [ ] Implement Saving and Loading
 * [ ] Implement Options panel 
 * [ ] Implement Inspection Panel
+* [ ] Implement the 'Pen Editor'. Get it, cause the "engine" is called Paper. Pen and Paper. It's funny. 
 	
 Things to potentially work on
 =============================
 
+* Maybe switch to using FXGL, currently using just JavaFX, and FXGL was built to create games with using JavaFX. Shouldn't be entirely too hard to switch over. 
+
 * Try to change how the CastleDB file is being loaded, either creating a custom deserializer or refactor the code into a easier to use method, currently it's all done with a JsonReader and literally stepping through the file line by line and extracting the relevant data. 
+
 * Think about going for just straight json files for loading instead of the entire CastleDB file, which would allow for more precise creation of objects and entities. Or a combination of the two where certain data can require both. i.e. specific equipment and what not
+
 	
 ScreenShots
 ===========

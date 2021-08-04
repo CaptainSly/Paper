@@ -4,7 +4,7 @@ import captainsly.paper.entities.stats.Stat;
 import captainsly.paper.mechanics.items.equipment.Equipment;
 import captainsly.paper.mechanics.items.equipment.Equipment.EquipmentType;
 import captainsly.paper.mechanics.items.equipment.EquipmentStat;
-import captainsly.paper.nodes.dialogs.LevelUpDialog;
+import captainsly.paper.nodes.dialogs.LevelUpAlert;
 import captainsly.paper.nodes.regions.PlayerStatRegion;
 import captainsly.paper.nodes.regions.WorldRegion;
 import captainsly.paper.utils.Utils;
@@ -94,7 +94,7 @@ public class Player extends Actor {
 		playerStats.getPlayerXpTooltip().setText("Amount needed for next level: " + toNextLevel());
 		worldRegion.write("LEVEL UP!");
 
-		LevelUpDialog levelup = new LevelUpDialog(this);
+		LevelUpAlert levelup = new LevelUpAlert(this);
 		levelup.showDialog();
 
 		if (getActorStat(Stat.XP) >= toNextLevel())
