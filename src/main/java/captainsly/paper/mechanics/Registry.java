@@ -12,8 +12,10 @@ import java.util.Map.Entry;
 
 import com.google.gson.stream.JsonReader;
 
+import captainsly.paper.entities.Enemy;
 import captainsly.paper.entities.Npc;
 import captainsly.paper.entities.Npc.Occupation;
+import captainsly.paper.entities.stats.Stat;
 import captainsly.paper.mechanics.items.Item;
 import captainsly.paper.mechanics.items.Item.ItemType;
 import captainsly.paper.mechanics.items.equipment.Equipment;
@@ -21,6 +23,7 @@ import captainsly.paper.mechanics.items.equipment.Equipment.EquipmentType;
 import captainsly.paper.mechanics.items.equipment.EquipmentStat;
 import captainsly.paper.mechanics.locations.Location;
 import captainsly.paper.mechanics.locations.Location.Direction;
+import captainsly.paper.mechanics.locations.actions.BattleAction;
 import captainsly.paper.mechanics.locations.actions.MineAction;
 import captainsly.paper.mechanics.locations.actions.ShopAction;
 
@@ -31,10 +34,12 @@ public class Registry {
 	public static final HashMap<String, Location> locationRegistry = new HashMap<String, Location>();
 	public static final HashMap<String, Lootlist> lootListRegistry = new HashMap<String, Lootlist>();
 	public static final HashMap<String, Npc> npcRegistry = new HashMap<String, Npc>();
+	public static final HashMap<String, Enemy> enemyRegistry = new HashMap<String, Enemy>();
 
 	private static HashMap<String, HashMap<String, Direction>> locationNeighborMap = new HashMap<String, HashMap<String, Direction>>();
 
 	public static void register() {
+		// TODO: Better way of doing this, this is exhausting.
 		JsonReader jsonReader = new JsonReader(new StringReader(readFile("src/main/resources/paper.cdb")));
 		jsonReader.setLenient(true);
 		try {
@@ -86,11 +91,65 @@ public class Registry {
 										npc = new Npc(npcId, npcName, npcOccupation);
 										jsonReader.endObject();
 										npcRegistry.put(npcId, npc);
-									} else if (data.contentEquals("item_data")) { // All the item data lies in here so
-																					// if the
-																					// data flag was set to this, start
-																					// preparing
-																					// for item creation
+									} else if (data.contentEquals("enemy_data")) {
+										Enemy enemy = null;
+										String enemyId = "";
+
+										jsonReader.beginObject();
+										while (jsonReader.hasNext()) {
+											name = jsonReader.nextName();
+											switch (name) {
+												case "enemyId":
+													enemyId = jsonReader.nextString();
+													break;
+												case "enemyName":
+													enemy = new Enemy(enemyId, jsonReader.nextString());
+													break;
+												case "enemyDescription":
+													enemy.setEnemyDescription(jsonReader.nextString());
+													break;
+												case "enemyItemList":
+													// TODO: this
+													jsonReader.skipValue();
+													break;
+												case "enemyLootList":
+													// TODO: This
+													jsonReader.skipValue();
+													break;
+												case "enemyHp":
+													enemy.setActorStat(Stat.HP, jsonReader.nextInt());
+													break;
+												case "enemyMp":
+													enemy.setActorStat(Stat.MP, jsonReader.nextInt());
+													break;
+												case "enemyLevel":
+													enemy.setActorStat(Stat.LEVEL, jsonReader.nextInt());
+													break;
+												case "enemyAtk":
+													enemy.setActorStat(Stat.ATK, jsonReader.nextInt());
+													break;
+												case "enemyDef":
+													enemy.setActorStat(Stat.DEF, jsonReader.nextInt());
+													break;
+												case "enemySpd":
+													enemy.setActorStat(Stat.SPD, jsonReader.nextInt());
+													break;
+												case "enemyWis":
+													enemy.setActorStat(Stat.WIS, jsonReader.nextInt());
+													break;
+											}
+										}
+										jsonReader.endObject();
+
+										System.out.println("ENEMY: " + enemy.getActorId() + enemy.getActorStat(Stat.HP));
+										enemyRegistry.put(enemy.getActorId(), enemy);
+
+									} else if (data.contentEquals("item_data")) {
+										// All the item data lies in here so
+										// if the
+										// data flag was set to this, start
+										// preparing
+										// for item creation
 
 										String[] itemIds = new String[3];
 										int itemCost = 0;
@@ -254,6 +313,9 @@ public class Registry {
 										else if (action.contentEquals("actionShop"))
 											locationRegistry.get(genLocal.getLocationId())
 													.addLocationAction(new ShopAction());
+										else if (action.contentEquals("actionBattle"))
+											locationRegistry.get(genLocal.getLocationId())
+											.addLocationAction(new BattleAction());
 
 									} else if (data.contentEquals("equipment_data")) {
 										Equipment equipment = null;

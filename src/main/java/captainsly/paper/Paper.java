@@ -2,7 +2,7 @@ package captainsly.paper;
 
 import captainsly.paper.entities.Player;
 import captainsly.paper.mechanics.Registry;
-import captainsly.paper.nodes.regions.WorldRegion;
+import captainsly.paper.mechanics.nodes.regions.WorldRegion;
 import captainsly.paper.utils.Utils;
 import javafx.application.Application;
 import javafx.scene.Scene;

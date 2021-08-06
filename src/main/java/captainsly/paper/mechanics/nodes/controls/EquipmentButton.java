@@ -1,11 +1,11 @@
-package captainsly.paper.nodes.controls;
+package captainsly.paper.mechanics.nodes.controls;
 
 import captainsly.paper.entities.Player;
 import captainsly.paper.mechanics.Registry;
 import captainsly.paper.mechanics.items.equipment.Equipment;
 import captainsly.paper.mechanics.items.equipment.Equipment.EquipmentType;
+import captainsly.paper.mechanics.nodes.regions.WorldRegion;
 import captainsly.paper.mechanics.items.equipment.EquipmentStat;
-import captainsly.paper.nodes.regions.WorldRegion;
 import captainsly.paper.utils.Utils;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;

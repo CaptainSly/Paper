@@ -6,7 +6,7 @@ public class Faction {
 
 	private String factionId, factionName, factionDescription;
 
-	private List<Faction> aggroFaction, neutralFaction, positiveFaction;
+	private List<Faction> aggroFaction, neutralFaction;
 
 	public String getFactionId() {
 		return factionId;
@@ -26,10 +26,6 @@ public class Faction {
 
 	public List<Faction> getNeutralFaction() {
 		return neutralFaction;
-	}
-
-	public List<Faction> getPositiveFaction() {
-		return positiveFaction;
 	}
 
 }

@@ -1,4 +1,4 @@
-package captainsly.paper.nodes.regions;
+package captainsly.paper.mechanics.nodes.regions;
 
 import java.util.Random;
 
@@ -7,8 +7,8 @@ import captainsly.paper.mechanics.Registry;
 import captainsly.paper.mechanics.locations.Location;
 import captainsly.paper.mechanics.locations.Location.Direction;
 import captainsly.paper.mechanics.locations.actions.Action;
-import captainsly.paper.nodes.controls.MovementControl;
-import captainsly.paper.nodes.dialogs.PlayerJournalAlert;
+import captainsly.paper.mechanics.nodes.alerts.PlayerJournalAlert;
+import captainsly.paper.mechanics.nodes.controls.MovementControl;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;

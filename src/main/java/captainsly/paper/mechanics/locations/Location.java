@@ -79,7 +79,7 @@ public class Location {
 	public List<Action> getActions() {
 		return actionList;
 	}
-	
+
 	public List<Npc> getNpcs() {
 		return npcList;
 	}

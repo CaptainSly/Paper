@@ -1,4 +1,4 @@
-package captainsly.paper.nodes.dialogs;
+package captainsly.paper.mechanics.nodes.alerts;
 
 import javafx.scene.control.Alert;
 

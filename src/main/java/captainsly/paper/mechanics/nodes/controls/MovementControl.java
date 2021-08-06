@@ -1,8 +1,8 @@
-package captainsly.paper.nodes.controls;
+package captainsly.paper.mechanics.nodes.controls;
 
 import captainsly.paper.mechanics.locations.Location;
 import captainsly.paper.mechanics.locations.Location.Direction;
-import captainsly.paper.nodes.regions.WorldRegion;
+import captainsly.paper.mechanics.nodes.regions.WorldRegion;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.geometry.Insets;

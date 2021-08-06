@@ -1,4 +1,4 @@
-package captainsly.paper.nodes.regions;
+package captainsly.paper.mechanics.nodes.regions;
 
 import java.util.Optional;
 
@@ -8,8 +8,8 @@ import captainsly.paper.mechanics.containers.ItemSlot;
 import captainsly.paper.mechanics.items.Item;
 import captainsly.paper.mechanics.items.Item.ItemType;
 import captainsly.paper.mechanics.items.equipment.Equipment.EquipmentType;
-import captainsly.paper.nodes.controls.EquipmentButton;
-import captainsly.paper.nodes.dialogs.NumberDialog;
+import captainsly.paper.mechanics.nodes.controls.EquipmentButton;
+import captainsly.paper.mechanics.nodes.dialogs.NumberDialog;
 import captainsly.paper.utils.Utils;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.EventHandler;

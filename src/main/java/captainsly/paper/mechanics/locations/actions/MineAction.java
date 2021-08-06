@@ -12,7 +12,7 @@ import com.bernardomg.tabletop.dice.parser.DefaultDiceParser;
 import captainsly.paper.mechanics.Lootlist;
 import captainsly.paper.mechanics.Registry;
 import captainsly.paper.mechanics.items.Item;
-import captainsly.paper.nodes.regions.WorldRegion;
+import captainsly.paper.mechanics.nodes.regions.WorldRegion;
 import javafx.application.Platform;
 
 public class MineAction extends Action {

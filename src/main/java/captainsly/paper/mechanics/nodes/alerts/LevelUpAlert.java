@@ -1,4 +1,4 @@
-package captainsly.paper.nodes.dialogs;
+package captainsly.paper.mechanics.nodes.alerts;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,10 @@
-package captainsly.paper.nodes.dialogs;
+package captainsly.paper.mechanics.nodes.alerts;
 
 import java.util.Optional;
 
 import captainsly.paper.entities.Actor;
 import captainsly.paper.mechanics.containers.ItemSlot;
+import captainsly.paper.mechanics.nodes.dialogs.NumberDialog;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;

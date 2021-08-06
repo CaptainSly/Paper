@@ -1,8 +1,8 @@
 package captainsly.paper.mechanics.locations.actions;
 
 import captainsly.paper.entities.Merchant;
-import captainsly.paper.nodes.dialogs.MerchantAlert;
-import captainsly.paper.nodes.regions.WorldRegion;
+import captainsly.paper.mechanics.nodes.alerts.MerchantAlert;
+import captainsly.paper.mechanics.nodes.regions.WorldRegion;
 
 public class ShopAction extends Action {
 
@@ -14,11 +14,11 @@ public class ShopAction extends Action {
 	}
 
 	@Override
-	public void onAction(WorldRegion worldNode) {
-		MerchantAlert dialog = new MerchantAlert(worldNode.getPlayer(), merchant,
-				worldNode.getCurrentLocation().getLocationName());
+	public void onAction(WorldRegion worldRegion) {
+		MerchantAlert dialog = new MerchantAlert(worldRegion.getPlayer(), merchant,
+				worldRegion.getCurrentLocation().getLocationName());
 		dialog.showAndWait();
-		worldNode.refresh();
+		worldRegion.refresh();
 	}
 
 }

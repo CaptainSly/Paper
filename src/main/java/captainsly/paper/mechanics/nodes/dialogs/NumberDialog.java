@@ -1,4 +1,4 @@
-package captainsly.paper.nodes.dialogs;
+package captainsly.paper.mechanics.nodes.dialogs;
 
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;

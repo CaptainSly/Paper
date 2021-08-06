@@ -1,6 +1,6 @@
 package captainsly.paper.mechanics.locations.actions;
 
-import captainsly.paper.nodes.regions.WorldRegion;
+import captainsly.paper.mechanics.nodes.regions.WorldRegion;
 
 public abstract class Action {
 

@@ -1,4 +1,4 @@
-package captainsly.paper.nodes.regions;
+package captainsly.paper.mechanics.nodes.regions;
 
 import javafx.scene.layout.Region;
 

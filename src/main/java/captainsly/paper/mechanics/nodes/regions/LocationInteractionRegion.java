@@ -1,4 +1,4 @@
-package captainsly.paper.nodes.regions;
+package captainsly.paper.mechanics.nodes.regions;
 
 import captainsly.paper.entities.Npc;
 import captainsly.paper.mechanics.locations.Location;
@@ -13,9 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 public class LocationInteractionRegion extends Region {
-	// TODO: Fill out this class, bring over the LocationAction controls from the
-	// worldnode to here
-
+	
 	private VBox interactionNodeRoot;
 
 	private ListView<Action> actionListView;
@@ -79,7 +77,7 @@ public class LocationInteractionRegion extends Region {
 					protected void updateItem(Npc item, boolean empty) {
 						super.updateItem(item, empty);
 
-						if (empty) {
+						if (empty || item == null) {
 							this.setText("");
 							this.setTooltip(null);
 						} else {

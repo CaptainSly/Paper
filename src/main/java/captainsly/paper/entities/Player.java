@@ -3,10 +3,10 @@ package captainsly.paper.entities;
 import captainsly.paper.entities.stats.Stat;
 import captainsly.paper.mechanics.items.equipment.Equipment;
 import captainsly.paper.mechanics.items.equipment.Equipment.EquipmentType;
+import captainsly.paper.mechanics.nodes.alerts.LevelUpAlert;
+import captainsly.paper.mechanics.nodes.regions.PlayerStatRegion;
+import captainsly.paper.mechanics.nodes.regions.WorldRegion;
 import captainsly.paper.mechanics.items.equipment.EquipmentStat;
-import captainsly.paper.nodes.dialogs.LevelUpAlert;
-import captainsly.paper.nodes.regions.PlayerStatRegion;
-import captainsly.paper.nodes.regions.WorldRegion;
 import captainsly.paper.utils.Utils;
 
 public class Player extends Actor {

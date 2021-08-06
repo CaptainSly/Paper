@@ -20,9 +20,88 @@
 			],
 			"lines": [
 				{
-					"npcId": "f",
+					"npcId": "npcCalinforBob",
 					"npcName": "Bob",
 					"npcOccupation": 3
+				}
+			],
+			"separators": [],
+			"props": {}
+		},
+		{
+			"name": "enemy_data",
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "enemyId"
+				},
+				{
+					"typeStr": "1",
+					"name": "enemyName",
+					"display": null
+				},
+				{
+					"typeStr": "1",
+					"name": "enemyDescription",
+					"display": null
+				},
+				{
+					"typeStr": "8",
+					"name": "enemyItemList",
+					"display": null
+				},
+				{
+					"typeStr": "8",
+					"name": "enemyLootList",
+					"display": null
+				},
+				{
+					"typeStr": "3",
+					"name": "enemyHp"
+				},
+				{
+					"typeStr": "3",
+					"name": "enemyMp"
+				},
+				{
+					"typeStr": "3",
+					"name": "enemyLevel"
+				},
+				{
+					"typeStr": "3",
+					"name": "enemyAtk"
+				},
+				{
+					"typeStr": "3",
+					"name": "enemyDef"
+				},
+				{
+					"typeStr": "3",
+					"name": "enemySpd"
+				},
+				{
+					"typeStr": "3",
+					"name": "enemyWis"
+				}
+			],
+			"lines": [
+				{
+					"enemyId": "enemySlimeGreen",
+					"enemyName": "Green Slime",
+					"enemyDescription": "A gelatinous slime, it's green in color, they bounce around and like to attack travelers. They are very weak creatures.",
+					"enemyItemList": [],
+					"enemyLootList": [
+						{
+							"itemId": "itemMiscSlimeGreen"
+						}
+					],
+					"enemyHp": 5,
+					"enemyMp": 0,
+					"enemyLevel": 1,
+					"enemyAtk": 2,
+					"enemyDef": 1,
+					"enemySpd": 2,
+					"enemyWis": 0
 				}
 			],
 			"separators": [],
@@ -54,60 +133,67 @@
 			],
 			"lines": [
 				{
-					"itemId": "oreIron",
+					"itemId": "itemOreIron",
 					"itemName": "Iron Ore",
 					"itemDescription": "Ore containing iron, needs to be smelted into ingots before it can be used.",
 					"itemCost": 25,
 					"itemType": 3
 				},
 				{
-					"itemId": "oreCopper",
+					"itemId": "itemOreCopper",
 					"itemName": "Copper Ore",
 					"itemDescription": "Ore containing copper, needs to be smelted into ingots before it can be used.",
 					"itemCost": 25,
 					"itemType": 3
 				},
 				{
-					"itemId": "oreTin",
+					"itemId": "itemOreTin",
 					"itemName": "Tin Ore",
 					"itemDescription": "Ore containing tin, needs to be smelted into ingots before it can be used.",
 					"itemCost": 25,
 					"itemType": 3
 				},
 				{
-					"itemId": "ingotIron",
+					"itemId": "itemIngotIron",
 					"itemName": "Iron Ingot",
 					"itemDescription": "An ingot made of solid iron.",
 					"itemCost": 50,
 					"itemType": 3
 				},
 				{
-					"itemId": "ingotCopper",
+					"itemId": "itemIngotCopper",
 					"itemName": "Copper Ingot",
 					"itemDescription": "An ingot made of solid copper.",
 					"itemCost": 50,
 					"itemType": 3
 				},
 				{
-					"itemId": "ingotTin",
+					"itemId": "itemIngotTin",
 					"itemName": "Tin Ingot",
 					"itemDescription": "An ingot made of solid tin.",
 					"itemCost": 50,
 					"itemType": 3
 				},
 				{
-					"itemId": "foodApple",
+					"itemId": "itemFoodApple",
 					"itemName": "Apple",
 					"itemDescription": "A delicious red apple",
 					"itemCost": 10,
 					"itemType": 0
 				},
 				{
-					"itemId": "foodBread",
+					"itemId": "itemFoodBread",
 					"itemName": "Bread",
 					"itemDescription": "A freshly baked loaf of bread",
 					"itemCost": 15,
 					"itemType": 0
+				},
+				{
+					"itemId": "itemMiscSlimeGreen",
+					"itemName": "",
+					"itemDescription": "",
+					"itemCost": 0,
+					"itemType": 3
 				}
 			],
 			"separators": [],
@@ -273,8 +359,16 @@
 					"locationName": "The Gorgeia Forest",
 					"locationDescription": "The Gorgeia Forest, a dark forest with a magical fog hanging in the air. It almost feels evil in a way.",
 					"locationNeighbors": [],
-					"locationActions": [],
-					"locationNpcs": []
+					"locationActions": [
+						{
+							"actionId": "actionBattle"
+						}
+					],
+					"locationNpcs": [
+						{
+							"npcId": ""
+						}
+					]
 				}
 			],
 			"separators": [],
@@ -599,6 +693,36 @@
 				{
 					"typeStr": "0",
 					"name": "factionId",
+					"display": null
+				}
+			]
+		},
+		{
+			"name": "enemy_data@enemyItemList",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "itemId",
+					"display": null
+				}
+			]
+		},
+		{
+			"name": "enemy_data@enemyLootList",
+			"props": {
+				"hide": true
+			},
+			"separators": [],
+			"lines": [],
+			"columns": [
+				{
+					"typeStr": "0",
+					"name": "itemId",
 					"display": null
 				}
 			]

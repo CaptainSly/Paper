@@ -1,6 +1,6 @@
-package captainsly.paper.nodes.dialogs;
+package captainsly.paper.mechanics.nodes.alerts;
 
-import captainsly.paper.nodes.regions.WorldRegion;
+import captainsly.paper.mechanics.nodes.regions.WorldRegion;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Tab;

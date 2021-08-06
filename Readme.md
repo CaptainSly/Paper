@@ -49,7 +49,7 @@ Version 0.0.3
 * Constantly Refractoring random things and renaming files
 * Working on the Battle System. 
 * Refactored the Dialog classes that extend Alert to have Alert in their name instead of Dialog
-* Prototyping Enemies. 
+* Prototyping Enemies, beastiary
 
 BUGS
 ====
@@ -64,6 +64,7 @@ TODO List
 * [ ] Implement The Journal Alert Class -- IN PROGRESS
 * [ ] Implement The Player Creation Dialog
 * [ ] Implement The Character Class, Character Race and the Faction classes -- IN PROGRESS
+* [ ] Implement A Beastiary - Goes hand in hand with the battle scene and enemies -- IN PROGRESS
 * [ ] Implement The Map Class
 * [x] Implement Dragging and Dropping of Equipment from the inventory to the equipment slots -- COMPLETE
 * [ ] Implement Lua Scripting and create a basic Lua Library for the project.
