@@ -92,11 +92,23 @@ public class BattleAlert extends Alert {
 		// First thing to do is declare the controls we'll need at the top, then split
 		// it off into sections
 		Label playerNameLabel = new Label();
+		Label playerHpLabel = new Label();
+		Label playerMpLabel = new Label();
+
 		Label enemyNameLabel = new Label();
+		Label enemyHpLabel = new Label();
+		Label enemyMpLabel = new Label();
 
 		// Setup the Player Side
 		playerNameLabel.setText(player.getActorName());
+		playerHpLabel.setText("HP: " + player.getActorStat(Stat.MAX_HP) + "/" + player.getActorStat(Stat.HP));
+		playerMpLabel.setText("MP: " + player.getActorStat(Stat.MAX_MP) + "/" + player.getActorStat(Stat.MP));
 
+		enemyNameLabel.setText(enemy.getActorName());
+		enemyHpLabel.setText("HP: " + enemy.getActorStat(Stat.MAX_HP) + "/" + enemy.getActorStat(Stat.HP));
+		enemyMpLabel.setText("MP: " + enemy.getActorStat(Stat.MAX_MP) + "/" + enemy.getActorStat(Stat.MP));
+		
+		
 		// Player Controls
 		Button attackBtn = new Button("Attack");
 		Button magicBtn = new Button("Magic");
@@ -107,6 +119,7 @@ public class BattleAlert extends Alert {
 			// TODO: ATTACK
 			// Did the player hit? If so the player does their attack stat worth of damage -
 			// the enemys defence.
+			
 
 		});
 
@@ -131,12 +144,14 @@ public class BattleAlert extends Alert {
 
 		// Add the controls to the list
 		playerAreaGrid.add(playerNameLabel, 0, 0);
+		playerAreaGrid.add(playerHpLabel, 1, 0);
 		playerAreaGrid.add(attackBtn, 0, 1);
 		playerAreaGrid.add(magicBtn, 1, 1);
 		playerAreaGrid.add(itemsBtn, 0, 2);
 		playerAreaGrid.add(runBtn, 1, 2);
 
 		enemyAreaGrid.add(enemyNameLabel, 0, 0);
+		enemyAreaGrid.add(enemyHpLabel, 1, 0);
 
 	}
 

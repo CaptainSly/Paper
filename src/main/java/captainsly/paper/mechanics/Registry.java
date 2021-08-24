@@ -44,7 +44,7 @@ public class Registry {
 		jsonReader.setLenient(true);
 		try {
 
-			// String flag that determines what data is being done
+			// String flag that determines what data is currently being accessed
 			String data = "";
 
 			jsonReader.beginObject();
@@ -109,18 +109,22 @@ public class Registry {
 													enemy.setEnemyDescription(jsonReader.nextString());
 													break;
 												case "enemyItemList":
-													// TODO: this
+													// TODO: Generate the enemies current inventory
 													jsonReader.skipValue();
 													break;
 												case "enemyLootList":
-													// TODO: This
+													// TODO: Generate the enemies death drop
 													jsonReader.skipValue();
 													break;
 												case "enemyHp":
-													enemy.setActorStat(Stat.HP, jsonReader.nextInt());
+													int hp = jsonReader.nextInt();
+													enemy.setActorStat(Stat.MAX_HP, hp);
+													enemy.setActorStat(Stat.HP, hp);
 													break;
 												case "enemyMp":
-													enemy.setActorStat(Stat.MP, jsonReader.nextInt());
+													int mp = jsonReader.nextInt();
+													enemy.setActorStat(Stat.MAX_MP, mp);
+													enemy.setActorStat(Stat.MP, mp);
 													break;
 												case "enemyLevel":
 													enemy.setActorStat(Stat.LEVEL, jsonReader.nextInt());
