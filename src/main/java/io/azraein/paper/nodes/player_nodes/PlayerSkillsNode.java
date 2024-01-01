@@ -9,10 +9,12 @@ import javafx.util.Callback;
 
 public class PlayerSkillsNode extends PaperNode {
 
+	private ListView<Skills> playerSkillView;
+	
 	public PlayerSkillsNode(PaperApp paperApp) {
 		super(paperApp);
 
-		ListView<Skills> playerSkillView = new ListView<>();
+		playerSkillView = new ListView<>();
 		playerSkillView.getItems().addAll(Skills.values());
 		playerSkillView.setCellFactory(new Callback<>() {
 
@@ -23,9 +25,10 @@ public class PlayerSkillsNode extends PaperNode {
 					@Override
 					protected void updateItem(Skills item, boolean empty) {
 						super.updateItem(item, empty);
+						var player = paperApp.playerProperty().get();
 
 						if (item != null) {
-							this.setText(item.name() + ": " + paperApp.playerProperty().get().getEntitySkill(item));
+							this.setText(item.name() + ": " + player.getEntitySkill(item));
 						} else
 							this.setText("");
 
@@ -38,6 +41,11 @@ public class PlayerSkillsNode extends PaperNode {
 
 		getChildren().add(playerSkillView);
 
+	}
+	
+	public void reset() {
+		playerSkillView.getItems().clear();
+		playerSkillView.getItems().addAll(Skills.values());
 	}
 
 }

@@ -4,7 +4,7 @@ import org.tinylog.Logger;
 
 import io.azraein.paper.core.entities.stats.Skills;
 import io.azraein.paper.core.system.Utils;
-import io.azraein.paper.nodes.paper_scenes.PaperCharCreatorScene;
+import io.azraein.paper.scenes.PaperCharCreatorScene;
 import javafx.beans.property.IntegerProperty;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;

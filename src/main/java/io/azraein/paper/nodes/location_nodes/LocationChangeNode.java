@@ -4,7 +4,7 @@ import io.azraein.paper.PaperApp;
 import io.azraein.paper.core.locations.Direction;
 import io.azraein.paper.core.system.Registry;
 import io.azraein.paper.nodes.PaperNode;
-import io.azraein.paper.nodes.paper_scenes.PaperGameScene;
+import io.azraein.paper.scenes.PaperGameScene;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;

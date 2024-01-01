@@ -10,12 +10,15 @@ public class Equipment extends Item {
 	private Skills equipmentSkillType;
 	private int equipmentSkillBonus;
 
-	// TODO: Equipment Statistics
+	private int equipmentDefenceBonus;
 
-	public Equipment(String itemId, String itemName, String itemDescription, EquipType equipmentEquipType) {
+	public Equipment(String itemId, String itemName, String itemDescription, EquipType equipmentEquipType,
+			int equipmentDefenceBonus) {
 		super(itemId, itemName, itemDescription);
 		this.equipmentEquipType = equipmentEquipType;
+		this.equipmentDefenceBonus = equipmentDefenceBonus;
 		equipmentSkillBonus = 0;
+
 	}
 
 	public EquipType getEquipmentEquipType() {
@@ -24,6 +27,10 @@ public class Equipment extends Item {
 
 	public Skills getEquipmentSkillType() {
 		return equipmentSkillType;
+	}
+
+	public int getEquipmentDefenceBonus() {
+		return equipmentDefenceBonus;
 	}
 
 	public int getEquipmentSkillBonus() {

@@ -3,6 +3,8 @@ package io.azraein.paper.core.system;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.tinylog.Logger;
+
 import io.azraein.paper.core.entities.Entity;
 import io.azraein.paper.core.impl.IGameEvent;
 import io.azraein.paper.core.items.Item;
@@ -24,6 +26,7 @@ public final class Registry {
 	}
 
 	public static void addEntity(Entity entity) {
+		Logger.debug("Adding Entity: " + entity.getEntityName());
 		Registry.REGISTRY_ENTITIES.put(entity.getEntityId(), entity);
 	}
 

@@ -6,7 +6,7 @@ import io.azraein.paper.PaperApp;
 import io.azraein.paper.core.impl.IGameEvent;
 import io.azraein.paper.core.system.Registry;
 import io.azraein.paper.nodes.PaperNode;
-import io.azraein.paper.nodes.paper_scenes.PaperGameScene;
+import io.azraein.paper.scenes.PaperGameScene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;

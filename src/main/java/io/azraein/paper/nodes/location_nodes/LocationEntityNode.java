@@ -2,9 +2,10 @@ package io.azraein.paper.nodes.location_nodes;
 
 import io.azraein.paper.PaperApp;
 import io.azraein.paper.core.entities.Entity;
+import io.azraein.paper.core.entities.EntityState;
 import io.azraein.paper.core.system.Registry;
 import io.azraein.paper.nodes.PaperNode;
-import io.azraein.paper.nodes.paper_scenes.PaperBattleScene;
+import io.azraein.paper.scenes.PaperBattleScene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -66,10 +67,23 @@ public class LocationEntityNode extends PaperNode {
 			if (newLocation != null) {
 				entityList.getItems().clear();
 				ObservableList<Entity> dummyList = FXCollections.observableArrayList();
-				for (String id : newLocation.getLocationEntities())
-					dummyList.add(Registry.getEntity(id));
+				for (String id : newLocation.getLocationEntities()) {
+					var e = Registry.getEntity(id);
+
+					if (!e.getEntityState().equals(EntityState.DEAD))
+						dummyList.add(e);
+				}
 
 				entityList.setItems(dummyList);
+
+				for (Entity e : entityList.getItems()) {
+					e.entityStateProperty().addListener((obser, oldValue, newValue) -> {
+						if (newValue.equals(EntityState.DEAD))
+							entityList.getItems().remove(e);
+
+					});
+				}
+
 			}
 
 		});

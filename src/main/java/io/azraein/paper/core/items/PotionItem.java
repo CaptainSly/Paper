@@ -22,7 +22,7 @@ public class PotionItem extends ConsumableItem {
 	public void onConsume(Entity entity) {
 		switch (potionType) {
 		case HEALTH:
-			entity.addEntityHealth(potionHealAmount);
+			entity.healEntity(potionHealAmount);
 		case MANA:
 			entity.addEntityMana(potionHealAmount);
 		}

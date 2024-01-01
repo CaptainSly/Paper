@@ -4,7 +4,7 @@ import io.azraein.paper.PaperApp;
 import io.azraein.paper.core.Paper;
 import io.azraein.paper.core.entities.stats.Characteristics;
 import io.azraein.paper.nodes.PaperNode;
-import io.azraein.paper.nodes.paper_scenes.PaperGameScene;
+import io.azraein.paper.scenes.PaperGameScene;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
@@ -40,6 +40,8 @@ public class PlayerStatsNode extends PaperNode {
 			charLabels[chara.ordinal()] = new Label(chara.name() + ": ");
 
 		playerName.setOnAction(e -> {
+			playerSkillsNode.reset();
+			
 			Alert alert = new Alert(AlertType.NONE);
 			alert.setTitle(paperApp.playerProperty().get().getEntityName() + "'s Skills");
 			alert.getButtonTypes().add(ButtonType.OK);

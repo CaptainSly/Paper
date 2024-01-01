@@ -27,9 +27,6 @@
 
 **Reproduces how often:** [What percentage of the time does it reproduce?]
 
-### Versions
-
-You can get this information from opening up the Editor and selecting about from the menu bar. It'll tell you the current version downloaded of the ZeldaEngine and Editor. You'll need both. Also include the OS and OS versions of your computer as well.
 
 ### Additional information
 

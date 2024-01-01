@@ -5,15 +5,22 @@ import org.tinylog.Logger;
 import io.azraein.paper.core.background.CharacterBackground;
 import io.azraein.paper.core.entities.stats.Characteristics;
 import io.azraein.paper.core.entities.stats.Skills;
+import io.azraein.paper.core.entities.status_buffs.Buff;
+import io.azraein.paper.core.entities.status_buffs.Debuff;
+import io.azraein.paper.core.entities.status_buffs.StatusConditions;
 import io.azraein.paper.core.items.Item;
 import io.azraein.paper.core.items.container.Inventory;
 import io.azraein.paper.core.items.equipment.EquipType;
 import io.azraein.paper.core.items.equipment.Equipment;
+import io.azraein.paper.core.items.weapons.Weapon;
+import io.azraein.paper.core.system.DiceUtils;
 import io.azraein.paper.core.system.Registry;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public abstract class Entity {
 
@@ -23,6 +30,7 @@ public abstract class Entity {
 	// Entity Inventories
 	private final Inventory entityInventory;
 	private final ObjectProperty<Equipment>[] entityEquipment;
+	private final ObjectProperty<Weapon> entityEquippedWeapon;
 
 	private final ObjectProperty<EntityState> entityStateProperty;
 
@@ -38,8 +46,12 @@ public abstract class Entity {
 
 	private int entityMaxManaPoints;
 	private final IntegerProperty entityCurrentManaPoints;
-
 	private final IntegerProperty entityGold;
+
+	// Status Conditions, Buffs and Debuffs
+	private final ObservableList<StatusConditions> entityStatusConditions = FXCollections.observableArrayList();
+	private final ObservableList<Buff> entityBuffs = FXCollections.observableArrayList();
+	private final ObservableList<Debuff> entityDebuffs = FXCollections.observableArrayList();
 
 	@SuppressWarnings("unchecked")
 	public Entity(String entityId, String entityName, CharacterBackground entityBackground) {
@@ -51,10 +63,14 @@ public abstract class Entity {
 		for (EquipType equipType : EquipType.values())
 			entityEquipment[equipType.ordinal()] = new SimpleObjectProperty<Equipment>();
 
+		entityEquippedWeapon = new SimpleObjectProperty<>();
+
 		entityStateProperty = new SimpleObjectProperty<>(EntityState.ALIVE);
 
-		// Setup Default Entity Stats
-		// TODO: Add in the characterBackground scores to skills
+		entityCharacteristics = new int[Characteristics.values().length];
+		entitySkills = new int[Skills.values().length];
+		entitySkillModifiers = new int[Skills.values().length];
+
 		entityMaxHealthPoints = 100;
 		entityCurrentHealthPoints = new SimpleIntegerProperty(entityMaxHealthPoints);
 
@@ -67,10 +83,12 @@ public abstract class Entity {
 		// Setup Listeners
 		entityCurrentHealthPoints.addListener((obs, oldValue, newValue) -> {
 
-			if (newValue.intValue() == 0) {
-				// TODO: Deathstate
+			if (newValue.intValue() <= 0 && !entityStateProperty.get().equals(EntityState.ESSENTIAL)) {
 				entityStateProperty.set(EntityState.DEAD);
-			}
+				entityCurrentHealthPoints.set(0);
+				onEntityDeath();
+			} else if (newValue.intValue() == 0 && entityStateProperty.get().equals(EntityState.ESSENTIAL))
+				entityCurrentHealthPoints.set(5); // TODO: Passive healing etc, etc, etc,
 
 			Logger.debug("Entity Health: " + newValue);
 		});
@@ -96,26 +114,61 @@ public abstract class Entity {
 			});
 		}
 
-		entityCharacteristics = new int[Characteristics.values().length];
-		entitySkills = new int[Skills.values().length];
-		entitySkillModifiers = new int[Skills.values().length];
-
 		entityInventory = new Inventory();
 
 	}
 
+	// Abstract Entity Methods
+
+	public abstract void onEntityDeath();
+
 	// Public Entity Methods
 
-	public void attackEntity(Entity opponent) {
-		// TODO: Figure out damage, etc. for when attacking an opponent.
-		opponent.subEntityHealth(5);
+	public int attackEntity(Entity opponent) {
+		// First check to see if the we are using a weapon
+		Logger.debug(this.entityName + ": attacking " + opponent.getEntityName());
+		int damage = 0;
+		if (entityEquippedWeapon.get() != null) {
+			var weapon = entityEquippedWeapon.get();
+
+			Logger.debug("Using Weapon: " + weapon.getItemName());
+			boolean canAttack = false;
+			switch (weapon.getWeaponType()) {
+			case MELEE:
+				canAttack = DiceUtils.rollSkillCheck(this, Skills.MELEE);
+				break;
+			case RANGED:
+				canAttack = DiceUtils.rollSkillCheck(this, Skills.RANGED);
+				break;
+			}
+
+			if (canAttack) {
+				Logger.debug("Attacking!");
+				damage = DiceUtils.rollDice(weapon.getWeaponDamageRoll());
+				opponent.damageEntity(damage);
+				return damage;
+			}
+
+		} else {
+			Logger.debug("We're gonna use the o'le fisties!");
+			// We're not using a weapon so it's hand to hand combat.
+			String hthDmgRoll = "2d4";
+			if (DiceUtils.rollSkillCheck(this, Skills.MELEE)) {
+				Logger.debug("BOOM! POW! SMACK! RIGHT IN DA KISSER!");
+				damage = DiceUtils.rollDice(hthDmgRoll);
+				opponent.damageEntity(damage);
+				return damage;
+			}
+		}
+
+		return 0;
 	}
 
-	public void addEntityHealth(int hp) {
+	public void healEntity(int hp) {
 		entityCurrentHealthPoints.set(entityCurrentHealthPoints.get() + hp);
 	}
 
-	public void subEntityHealth(int hp) {
+	public void damageEntity(int hp) {
 		entityCurrentHealthPoints.set(entityCurrentHealthPoints.get() - hp);
 	}
 
@@ -125,6 +178,41 @@ public abstract class Entity {
 
 	public void subEntityMana(int mp) {
 		entityCurrentManaPoints.set(entityCurrentManaPoints.get() - mp);
+	}
+
+	public void modifySkillModifier(Skills skill, int modifier) {
+		entitySkillModifiers[skill.ordinal()] += modifier;
+	}
+
+	public void addGold(int goldAmt) {
+		entityGold.set(entityGold.get() + goldAmt);
+	}
+
+	public void addStatusCondition(StatusConditions statusCondition) {
+		if (!entityStatusConditions.contains(statusCondition))
+			entityStatusConditions.add(statusCondition);
+	}
+
+	public void removeStatusCondition(StatusConditions statusCondition) {
+		entityStatusConditions.remove(statusCondition);
+	}
+
+	public void addBuff(Buff buff) {
+		if (!entityBuffs.contains(buff))
+			entityBuffs.add(buff);
+	}
+
+	public void removeBuff(Buff buff) {
+		entityBuffs.remove(buff);
+	}
+
+	public void addDebuff(Debuff debuff) {
+		if (!entityDebuffs.contains(debuff))
+			entityDebuffs.add(debuff);
+	}
+
+	public void removeDebuff(Debuff debuff) {
+		entityDebuffs.remove(debuff);
 	}
 
 	public void addItem(Item item, int amount) {
@@ -145,21 +233,31 @@ public abstract class Entity {
 		entityEquipment[equipType.ordinal()].set(null);
 	}
 
+	public void equipEntityWeapon(Weapon weapon) {
+
+	}
+
+	public void unequipEntityWeapon() {
+
+	}
+
 	// Private Entity Methods
 
 	private void unequipEquipment(EquipType equipType, String itemId) {
 		Equipment e = (Equipment) Registry.getItem(itemId);
 		if (e.getEquipmentSkillType() != null)
-			entitySkillModifiers[e.getEquipmentSkillType().ordinal()] -= e.getEquipmentSkillBonus();
+			modifySkillModifier(e.getEquipmentSkillType(), -e.getEquipmentSkillBonus());
 
+		modifySkillModifier(Skills.DODGE, -e.getEquipmentDefenceBonus());
 		addItem(e, 1);
 	}
 
 	private void equipEquipment(EquipType equipType, String itemId) {
 		Equipment e = (Equipment) Registry.getItem(itemId);
 		if (e.getEquipmentSkillType() != null)
-			entitySkillModifiers[e.getEquipmentSkillType().ordinal()] += e.getEquipmentSkillBonus();
+			modifySkillModifier(e.getEquipmentSkillType(), e.getEquipmentSkillBonus());
 
+		modifySkillModifier(Skills.DODGE, e.getEquipmentDefenceBonus());
 		removeItem(e, 1);
 	}
 
@@ -221,8 +319,28 @@ public abstract class Entity {
 		return entityEquipment[equipType.ordinal()].get();
 	}
 
+	public Weapon getEntityWeapon() {
+		return entityEquippedWeapon.get();
+	}
+
+	public ObjectProperty<Weapon> entityEquippedWeaponProperty() {
+		return entityEquippedWeapon;
+	}
+
 	public ObjectProperty<Equipment> entityEquipmentProperty(EquipType equipType) {
 		return entityEquipment[equipType.ordinal()];
+	}
+
+	public ObservableList<StatusConditions> getEntityStatusConditions() {
+		return entityStatusConditions;
+	}
+
+	public ObservableList<Buff> getEntityBuffs() {
+		return entityBuffs;
+	}
+
+	public ObservableList<Debuff> getEntityDebuffs() {
+		return entityDebuffs;
 	}
 
 	public IntegerProperty entityGoldProperty() {

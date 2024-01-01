@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Random;
 
 import io.azraein.paper.core.Paper;
+import io.azraein.paper.core.background.CharacterBackgroundFactory;
 import io.azraein.paper.core.entities.Npc;
 import io.azraein.paper.core.entities.Player;
 import io.azraein.paper.core.entities.stats.Skills;
@@ -18,10 +19,10 @@ import io.azraein.paper.core.locations.Direction;
 import io.azraein.paper.core.locations.Location;
 import io.azraein.paper.core.system.Calendar;
 import io.azraein.paper.core.system.Registry;
-import io.azraein.paper.nodes.paper_scenes.PaperBattleScene;
-import io.azraein.paper.nodes.paper_scenes.PaperCharCreatorScene;
-import io.azraein.paper.nodes.paper_scenes.PaperGameScene;
-import io.azraein.paper.nodes.paper_scenes.PaperScene;
+import io.azraein.paper.scenes.PaperBattleScene;
+import io.azraein.paper.scenes.PaperCharCreatorScene;
+import io.azraein.paper.scenes.PaperGameScene;
+import io.azraein.paper.scenes.PaperScene;
 import javafx.application.Application;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
@@ -45,14 +46,14 @@ public class PaperApp extends Application {
 		this.primaryStage = stage;
 		paperScenes = new HashMap<>();
 
+		Paper.paperCalendar = new Calendar();
+		Paper.rnJesus = new Random(System.nanoTime());
+
 		// Setup the default property listeners
 		setupSceneListeners();
 
 		// TODO: REMOVE
 		createDummyContent();
-
-		Paper.paperCalendar = new Calendar();
-		Paper.rnJesus = new Random(System.nanoTime());
 
 		paperScenes.put("charCreator", new PaperCharCreatorScene(this));
 		paperScenes.put("gameScene", new PaperGameScene(this));
@@ -106,12 +107,16 @@ public class PaperApp extends Application {
 
 	private void createDummyContent() {
 		TestEvent testEvent = new TestEvent();
-		Npc testNpc = new Npc("testNpc1", "Lord OneTesty Face");
-		Npc testNpc1 = new Npc("testNpc2", "Lord TwoTesty Face");
-		Npc testNpc2 = new Npc("testNpc3", "Lord ThreeTesty McFace");
-		Npc testNpc3 = new Npc("testNpc4", "Kyle");
-		Npc testNpc4 = new Npc("testNpc5", "Jannet");
-		Npc testNpc5 = new Npc("testNpc6", "Face");
+		Npc testNpc = new Npc("testNpc1", "Lord Soldier McTesty Face",
+				new CharacterBackgroundFactory().createSoldierBackground());
+		Npc testNpc1 = new Npc("testNpc2", "Lord Thief McTesty Face",
+				new CharacterBackgroundFactory().createThiefBackground());
+		Npc testNpc2 = new Npc("testNpc3", "Lord Mage McTesty Face",
+				new CharacterBackgroundFactory().createMageBackground());
+		
+		Npc testNpc3 = new Npc("testNpc4", "Kyle", new CharacterBackgroundFactory().createThiefBackground());
+		Npc testNpc4 = new Npc("testNpc5", "Jannet", new CharacterBackgroundFactory().createThiefBackground());
+		Npc testNpc5 = new Npc("testNpc6", "Face", new CharacterBackgroundFactory().createThiefBackground());
 
 		Location testLocation = new Location("testLocation1", "Denmark", "Denmarkles");
 		Location testLocation2 = new Location("testLocation2", "Iceland", "Where the FUCK is the ice?");
@@ -130,19 +135,20 @@ public class PaperApp extends Application {
 		testLocation.addLocationNeighbor(Direction.EAST, testLocation2);
 		testLocation.addLocationNeighbor(Direction.SOUTH, testLocation3);
 
-		Equipment testEquipment = new Equipment("testEquipment", "The Test Helmet", "It does test shit",
-				EquipType.HEAD);
+		Equipment testEquipment = new Equipment("testHead", "The Test Helmet", "It does test shit", EquipType.HEAD, 3);
 
-		Equipment testChestplate = new Equipment("testChestplate", "The Test Chestplate",
-				"it Does chestplate test shit", EquipType.CHEST);
+		Equipment testChestplate = new Equipment("testChest", "The Test Chestplate", "it Does chestplate test shit",
+				EquipType.CHEST, 5);
 
-		Equipment testLegs = new Equipment("testLegs", "The Test Leggings", "it Does legs test shit", EquipType.LEGS);
+		Equipment testLegs = new Equipment("testLegs", "The Test Leggings", "it Does legs test shit", EquipType.LEGS,
+				3);
 
-		Equipment testFeet = new Equipment("testFeet", "The Test Feet", "it Does feet test shit", EquipType.FEET);
+		Equipment testFeet = new Equipment("testFeet", "The Test Feet", "it Does feet test shit", EquipType.FEET, 2);
 		testFeet.setEquipmentSkillBonus(10);
 		testFeet.setEquipmentSkillType(Skills.STEALTH);
 
-		Equipment testHands = new Equipment("testHands", "The Test Gloves", "it Does glove test shit", EquipType.HANDS);
+		Equipment testHands = new Equipment("testHands", "The Test Gloves", "it Does glove test shit", EquipType.HANDS,
+				3);
 
 		Item slimeItem = new Item("redSlime", "Red Slime", "It's a potion component");
 

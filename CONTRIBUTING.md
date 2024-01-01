@@ -11,13 +11,11 @@ Thanks for taking the time to help work on this. This is the guidelines to contr
 [What should I know before beginning?](#what-should-i-know-before-beginning)
   * [Dependencies](#dependencies)
   * [Design Decisions](#design-decisions)
-  * [Logging Commits](#logging-commits)
 
 [How can I contribute?](#how-can-i-contribute)
   * [Reporting Bugs](#reporting-bugs)
-    * [Before Submitting a Bug Report](#before-submitting-a-bug-report)
+  * [Before Submitting a Bug Report](#before-submitting-a-bug-report)
   * [Suggesting Features](#suggesting-features)
-  * [First Code Contribution](#first-code-contribution)
   * [Pull Requests](#pull-requests)
 
 [Styleguides](#styleguides)
@@ -108,12 +106,7 @@ Include details about your configuration and environment:
 
 This section guides you through submitting a feature, including completely new features and minor improvements to existing functionality. Following these guidelines helps maintainers and the community understand your suggestion :pencil: and find related suggestions :mag_right:
 
-Before creating feature suggestions, please check [this list](#before-submitting-a-feature-suggestion) as you might find out that you don't need to create one. When creating a feature suggestion, please [include as many details as possible](#how-do-i-submit-a-good-feature-suggestion). Fill in [the template](ISSUE_TEMPLATE.md), including the steps that you imagine you would take if the feature you're requesting existed.
-
-#### Before Submitting An Feature Suggestion
-
-* **Check the Issues and Pull Requests first** chances are someone might have already made such a feature and a pull request is waiting to be approved
-
+Before creating feature suggestions, please check previous suggestions as you might find out that you don't need to create one. When creating a feature suggestion, please [include as many details as possible](#how-do-i-submit-a-good-feature-suggestion). Fill in [the template](ISSUE_TEMPLATE.md), including the steps that you imagine you would take if the feature you're requesting existed.
 
 #### How Do I Submit A (Good) Feature Suggestion?
 
@@ -126,7 +119,6 @@ Feature suggestions are tracked as [Github Issues](https://guides.github.com/fea
 * **Include screenshots and animated GIFs.** which can help demonstrate the point of the feature. You can use [this tool](https://www.cockos.com/licecap/) to record GIFs on macOS and Windows, and [this tool](https://github.com/colinkeenan/silentcast) or [this tool](https://github.com/GNOME/byzanz) on Linux.
 * **Explain why this feature would be useful** to most users and isn't something that can or should be implemented as a main part of the engine.
 * **List some other engines/editors where this feature exists**
-* **Specify which version of The Engine/Editor you are using**. You can find that in the Editor's about section under file
 * **Specify the name and version of the OS you're using.**
 
 ### Your First Code Contribution
